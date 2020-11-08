@@ -7,7 +7,7 @@ pipeline {
     stage('Build') {
         steps {
             sh 'wget https://api.zubr.in/content.zip -O content.zip'
-            sh 'unzip -q content.zip -d content/'
+            sh 'unzip -q -o content.zip -d content/'
             sh 'hugo --cacheDir ${WORKSPACE}'
         }
     }
