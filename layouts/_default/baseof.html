@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Zubr - Courts</title>
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/misc.css">
+    {{ $cssMain := resources.Get "css/main.css" | minify | fingerprint}}
+    {{ $cssMisc := resources.Get "css/misc.css" | minify | fingerprint}}
+    <link rel="stylesheet" href="{{ $cssMain.Permalink }}">
+    <link rel="stylesheet" href="{{ $cssMisc.Permalink }}">
 </head>
 <body>
 {{ block "main" . }}
