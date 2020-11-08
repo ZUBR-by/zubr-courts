@@ -7,7 +7,7 @@ pipeline {
     stage('Build') {
         steps {
             sh 'wget https://api.zubr.in/content.zip -O content.zip'
-            sh 'unzip content.zip -d content/'
+            sh 'unzip content.zip -q -d content/'
             sh 'hugo'
         }
     }
