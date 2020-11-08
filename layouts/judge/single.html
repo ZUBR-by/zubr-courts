@@ -1,5 +1,5 @@
 {{ define "main" }}
-<div class="two-coll-wrapper flex-row mil-flex-column">
+<div class="two-coll-wrapper flex-row mil-flex-column" id="app">
     <div class="section size-70 mil-size-100">
         <div class="scene zbr-home-promo innerpages mil-pdng-b-30px">
             <div class="lang-swicher mil-notdisplay" style="top:-10px;">
@@ -104,115 +104,14 @@
                 </div>
             </div>
         </div>
-        <div class="scene">
-            <div class="pdng-t-5prc pdng-b-20px">
-                <h2 class=" txt-uppercase txt-color-1">
-                    Вынесенные решения
-                </h2>
-            </div>
-            <div class="filter-wrp flex-row txt-algn-c mrgn-b-20px">
-                <div class="section size-25 pdng-r-10px">
-                    <input class="input" placeholder="29.02.2010">
-                </div>
-                <div class="section size-25 pdng-r-10px">
-                    <input class="input" placeholder="23.34">
-                </div>
-                <div class="section size-25 pdng-r-10px">
-                    <input class="input" placeholder="Введите текст решения">
-                </div>
-                <div class="section size-25 txt-algn-r">
-                    <button class="button">Найти</button>
-                </div>
-            </div>
-            <div class="table-wrapper pdng-t-20px pdng-20px">
-                <table class="zbr-table">
-                    <tbody>
-                    <tr>
-                        <td class="txt-nowrap">01.01.2020</td>
-                        <td class="txt-nowrap">ст. 23.34</td>
-                        <td class="txt-nowrap">15 суток</td>
-                        <td class="zbr-table-longtext">блаблабла бл аблабл аблаблабла блаблабла блаблабла блаблабла</td>
-                    </tr>
-                    <tr>
-                        <td>01.01.2020</td>
-                        <td>ст. 23.34</td>
-                        <td>15 суток</td>
-                        <td>блаблабла блабла блабл аблабла блабл аблабл аблабла блаблабла</td>
-                    </tr>
-                    <tr>
-                        <td>01.01.2020</td>
-                        <td>ст. 23.34</td>
-                        <td>15 суток</td>
-                        <td>блаблабла блабла блабл аблабла блабл аблабл аблабла блаблабла</td>
-                    </tr>
-                    <tr>
-                        <td>01.01.2020</td>
-                        <td>ст. 23.34</td>
-                        <td>15 суток</td>
-                        <td>блаблабла блабла блабл аблабла блабл аблабл аблабла блаблабла</td>
-                    </tr>
-                    <tr>
-                        <td>01.01.2020</td>
-                        <td>ст. 23.34</td>
-                        <td>15 суток</td>
-                        <td>блаблабла блабла блабл аблабла блабл аблабл аблабла блаблабла</td>
-                    </tr>
-                    <tr>
-                        <td>01.01.2020</td>
-                        <td>ст. 23.34</td>
-                        <td>15 суток</td>
-                        <td>блаблабла блабла блабл аблабла блабл аблабл аблабла блаблабла</td>
-                    </tr>
-                    <tr>
-                        <td>01.01.2020</td>
-                        <td>ст. 23.34</td>
-                        <td>15 суток</td>
-                        <td>блаблабла блабла блабл аблабла блабл аблабл аблабла блаблабла</td>
-                    </tr>
-                    <tr>
-                        <td>01.01.2020</td>
-                        <td>ст. 23.34</td>
-                        <td>15 суток</td>
-                        <td>блаблабла блабла блабл аблабла блабл аблабл аблабла блаблабла</td>
-                    </tr>
-                    <tr>
-                        <td>01.01.2020</td>
-                        <td>ст. 23.34</td>
-                        <td>15 суток</td>
-                        <td>блаблабла блабла блабл аблабла блабл аблабл аблабла блаблабла</td>
-                    </tr>
-                    <tr>
-                        <td>01.01.2020</td>
-                        <td>ст. 23.34</td>
-                        <td>15 суток</td>
-                        <td>блаблабла блабла блабл аблабла блабл аблабл аблабла блаблабла</td>
-                    </tr>
-                    <tr>
-                        <td>01.01.2020</td>
-                        <td>ст. 23.34</td>
-                        <td>15 суток</td>
-                        <td>блаблабла блабла блабл аблабла блабл аблабл аблабла блаблабла</td>
-                    </tr>
-                    <tr>
-                        <td>01.01.2020</td>
-                        <td>ст. 23.34</td>
-                        <td>15 суток</td>
-                        <td>блаблабла блабла блабл аблабла блабл аблабл аблабла блаблабла</td>
-                    </tr>
-                    <tr>
-                        <td>01.01.2020</td>
-                        <td>ст. 23.34</td>
-                        <td>15 суток</td>
-                        <td>блаблабла блабла блабл аблабла блабл аблабл аблабла блаблабла</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <decisions :judge='{{.Param "id"}}'></decisions>
     </div>
     <div class="section size-30 mil-size-100" style="background:#EFEFEF">
         Disqus widget
     </div>
+    {{ $jsCurrent := resources.Get "generated/js/judge.js" | fingerprint }}
+    <script src="{{ $jsCurrent.Permalink }}"></script>
 </div>
 {{ end }}
+
 

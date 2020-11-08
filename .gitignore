@@ -9,3 +9,7 @@ content.zip
 !content/judge
 /content/judge/*
 !content/judge/foo.md
+
+/assets/generated/*
+
+frontend/node_modules

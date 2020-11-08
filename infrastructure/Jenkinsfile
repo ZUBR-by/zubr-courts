@@ -8,6 +8,7 @@ pipeline {
         steps {
             sh 'wget https://api.zubr.in/content.zip -O content.zip'
             sh 'unzip -q -o content.zip -d content/'
+            sh 'yarn run build'
             sh 'hugo --cacheDir $WORKSPACE/cache'
         }
     }

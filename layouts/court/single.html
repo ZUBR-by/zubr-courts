@@ -1,1 +1,8 @@
-single court
+{{ define "main" }}
+<div id="app">
+    single court
+    <decisions :court='{{.Param "id"}}'></decisions>
+</div>
+{{ $jsCurrent := resources.Get "generated/js/court.js" | fingerprint }}
+<script src="{{ $jsCurrent.Permalink }}"></script>
+{{end}}
