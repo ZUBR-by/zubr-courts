@@ -1,3 +1,11 @@
 public/
 resources/
 content.zip
+
+!content/court
+/content/court/*
+!content/court/foo.md
+
+!content/judge
+/content/judge/*
+!content/judge/foo.md

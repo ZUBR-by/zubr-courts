@@ -11,5 +11,21 @@ pipeline {
             sh 'hugo --cacheDir $WORKSPACE/cache'
         }
     }
+    stage('Deploy') {
+        environment {
+            FRONTEND_HOST  = credentials('FRONTEND_HOST')
+        }
+        steps {
+            writeFile file: 'hosts', text: """
+$FRONTEND_HOST
+"""
+            ansiblePlaybook(
+                  playbook: 'infrastructure/deploy.yml',
+                  inventory: "hosts",
+                  credentialsId: "SSH_PRIVATE_KEY",
+                  hostKeyChecking: false
+            )
+        }
+    }
   }
 }
