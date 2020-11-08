@@ -5,9 +5,11 @@ pipeline {
   }
   stages {
     stage('Build') {
-        sh 'wget https://api.zubr.in/content.zip -O content.zip'
-        sh 'unzip content.zip -d content/'
-        sh 'hugo'
+        steps {
+            sh 'wget https://api.zubr.in/content.zip -O content.zip'
+            sh 'unzip content.zip -d content/'
+            sh 'hugo'
+        }
     }
   }
 }
