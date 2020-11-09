@@ -11,12 +11,8 @@
     <link rel="stylesheet" href="{{ $cssMisc.Permalink }}">
 </head>
 <body>
-{{ if not .IsHome }}
-{{ partial "header"}}
-{{ end }}
 {{ block "main" . }}
 {{ end }}
-{{ partial "footer"}}
 </body>
 {{ $jsVendors := resources.Get "generated/js/chunk-vendors.js" | fingerprint }}
 <script src="{{ $jsVendors.Permalink }}"></script>

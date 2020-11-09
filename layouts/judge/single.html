@@ -1,69 +1,11 @@
 {{ define "main" }}
 <div class="two-coll-wrapper flex-row mil-flex-column" id="app">
     <div class="section size-70 mil-size-100">
-        <div class="scene zbr-home-promo innerpages mil-pdng-b-30px">
-            <div class="lang-swicher mil-notdisplay" style="top:-10px;">
-                <div class="lang-swicher-button"><img src="/imgs/icons/svg/flag-belarus.svg"></div>
-                <div class="lang-swicher-button"><img src="/imgs/icons/svg/flag-ukraine.svg"></div>
-                <div class="lang-swicher-button active"><img src="/imgs/icons/svg/flag-russia.svg"></div>
-            </div>
-            <div>
-                <div class="zbr-header flex-algn-itms-c flex-row mil-flex-column-reserve">
-                    <div class="section size-70 mil-size-100 mil-pdng-t-60px">
-                        <h1>
-                            Граждан&shy;ский контроль
-                            <br>
-                            судебной системы
-                        </h1>
-                    </div>
-                    <div class="section size-30 txt-algn-r mil-size-100 mil-txt-algn-l mil-fix-header">
-                        <a class="zbr-h-logo cursor-pointer" href="/">
-                            <img src="/imgs/icons/svg/zubr-h-logo.svg">
-                        </a>
-                        <input id="brgrbtn" class="notdisplay mil-show" type="checkbox">
-                        <label for="brgrbtn" class="notdisplay burger-button mil-show">
-                            <div class="burger-button-line"></div>
-                            <div class="burger-button-line"></div>
-                            <div class="burger-button-line"></div>
-                        </label>
-                        <div class="brgr-nav notdisplay mil-show">
-                            <div class="brgr-nav-links">
-                                <a class="button size-100 txt-algn-c" href="/court">Суды</a>
-                                <a class="button size-100 txt-algn-c" href="">Судья</a>
-                                <a class="button size-100 txt-algn-c" href="">О проекте</a>
-                            </div>
-                            <div class="zbr-ftr-links txt-algn-c">
-                                <a class="cursor-pointer" href="#"><img src="/imgs/icons/yt.png" alt="YouTube"></a>
-                                <a class="cursor-pointer" href="#"><img src="/imgs/icons/fb.png" alt="Facebook"></a>
-                                <a class="cursor-pointer" href="#"><img src="/imgs/icons/in.png" alt="Instagram"></a>
-                                <a class="cursor-pointer" href="#"><img src="/imgs/icons/ok.png" alt="OK"></a>
-                                <a class="cursor-pointer" href="#"><img src="/imgs/icons/tg.png" alt="Telegram"></a>
-                                <a class="cursor-pointer" href="#"><img src="/imgs/icons/vk.png" alt="VK"></a>
-                            </div>
-                            <div class="lang-swicher">
-                                <div class="lang-swicher-button"><img src="/imgs/icons/svg/flag-belarus.svg"></div>
-                                <div class="lang-swicher-button"><img src="/imgs/icons/svg/flag-ukraine.svg"></div>
-                                <div class="lang-swicher-button active"><img src="/imgs/icons/svg/flag-russia.svg">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hdr-nav-links">
-                <a href="/court">Суды</a>
-                <span class="hdr-nav-l-spr">/</span>
-                <a href="#">Минск</a>
-                <span class="hdr-nav-l-spr">/</span>
-                <a href="#">Суд Первомайского Района</a>
-                <span class="hdr-nav-l-spr">/</span>
-                <span>Судейка Судья Судеевна</span>
-            </div>
-        </div>
+        {{ partial "header"}}
         <div class="scene flex-row mil-flex-column">
             <div class="section size-30 pdng-r-50px mil-size-100 mil-pdng-20px">
                 <div class="judge-unit-photo">
-                    <img src="/imgs/icons/svg/user-gray.svg">
+                    <img src='https://cdn.zubr.ws/courts/judges/Шабуня Виктория Валерьевна.jpg'>
                 </div>
             </div>
             <div class="section size-70 mil-size-100">
@@ -105,6 +47,7 @@
             </div>
         </div>
         <decisions :judge='{{.Param "id"}}'></decisions>
+        {{ partial "footer"}}
     </div>
     <div class="section size-30 mil-size-100" style="background:#EFEFEF">
         <div id="disqus_thread"></div>
@@ -128,6 +71,7 @@
         </script>
         <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
+
     {{ $jsCurrent := resources.Get "generated/js/judge.js" | fingerprint }}
     <script src="{{ $jsCurrent.Permalink }}"></script>
 </div>
