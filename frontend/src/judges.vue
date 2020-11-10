@@ -19,7 +19,7 @@
                     </td>
                     <td>{{ judge.fullName }}</td>
                     <td class="zbr-table-longtext">комментарий</td>
-                    <td><a :href="'/judge/' + judge.id" target="_blank">ссылка</a></td>
+                    <td><a :href="'/judge/' + judge.id">ссылка</a></td>
                 </tr>
                 <tr v-if="judges.length === 0">
                     <td colspan="4">
