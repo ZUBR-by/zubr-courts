@@ -1,8 +1,9 @@
 {{ define "main" }}
+{{partial "header"}}
 <div id="app">
     <judges></judges>
-    {{partial "footer"}}
 </div>
+{{partial "footer"}}
 {{ end }}
 {{ define "js"}}
 {{ $jsCurrent := resources.Get "generated/js/judges.js" | fingerprint }}
