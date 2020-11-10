@@ -5,7 +5,9 @@
         <div class="scene flex-row mil-flex-column">
             <div class="section size-30 pdng-r-50px mil-size-100 mil-pdng-20px">
                 <div class="judge-unit-photo">
-                    <img src='https://cdn.zubr.ws/courts/judges/Шабуня Виктория Валерьевна.jpg'>
+                    <object data='https://cdn.zubr.ws/courts/judges/{{$.Param "full_name"}}.jpg'  type="image/jpeg">
+                        <img alt="photo" src="/imgs/icons/svg/user-gray.svg">
+                    </object>
                 </div>
             </div>
             <div class="section size-70 mil-size-100">
@@ -72,9 +74,11 @@
         <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
 
-    {{ $jsCurrent := resources.Get "generated/js/judge.js" | fingerprint }}
-    <script src="{{ $jsCurrent.Permalink }}"></script>
+
 </div>
 {{ end }}
-
+{{ define "js"}}
+{{ $jsCurrent := resources.Get "generated/js/judge.js" | fingerprint }}
+<script src="{{ $jsCurrent.Permalink }}"></script>
+{{end}}
 

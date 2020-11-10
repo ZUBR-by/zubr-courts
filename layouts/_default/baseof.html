@@ -11,11 +11,12 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="ZUBR.CC">
 
-    <title>Zubr - Courts</title>
+    <title>ZUBR - Courts</title>
     {{ $cssMain := resources.Get "css/main.css" | minify | fingerprint}}
     {{ $cssMisc := resources.Get "css/misc.css" | minify | fingerprint}}
     <link rel="stylesheet" href="{{ $cssMain.Permalink }}">
     <link rel="stylesheet" href="{{ $cssMisc.Permalink }}">
+
 </head>
 <body>
 {{ block "main" . }}
@@ -23,4 +24,5 @@
 </body>
 {{ $jsVendors := resources.Get "generated/js/chunk-vendors.js" | fingerprint }}
 <script src="{{ $jsVendors.Permalink }}"></script>
-
+{{ block "js" . }}
+{{end}}

@@ -1,3 +1,10 @@
 {{ define "main" }}
-<a href="/judge/1293">судья Шабуня</a>
+<div id="app">
+    <judges></judges>
+    {{partial "footer"}}
+</div>
 {{ end }}
+{{ define "js"}}
+{{ $jsCurrent := resources.Get "generated/js/judges.js" | fingerprint }}
+<script src="{{ $jsCurrent.Permalink }}"></script>
+{{end}}

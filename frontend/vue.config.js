@@ -1,10 +1,13 @@
 module.exports = {
     outputDir          : './../assets/generated',
     pages              : {
-        judge: {
+        judge : {
             entry: 'src/judge.js',
         },
-        court: {
+        judges: {
+            entry: 'src/judge_list.js',
+        },
+        court : {
             entry: 'src/court.js',
         },
     },
