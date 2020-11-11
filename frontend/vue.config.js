@@ -10,6 +10,9 @@ module.exports = {
         court : {
             entry: 'src/court.js',
         },
+        courts: {
+            entry: 'src/court_list.js',
+        },
     },
     filenameHashing    : false,
     chainWebpack       : config => {

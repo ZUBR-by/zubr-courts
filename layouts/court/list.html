@@ -1,6 +1,11 @@
 {{ define "main" }}
-<a href="/">главная</a>
-
-<br>
-<a href="/court/07-003-03-01">суд Московского района г. Минска</a>
+{{partial "header"}}
+<div id="app">
+    <courts></courts>
+</div>
+{{partial "footer"}}
 {{ end }}
+{{ define "js"}}
+{{ $jsCurrent := resources.Get "generated/js/courts.js" | fingerprint }}
+<script src="{{ $jsCurrent.Permalink }}"></script>
+{{end}}
