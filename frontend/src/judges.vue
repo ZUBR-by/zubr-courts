@@ -38,7 +38,7 @@ export default {
     data() {
         return {
             judges: [],
-            search: 'Шабуня'
+            search: ''
         }
     },
     methods: {
