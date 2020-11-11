@@ -1,8 +1,20 @@
 {{ define "main" }}
-<div id="app">
-    single court
-    <decisions :court='{{.Param "id"}}'></decisions>
+<div class="two-coll-wrapper flex-row mil-flex-column" id="app">
+    <div class="section size-70 mil-size-100">
+        {{ partial "header"}}
+        <location :longitude='{{.Param "longitude"}}' :latitude='{{.Param "latitude"}}'></location>
+        <decisions :court='{{.Param "id"}}'></decisions>
+        {{ partial "footer"}}
+    </div>
+    {{ partial "disqus"}}
 </div>
+</div>
+{{end}}
+{{ define "js"}}
 {{ $jsCurrent := resources.Get "generated/js/court.js" | fingerprint }}
+{{ $cssCurrent := resources.Get "generated/css/court.css" | fingerprint }}
+{{ $cssCurrent1 := resources.Get "generated/css/chunk-vendors.css" | fingerprint }}
 <script src="{{ $jsCurrent.Permalink }}"></script>
+<link rel="stylesheet" href="{{$cssCurrent.Permalink}}"/>
+<link rel="stylesheet" href="{{$cssCurrent1.Permalink}}"/>
 {{end}}
