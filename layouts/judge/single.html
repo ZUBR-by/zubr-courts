@@ -46,6 +46,11 @@
                         +37529 000 00 00
                     </div>
                 </div>
+                {{ safeHTML `
+                <div v-for="item of career" :id="item.id">
+                    {{item}}
+                </div>
+                ` }}
             </div>
         </div>
         <decisions :judge='{{.Param "id"}}'></decisions>
@@ -55,6 +60,9 @@
 </div>
 {{ end }}
 {{ define "js"}}
+<script>
+    var id = '{{.Param "id"}}';
+</script>
 {{ $jsCurrent := resources.Get "generated/js/judge.js" | fingerprint }}
 <script src="{{ $jsCurrent.Permalink }}"></script>
 {{end}}
