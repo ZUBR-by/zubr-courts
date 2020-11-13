@@ -14,20 +14,22 @@
                 <h1 class="txt-size-34px txt-nottransform">
                     {{ $.Param "full_name"}}
                 </h1>
+                {{ if $.Param "court"}}
                 <div class="judge-info-unit pdng-t-10px">
                     <div class="judge-info-unit-name txt-color-1">
                         Название суда:
                     </div>
                     <div class="judge-info-unit-desc">
-                        Суд Первомайского Района
+                        <a href='/court/{{ .Param "court.id" }}'>{{ .Param "court.name" }}</a>
                     </div>
                 </div>
+                {{ end }}
                 <div class="judge-info-unit">
                     <div class="judge-info-unit-name txt-color-1">
                         Должность:
                     </div>
                     <div class="judge-info-unit-desc">
-                        Старший судья
+                        {{ .Param "court.position" }}
                     </div>
                 </div>
                 <div class="judge-info-unit">
@@ -35,17 +37,17 @@
                         Дата назначения:
                     </div>
                     <div class="judge-info-unit-desc">
-                        10.11.2010
+                        {{ .Param "court.timestamp" }}
                     </div>
                 </div>
-                <div class="judge-info-unit">
-                    <div class="judge-info-unit-name txt-color-1">
-                        Контакты:
-                    </div>
-                    <div class="judge-info-unit-desc">
-                        +37529 000 00 00
-                    </div>
-                </div>
+<!--                <div class="judge-info-unit">-->
+<!--                    <div class="judge-info-unit-name txt-color-1">-->
+<!--                        Контакты:-->
+<!--                    </div>-->
+<!--                    <div class="judge-info-unit-desc">-->
+<!--                        +37529 000 00 00-->
+<!--                    </div>-->
+<!--                </div>-->
                 {{ safeHTML `
                 <div v-for="item of career" :id="item.id">
                     {{item}}
@@ -57,6 +59,17 @@
         {{ partial "footer"}}
     </div>
     {{ partial "disqus"}}
+</div>
+{{ end }}
+{{ define "breadcrumbs" }}
+<div class="hdr-nav-links">
+    <a href="/court">Суды</a>
+    <span class="hdr-nav-l-spr">/</span>
+    <a href="/judge">Судьи</a>
+    <span class="hdr-nav-l-spr">/</span>
+    <a href="#">Суд Первомайского Района</a>
+    <span class="hdr-nav-l-spr">/</span>
+    <span>Судейка Судья Судеевна</span>
 </div>
 {{ end }}
 {{ define "js"}}

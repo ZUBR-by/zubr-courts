@@ -30,12 +30,7 @@
                         <a class="button size-100 txt-algn-c" href="">О проекте</a>
                     </div>
                     <div class="zbr-ftr-links txt-algn-c">
-                        <a class="cursor-pointer" href="#"><img src="/imgs/icons/yt.png" alt="YouTube"></a>
-                        <a class="cursor-pointer" href="#"><img src="/imgs/icons/fb.png" alt="Facebook"></a>
-                        <a class="cursor-pointer" href="#"><img src="/imgs/icons/in.png" alt="Instagram"></a>
-                        <a class="cursor-pointer" href="#"><img src="/imgs/icons/ok.png" alt="OK"></a>
-                        <a class="cursor-pointer" href="#"><img src="/imgs/icons/tg.png" alt="Telegram"></a>
-                        <a class="cursor-pointer" href="#"><img src="/imgs/icons/vk.png" alt="VK"></a>
+                        {{ partial "links"}}
                     </div>
 <!--                    <div class="lang-swicher">-->
 <!--                        <div class="lang-swicher-button"><img src="/imgs/icons/svg/flag-belarus.svg"></div>-->
@@ -47,13 +42,6 @@
             </div>
         </div>
     </div>
-    <div class="hdr-nav-links">
-        <a href="/court">Суды</a>
-        <span class="hdr-nav-l-spr">/</span>
-        <a href="/judge">Судьи</a>
-        <span class="hdr-nav-l-spr">/</span>
-        <a href="#">Суд Первомайского Района</a>
-        <span class="hdr-nav-l-spr">/</span>
-        <span>Судейка Судья Судеевна</span>
-    </div>
+    {{ block "breadcrumbs" . }}
+    {{ end }}
 </div>
