@@ -27,12 +27,8 @@
 
                     <div class="brgr-nav-links">
                         <a class="button size-100 txt-algn-c" href="/">Главная</a>
-                        {{ if eq .Type "court"  }}
-                        <a class="button size-100 txt-algn-c" href="/court">Суд</a>
-                        <a class="button size-100 txt-algn-c" href="#">Район/область</a>
-                        <a class="button size-100 txt-algn-c" >{{ .Param "name"}}</a>
-                        {{ else }}
-                        {{ end }}
+                        <a class="button size-100 txt-algn-c" href="/court">Судs</a>
+                        <a class="button size-100 txt-algn-c" href="/judge">Судьи</a>
                     </div>
 
                     <div class="zbr-ftr-links txt-algn-c">
@@ -52,12 +48,18 @@
         <a href="/">Главная</a>
         {{ if eq .Type "court"  }}
         <span class="hdr-nav-l-spr">/</span>
-        <a href="/court">Суд</a>
+        <a href="/court">Суды</a>
         <span class="hdr-nav-l-spr">/</span>
-        <a href="#">Район/область</a>
+        <span>{{ .Param "region"}}</span>
         <span class="hdr-nav-l-spr">/</span>
         <span>{{ .Param "name"}}</span>
-        {{ else }}
+        {{ else if eq .Type "judge" }}
+        <span class="hdr-nav-l-spr">/</span>
+        <a href="/court">Суды</a>
+        <span class="hdr-nav-l-spr">/</span>
+        <span>{{ .Param "region"}}</span>
+        <span class="hdr-nav-l-spr">/</span>
+        <span>{{ .Param "name"}}</span>
         {{ end }}
     </div>
 </div>
