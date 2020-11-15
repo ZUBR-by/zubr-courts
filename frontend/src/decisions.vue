@@ -26,7 +26,7 @@
                     <td class="txt-nowrap">{{ decision.timestamp }}</td>
                     <td class="txt-nowrap">{{ decision.article }}</td>
                     <td class="txt-nowrap">{{ decision.aftermath }}</td>
-                    <td class="zbr-table-longtext">комментарий</td>
+                    <td class="zbr-table-longtext"></td>
                 </tr>
                 <tr v-if="decisions.length === 0">
                     <td colspan="4">

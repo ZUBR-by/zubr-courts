@@ -4,15 +4,17 @@
 
 <script>
 import 'ol/ol.css';
-import Map          from 'ol/Map';
-import OSM          from 'ol/source/OSM';
-import TileLayer    from 'ol/layer/Tile';
-import View         from 'ol/View';
-import {fromLonLat} from 'ol/proj';
-import Feature      from 'ol/Feature';
-import Point        from 'ol/geom/Point'
-import VectorLayer  from 'ol/layer/Vector';
-import VectorSource from 'ol/source/Vector';
+import Map           from 'ol/Map';
+import OSM           from 'ol/source/OSM';
+import TileLayer     from 'ol/layer/Tile';
+import View          from 'ol/View';
+import {fromLonLat}  from 'ol/proj';
+import Feature       from 'ol/Feature';
+import Point         from 'ol/geom/Point'
+import Zoom         from 'ol/control/Zoom'
+import VectorLayer   from 'ol/layer/Vector';
+import VectorSource  from 'ol/source/Vector';
+import {Icon, Style} from 'ol/style';
 
 export default {
     name : "map",
@@ -30,10 +32,10 @@ export default {
                 target      : 'map',
                 view        : new View({
                     center: fromLonLat([this.longitude, this.latitude]),
-                    zoom  : 16,
+                    zoom  : 15.5,
                 }),
                 interactions: [],
-                controls    : [],
+                controls    : [new Zoom()],
             });
             const updatedView = map.getView();
             const marker      = new VectorLayer({
@@ -45,6 +47,13 @@ export default {
                             ])),
                         }),
                     ],
+                }),
+                style : new Style({
+                    image: new Icon({
+                        anchor: [0.7, 1],
+                        scale  : 0.3,
+                        src: '/imgs/marker.png',
+                    }),
                 }),
             });
 
@@ -66,7 +75,7 @@ export default {
 <style>
 .map {
     width: 100%;
-    height: 400px;
+    height: 100%;
 }
 
 a.skiplink {
