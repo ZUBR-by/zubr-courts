@@ -1,7 +1,7 @@
 {{ define "main" }}
 <div class="two-coll-wrapper flex-row mil-flex-column" id="app">
     <div class="section size-70 mil-size-100">
-        {{ partial "header"}}
+        {{ partial "header" . }}
         <div class="scene">
             <div class="court-info flex-row flex-algn-itms-strch mil-flex-column-reserve">
                 <div class="section size-50 pdng-30px mil-size-100">
@@ -46,7 +46,7 @@
                                 {{ .Param "statistic.arrests" }}
                             </h1>
                             <h3 class="txt-size-18px">
-                                Cуток ареста
+                                Суток ареста
                             </h3>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                             <a class="tag-unit" href="#">Длиный тег</a>
                         </div>
                         <div class="pdng-t-30px">
-                            <a class="button size-100" href="#">Подробнее</a>
+                            <a class="button size-100" href="/judge/{{ $element.id}}">Подробнее</a>
                         </div>
                     </div>
                 </div>
