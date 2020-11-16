@@ -57,7 +57,7 @@
         {{end}}
         {{ else if eq .Type "judge" }}
         <span class="hdr-nav-l-spr">/</span>
-        {{if (.Param "court") and (.Param "full_name")}}
+        {{if and (.Param "court") (.Param "full_name")}}
         <a href="/court">Суды</a>
         {{else}}
         <a href="/judge">Судьи</a>
