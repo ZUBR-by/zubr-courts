@@ -11,7 +11,6 @@ import View          from 'ol/View';
 import {fromLonLat}  from 'ol/proj';
 import Feature       from 'ol/Feature';
 import Point         from 'ol/geom/Point'
-import Zoom         from 'ol/control/Zoom'
 import VectorLayer   from 'ol/layer/Vector';
 import VectorSource  from 'ol/source/Vector';
 import {Icon, Style} from 'ol/style';
@@ -34,8 +33,6 @@ export default {
                     center: fromLonLat([this.longitude, this.latitude]),
                     zoom  : 15.5,
                 }),
-                interactions: [],
-                controls    : [new Zoom()],
             });
             const updatedView = map.getView();
             const marker      = new VectorLayer({

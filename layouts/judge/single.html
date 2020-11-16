@@ -1,7 +1,7 @@
 {{ define "main" }}
 <div class="two-coll-wrapper flex-row mil-flex-column" id="app">
     <div class="section size-70 mil-size-100">
-        {{ partial "header"}}
+        {{ partial "header" . }}
         <div class="scene flex-row mil-flex-column">
             <div class="section size-30 pdng-r-50px mil-size-100 mil-pdng-20px">
                 <div class="judge-unit-photo">
@@ -23,7 +23,6 @@
                         <a href='/court/{{ .Param "court.id" }}'>{{ .Param "court.name" }}</a>
                     </div>
                 </div>
-                {{ end }}
                 <div class="judge-info-unit">
                     <div class="judge-info-unit-name txt-color-1">
                         Должность:
@@ -40,6 +39,23 @@
                         {{ .Param "court.timestamp" }}
                     </div>
                 </div>
+                {{ end }}
+                <ul>
+                {{ range $index, $element := .Param "career"}}
+                    {{if eq $element.type "appointed"}}
+                    <li>
+                        Назначен(а) с {{$element.timestamp}}
+                        {{if eq $element.termType "indefinitely"}}
+                        , бессрочно
+                        {{else}}
+                        , на срок {{$element.term}} лет
+                        {{end}}
+                    </li>
+                    {{else}}
+                    <li>Освобожден(а) с {{$element.timestamp}}, {{$element.court.name}}</li>
+                    {{end}}
+                {{end}}
+                </ul>
 <!--                <div class="judge-info-unit">-->
 <!--                    <div class="judge-info-unit-name txt-color-1">-->
 <!--                        Контакты:-->
@@ -48,28 +64,12 @@
 <!--                        +37529 000 00 00-->
 <!--                    </div>-->
 <!--                </div>-->
-                {{ safeHTML `
-                <div v-for="item of career" :id="item.id">
-                    {{item}}
-                </div>
-                ` }}
             </div>
         </div>
         <decisions :judge='{{.Param "id"}}'></decisions>
         {{ partial "footer"}}
     </div>
     {{ partial "disqus"}}
-</div>
-{{ end }}
-{{ define "breadcrumbs" }}
-<div class="hdr-nav-links">
-    <a href="/court">Суды</a>
-    <span class="hdr-nav-l-spr">/</span>
-    <a href="/judge">Судьи</a>
-    <span class="hdr-nav-l-spr">/</span>
-    <a href="#">Суд Первомайского Района</a>
-    <span class="hdr-nav-l-spr">/</span>
-    <span>Судейка Судья Судеевна</span>
 </div>
 {{ end }}
 {{ define "js"}}

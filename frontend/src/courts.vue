@@ -13,9 +13,8 @@
                 <tbody>
                 <tr v-for="court of courts" :key="court.id">
                     <td>{{ court.id }}</td>
-                    <td>{{ court.name }}</td>
-                    <td class="zbr-table-longtext">комментарий</td>
-                    <td><a :href="'/court/' + court.id">ссылка</a></td>
+                    <td><a :href="'/court/' + court.id">{{ court.name }}</a></td>
+                    <td>{{ court.address }}</td>
                 </tr>
                 <tr v-if="courts.length === 0">
                     <td colspan="4">
@@ -39,7 +38,6 @@ export default {
     },
     methods: {
         loadData() {
-            console.log(1);
             let host   = process.env.VUE_APP_API_URL ? process.env.VUE_APP_API_URL : 'https://zubr.club';
             let url    = new URL(
                 host + '/court'

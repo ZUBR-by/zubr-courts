@@ -17,9 +17,9 @@
                             <img alt="photo" width="50" height="50" src="/imgs/icons/svg/user-gray.svg">
                         </object>
                     </td>
-                    <td>{{ judge.fullName }}</td>
+                    <td><a :href="'/judge/' + judge.id">{{ judge.fullName }}</a></td>
+                    <td>{{ judge.currentCourt ? judge.currentCourt.name : ''}}</td>
                     <td class="zbr-table-longtext">комментарий</td>
-                    <td><a :href="'/judge/' + judge.id">ссылка</a></td>
                 </tr>
                 <tr v-if="judges.length === 0">
                     <td colspan="4">
