@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     {{$title := cond (gt (.Title | len) 0) .Title "Гражданский мониторинг судебной системы"}}
-    {{$title = printf "%s - %s" "ZUBR.cc" $title}}
+    {{$fullTitle = printf "%s - %s" "ZUBR.cc" $title}}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -11,7 +11,7 @@
     <meta property="og:description" content="Гражданский контроль судебной системы.">
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{$title}}">
-    <title>{{$title}}</title>
+    <title>{{$fullTitle}}</title>
     {{ $cssMain := resources.Get "css/main.css" | minify | fingerprint}}
     {{ $cssMisc := resources.Get "css/misc.css" | minify | fingerprint}}
     <link rel="stylesheet" href="/fonts/roboto/roboto.css">
