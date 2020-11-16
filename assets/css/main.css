@@ -26,18 +26,19 @@ iframe {
   border:none;
   display:block;
 }
-a {
+a, a * {
   text-decoration:none;
   cursor:pointer;
 }
-a:hover {
+a:hover,
+a:hover * {
   color:red;
 }
 h1 {
   font-size:50px;
   font-weight:800;
   line-height:1.2em;
-  text-transform:uppercase;
+  /*text-transform:uppercase;*/
 }
 h2 {
   font-size:28px;
@@ -60,23 +61,34 @@ h3 {
   box-shadow:rgba(255,92,1,0.2) 0 3px 6px;
   cursor:pointer;
 }
-.button:hover {
+.input {border-radius:8px;}
+.input::placeholder {
+  color:rgba(255,92,1,0.3);
+}
+.button:hover,
+.button.active,
+.button.primary {
   color:#fff;
   background:#FF5C01;
 }
 .button:active {
   background:red;
 }
-.button + .button {
-  margin-left:5px;
+.button {
+  margin:5px 5px 0 0;
+}
+.button:only-child {
+  margin:0;
 }
 .button.large {
   font-size:18px;
+  margin:10px 15px 0 0;
   padding:15px 30px;
 }
-.button.large + .button.large {
-  margin-left:15px;
+.button.large:only-child {
+  margin:0;
 }
+
 .input {
   display:block;
   outline:none;
@@ -86,7 +98,40 @@ h3 {
 .input:focus {
   box-shadow:rgba(255,92,1,0.4) 0 2px 8px;
 }
-.cursor-pointer, .cursor-pointer * {cursor:pointer;}
+
+.courts-list-linetabs{
+  margin:0 -5%;
+  padding:30px 5% 0 5%;
+}
+.line-tabs {
+  display:inline-flex;
+  color:#FF5C01;
+  font-size:15px;
+  font-weight:500;
+}
+.tab-unit {
+  display:flex;
+  align-items:center;
+  padding:10px 15px;
+  border:#FF5C01 1px solid;
+}
+.tab-unit.active {
+  color:#fff;
+  background:#FF5C01;
+}
+.tab-unit + .tab-unit {
+  margin-left:-1px;
+}
+.tab-unit:first-child {
+  border-radius:15px 0 0 15px;
+}
+.tab-unit:last-child {
+  border-radius:0 15px 15px 0;
+}
+.tab-unit:only-child {
+  border-radius:15px;
+}
+
 .tag-unit {
   display:inline-block;
   font-size:12px;
@@ -105,9 +150,48 @@ h3 {
   margin:0 -20px;
   padding:20px;
   border-radius:15px;
+  /*  position:sticky;
+    top:10px;
+    background:#fff;
+    z-index:1000;*/
 }
 .filter-wrp .input {
   width:100%;
+}
+.filter-table-sort {
+  font-size:14px;
+  margin:0 -20px -20px -20px;
+  border-top:#EDEDED 1px solid;
+}
+.filter-table-sort .section {
+  color:rgba(0,0,0,0.3);
+  padding:10px 0 10px 30px;
+}
+.filter-t-s-arrow {
+  display:inline-block;
+  width:10px;
+  height:10px;
+  vert-align:middle;
+  margin:0 0 0 5px;
+  background-image: url("data:image/svg+xml,%3Csvg width='8' height='8' viewBox='0 0 8 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.7'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.586885 3.22806L6.16254e-05 3.81488L3.81494 7.62976L7.62982 3.81488L7.04286 3.22792L3.81481 6.45598L0.586885 3.22806Z' fill='black'/%3E%3C/g%3E%3C/svg%3E%0A");
+  background-size:100% 100%;
+  opacity:0.5;
+}
+.filter-t-s-arrow.down {}
+.filter-t-s-arrow.up {
+  transform:rotate(180deg);
+  margin-bottom:-2px;
+}
+
+.filter-table-sort .section:hover {
+  color:rgba(0,0,0,0.7);
+}
+.filter-table-sort .section:hover .filter-t-s-arrow {
+  opacity:1;
+}
+
+.filter-table-sort .section + .section {
+  border-left:#EDEDED 1px solid;
 }
 
 .table-wrapper {
@@ -123,6 +207,9 @@ h3 {
   padding:15px 0;
   padding-left:10px;
 }
+.zbr-table td:last-child {
+  padding-right:10px;
+}
 .zbr-table td + td {padding-left:30px}
 .zbr-table tr + tr td {
   border-top:rgba(255,92,1,0.3) 1px solid;
@@ -130,16 +217,26 @@ h3 {
 .zbr-table tr:hover td {
   background:rgba(0,0,0,0.05);
 }
+.zbr-table tr.fav td {
+  background:rgba(255,92,1,0.1);
+}
+.zbr-table tr.fav:hover td {
+  background:rgba(255,92,1,0.15);
+}
 .zbr-table-longtext {
   min-width:250px;
 }
 
 
 /* Layout */
-.scene {
-  padding:5%;
-}
+.scene {padding:5% 5%;}
+.homepage .scene {padding:5% 10%;}
+
+
 .section {}
+.inline-block {
+  display:inline-block;
+}
 .flex-row {
   display:flex;
   flex-direction:row;
@@ -174,6 +271,9 @@ h3 {
 .two-coll-wrapper > .section + .section {
   border-left:rgba(255,92,1,0.3) 2px solid;
 }
+.scroll-x-auto {
+  overflow-x:auto;
+}
 
 /* Text Options */
 .txt-normal {font-weight:400;}
@@ -199,10 +299,13 @@ h3 {
 .txt-algn-c {text-align:center;}
 .txt-algn-r {text-align:right;}
 
+.txt-size-14px {font-size:14px;}
+.txt-size-16px {font-size:16px;}
 .txt-size-18px {font-size:18px;}
 .txt-size-24px {font-size:24px;}
 .txt-size-34px {font-size:34px;}
 
+.valgn-c {vertical-align:middle !important;}
 
 /* Width */
 .size-10 {width:10%;}
@@ -219,10 +322,19 @@ h3 {
 .size-90 {width:90%;}
 .size-100 {width:100%;}
 
+.size-32px {width:32px;}
+.size-64px {width:64px;}
+
 .height-100 {height:100%;}
 
+.min-size-100px {min-width:100px;}
+.min-size-200px {min-width:200px;}
+.min-size-250px {min-width:250px;}
+.min-size-300px {min-width:300px;}
 
 /* Margin */
+.mrgn-0 {margin:0;}
+
 .mrgn-5px {margin:5px;}
 .mrgn-10px {margin:10px;}
 .mrgn-5prc {margin:5%;}
@@ -254,6 +366,7 @@ h3 {
 
 
 /* Padding */
+.pdng-0 {padding:0;}
 .pdng-10px {padding:10px;}
 .pdng-30px {padding:30px;}
 .pdng-50px {padding:50px;}
@@ -268,6 +381,7 @@ h3 {
 .pdng-t-20prc {padding-top:20%;}
 
 .pdng-r-10px {padding-right:10px;}
+.pdng-r-20px {padding-right:20px;}
 .pdng-r-30px {padding-right:30px;}
 .pdng-r-50px {padding-right:50px;}
 .pdng-r-2_5prc {padding-right:2.5%;}
@@ -280,6 +394,7 @@ h3 {
 .pdng-b-5prc {padding-bottom:5%;}
 
 .pdng-l-10px {padding-left:10px;}
+.pdng-l-20px {padding-left:20px;}
 .pdng-l-30px {padding-left:30px;}
 .pdng-l-50px {padding-left:50px;}
 .pdng-l-2_5prc {padding-left:2.5%;}
@@ -299,6 +414,8 @@ h3 {
 
 /* Colors */
 h1, a, .button, .txt-color-1 {color:#FF5C01;}
+.txt-color-2 {color:rgba(0,0,0,1);}
+.txt-color-3 {color:rgba(0,0,0,0.3);}
 
 
 /* Components */
@@ -336,6 +453,11 @@ h1, a, .button, .txt-color-1 {color:#FF5C01;}
   background:rgba(0,0,0,0.05);
   border-radius:25px;
 }
+.lang-swicher {
+  top:-10px;
+}
+.homepage .lang-swicher {top:-30px;}
+
 .lang-swicher-button,
 .lang-swicher-button img {
   width:24px;
@@ -373,6 +495,21 @@ h1, a, .button, .txt-color-1 {color:#FF5C01;}
   border-top:rgba(255,92,1,0.2) 2px solid;
 }
 
+/* Court of Law - list */
+.courts-list-map-wrp {
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:rgba(0,0,0,0.15) 0 30px 60px;
+}
+.courts-list {
+  list-style:none;
+}
+.courts-list li {}
+.courts-list li + li {
+  margin-top:20px;
+}
+
+
 /* Judge units on home page */
 .judge-unit {
   padding:20px;
@@ -381,26 +518,22 @@ h1, a, .button, .txt-color-1 {color:#FF5C01;}
   border-radius:15px;
   box-shadow:rgba(0,0,0,0.15) 0 15px 30px;
 }
+.judge-unit:hover {
+  box-shadow:rgba(0,0,0,0.25) 0 20px 40px;
+  z-index:1;
+}
 .judge-unit-photo {
   width:100%;
   padding-top:50%;
   padding-bottom:50%;
   background:#FF5C01;
   border-radius:100%;
-  overflow:hidden;
+  /*overflow:hidden;*/
 }
 .judge-unit .judge-unit-photo {
   margin:10px 0 20px 0;
 }
-.judge-unit-photo img {
-  position:absolute;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  border:#FF5C01 2px solid;
-  border-radius:100%;
-  }
+.judge-unit-photo img,
 .judge-unit-photo object {
   position:absolute;
   left:0;
@@ -410,6 +543,23 @@ h1, a, .button, .txt-color-1 {color:#FF5C01;}
   border:#FF5C01 2px solid;
   border-radius:100%;
 }
+.judge-u-photo-icon {
+  position:absolute;
+  left:-3px;
+  top:-3px;
+  width:22px;
+  height:22px;
+  background:#FF5C01;
+  z-index:1;
+  border-radius:100%;
+}
+.judge-u-photo-icon img {
+  top:5%;
+  left:10%;
+  width:80%;
+  height:80%;
+}
+
 .judge-unit-court,
 .judge-unit-position {
   font-size:14px;
@@ -694,6 +844,7 @@ input#brgrbtn:checked + label + .brgr-nav {
   opacity:0.3 !important;
   cursor:not-allowed;
 }
+.cursor-pointer, .cursor-pointer * {cursor:pointer;}
 
 
 @media (max-width: 820px) {
@@ -705,6 +856,9 @@ input#brgrbtn:checked + label + .brgr-nav {
   }
 
   .scene {padding:10% 5%;}
+  .homepage .scene {padding:10% 5%;}
+
+
   .two-coll-wrapper {height:initial}
   .two-coll-wrapper > .section {overflow-y:initial;}
   .two-coll-wrapper > .section + .section {
@@ -771,6 +925,7 @@ input#brgrbtn:checked + label + .brgr-nav {
   .mil-pdng-0 {padding:0;}
   .mil-pdng-10px {padding:10px;}
   .mil-pdng-20px {padding:20px;}
+  .mil-pdng-t-10px {padding-top:10px;}
   .mil-pdng-t-20px {padding-top:20px;}
   .mil-pdng-t-30px {padding-top:30px;}
   .mil-pdng-t-50px {padding-top:50px;}
@@ -820,10 +975,3 @@ input#brgrbtn:checked + label + .brgr-nav {
   .mil-show {display:block !important;}
   .mil-noborders {border:none !important;}
 }
-
-
-
-
-
-
-
