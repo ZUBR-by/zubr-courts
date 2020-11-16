@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+    {{$title := cond (gt (.Title | len) 0) .Title "Гражданский мониторинг судебной системы"}}
+    {{$title = printf "%s - %s" "ZUBR.cc" $title}}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="title" content="ZUBR.CC">
-    <meta name="description" content="Гражданский контроль судебной системы.">
-
+    <meta name="title" content="{{$title}}">
+    <meta name="description" content="Гражданский контроль судебной системы">
     <meta property="og:description" content="Гражданский контроль судебной системы.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="ZUBR.CC">
-
-    <title>ZUBR - Courts</title>
+    <meta property="og:title" content="{{$title}}">
+    <title>{{$title}}</title>
     {{ $cssMain := resources.Get "css/main.css" | minify | fingerprint}}
     {{ $cssMisc := resources.Get "css/misc.css" | minify | fingerprint}}
     <link rel="stylesheet" href="/fonts/roboto/roboto.css">

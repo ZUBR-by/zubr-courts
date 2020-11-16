@@ -24,13 +24,13 @@
                 <tbody>
                 <tr v-for="decision of decisions" :key="decision.id">
                     <td class="txt-nowrap">{{ decision.timestamp }}</td>
-                    <td class="txt-nowrap">{{ decision.article }}</td>
                     <td class="txt-nowrap">{{ decision.aftermath }}</td>
+                    <td class="txt-nowrap">{{ decision.articles }}</td>
                     <td class="zbr-table-longtext"></td>
                 </tr>
                 <tr v-if="decisions.length === 0">
                     <td colspan="4">
-                        Нет данных
+                        {{ error ? error : 'Нет данных' }}
                     </td>
                 </tr>
                 </tbody>
@@ -44,7 +44,8 @@ export default {
     name : 'decisions',
     data() {
         return {
-            decisions: []
+            decisions: [],
+            error    : ''
         }
     },
     props: {
@@ -52,22 +53,28 @@ export default {
         judge: String,
     },
     created() {
-        let host = process.env.VUE_APP_API_URL ? process.env.VUE_APP_API_URL : 'https://zubr.club';
-        let url  = new URL(
+        let host   = process.env.VUE_APP_API_URL ? process.env.VUE_APP_API_URL : 'https://zubr.club';
+        let url    = new URL(
             host + '/decision'
         );
+        let params = {
+            'sort[timestamp]'     : 'desc',
+            'sort[aftermath_type]': 'asc',
+        };
         if (this.court) {
-            url.search = new URLSearchParams({
-                'court.id': this.court
-            });
+            params['court.id'] = this.court;
         }
         if (this.judge) {
-            url.search = new URLSearchParams({
-                'judge.id': this.judge
-            });
+            params['judge.id'] = this.judge;
         }
-
-        fetch(url).then(r => r.json()).then(r => {
+        url.search = new URLSearchParams(params);
+        fetch(url).then(r => {
+            if (!r.ok) {
+                this.error = 'Произошла ошибка'
+                return {'hydra:member': []}
+            }
+            return r.json()
+        }).then(r => {
             this.decisions = r['hydra:member'];
         })
     }

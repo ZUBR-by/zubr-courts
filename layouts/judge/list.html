@@ -9,3 +9,4 @@
 {{ $jsCurrent := resources.Get "generated/js/judges.js" | fingerprint }}
 <script src="{{ $jsCurrent.Permalink }}"></script>
 {{end}}
+

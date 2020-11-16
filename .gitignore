@@ -5,10 +5,12 @@ content.zip
 !content/court
 /content/court/*
 !content/court/foo.md
+!content/court/_index.md
 
 !content/judge
 /content/judge/*
 !content/judge/foo.md
+!content/judge/_index.md
 
 /assets/generated/*
 
