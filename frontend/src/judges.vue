@@ -57,7 +57,7 @@
                                     <object width="50" height="50" :data="'https://cdn.zubr.ws/courts/judges/' + judge['fullName'] + '.jpg'" type="image/jpeg">
                                         <img alt="photo" width="50" height="50" src="/imgs/icons/svg/user-gray.svg">
                                     </object>
-                                    <div class="judge-u-photo-icon">
+                                    <div class="judge-u-photo-icon" v-if="judge.id === 1">
                                         <img src="/imgs/icons/svg/star.svg">
                                     </div>
                                 </div>
@@ -78,8 +78,8 @@
                         </div>
                     </td>
                     <td class="txt-nowrap size-20 valgn-c">
-                        <div>230 решений</div>
-                        <div class="txt-color-3">35 915 р. / 450 суток</div>
+                        <div>{{ judge.statistic.count }} решений</div>
+                        <div class="txt-color-3">{{ judge.statistic.fines_rub }} р. / {{ judge.statistic.arrests }} суток</div>
                     </td>
                     <td class="txt-nowrap size-30 pdng-r-10px valgn-c">
                         <div v-if="judge.currentCourt">
@@ -114,7 +114,6 @@ export default {
     },
     methods: {
         loadData() {
-            console.log(1);
             let host   = process.env.VUE_APP_API_URL ? process.env.VUE_APP_API_URL : 'https://zubr.club';
             let url    = new URL(
                 host + '/judge'
