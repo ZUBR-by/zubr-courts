@@ -25,7 +25,5 @@
 {{ block "main" . }}
 {{ end }}
 </body>
-{{ $jsVendors := resources.Get "generated/js/chunk-vendors.js" | fingerprint }}
-<script src="{{ $jsVendors.Permalink }}"></script>
 {{ block "js" . }}
 {{end}}

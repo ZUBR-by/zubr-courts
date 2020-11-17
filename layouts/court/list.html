@@ -45,7 +45,10 @@
         </div>
         <div class="section pdng-t-50px">
             <div class="courts-list-map-wrp">
-                <div style="position:relative;overflow:hidden; width:100%; height:500px;"><a href="https://yandex.by/maps/157/minsk/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Минск</a><a href="https://yandex.by/maps/157/minsk/?ll=27.561481%2C53.902496&utm_medium=mapframe&utm_source=maps&z=12" style="color:#eee;font-size:12px;position:absolute;top:14px;">Яндекс.Карты — поиск мест и адресов, городской транспорт</a><iframe src="https://yandex.by/map-widget/v1/-/CBRwfTX5XB" width="100%" height="100%" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
+                <div style="position:relative;overflow:hidden; width:100%; height:500px;">
+                    <a href="https://yandex.by/maps/157/minsk/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Минск</a><a href="https://yandex.by/maps/157/minsk/?ll=27.561481%2C53.902496&utm_medium=mapframe&utm_source=maps&z=12" style="color:#eee;font-size:12px;position:absolute;top:14px;">Яндекс.Карты — поиск мест и адресов, городской транспорт</a>
+                    <iframe src="https://yandex.by/map-widget/v1/-/CBRwfTX5XB" width="100%" height="100%" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>
+                </div>
             </div>
         </div>
     </div>
@@ -54,85 +57,24 @@
             Минская область
         </h2>
         <ul class="courts-list mrgn-t-30px">
+            {{ range $index, $element := $.Site.Data.courts }}
             <li>
                 <h3>
-                    <a class="txt-underline txt-size-18px txt-nowrap" href="#">Суд Московского района г. Минска</a>
-                    <div class="txt-size-14px txt-color-2">220042, г. Минск, пр. газ. «Правда», 27</div>
-                    <div class="txt-size-14px txt-color-3">37,301 р. / 1,484 базовых велечин</div>
-                    <div class="txt-size-14px txt-color-3">460 Cуток ареста</div>
+                    <a class="txt-underline txt-size-18px txt-nowrap" href='/court/{{$index}}'>{{$element.name}}</a>
+                    <div class="txt-size-14px txt-color-2">{{$element.address}}</div>
+                    <div class="txt-size-14px txt-color-3">{{$element.statistic.fines_rub}} р. / {{$element.statistic.fines}} базовых велечин</div>
+                    <div class="txt-size-14px txt-color-3">{{$element.statistic.arrests}} Cуток ареста</div>
                 </h3>
             </li>
-            <li>
-                <h3>
-                    <a class="txt-underline txt-size-18px txt-nowrap" href="#">Суд Московского района г. Минска</a>
-                    <div class="txt-size-14px txt-color-2">220042, г. Минск, пр. газ. «Правда», 27</div>
-                    <div class="txt-size-14px txt-color-3">37,301 р. / 1,484 базовых велечин</div>
-                    <div class="txt-size-14px txt-color-3">460 Cуток ареста</div>
-                </h3>
-            </li>
-            <li>
-                <h3>
-                    <a class="txt-underline txt-size-18px txt-nowrap" href="#">Суд Московского района г. Минска</a>
-                    <div class="txt-size-14px txt-color-2">220042, г. Минск, пр. газ. «Правда», 27</div>
-                    <div class="txt-size-14px txt-color-3">37,301 р. / 1,484 базовых велечин</div>
-                    <div class="txt-size-14px txt-color-3">460 Cуток ареста</div>
-                </h3>
-            </li>
-            <li>
-                <h3>
-                    <a class="txt-underline txt-size-18px txt-nowrap" href="#">Суд Московского района г. Минска</a>
-                    <div class="txt-size-14px txt-color-2">220042, г. Минск, пр. газ. «Правда», 27</div>
-                    <div class="txt-size-14px txt-color-3">37,301 р. / 1,484 базовых велечин</div>
-                    <div class="txt-size-14px txt-color-3">460 Cуток ареста</div>
-                </h3>
-            </li>
-            <li>
-                <h3>
-                    <a class="txt-underline txt-size-18px txt-nowrap" href="#">Суд Московского района г. Минска</a>
-                    <div class="txt-size-14px txt-color-2">220042, г. Минск, пр. газ. «Правда», 27</div>
-                    <div class="txt-size-14px txt-color-3">37,301 р. / 1,484 базовых велечин</div>
-                    <div class="txt-size-14px txt-color-3">460 Cуток ареста</div>
-                </h3>
-            </li>
-            <li>
-                <h3>
-                    <a class="txt-underline txt-size-18px txt-nowrap" href="#">Суд Московского района г. Минска</a>
-                    <div class="txt-size-14px txt-color-2">220042, г. Минск, пр. газ. «Правда», 27</div>
-                    <div class="txt-size-14px txt-color-3">37,301 р. / 1,484 базовых велечин</div>
-                    <div class="txt-size-14px txt-color-3">460 Cуток ареста</div>
-                </h3>
-            </li>
-            <li>
-                <h3>
-                    <a class="txt-underline txt-size-18px txt-nowrap" href="#">Суд Московского района г. Минска</a>
-                    <div class="txt-size-14px txt-color-2">220042, г. Минск, пр. газ. «Правда», 27</div>
-                    <div class="txt-size-14px txt-color-3">37,301 р. / 1,484 базовых велечин</div>
-                    <div class="txt-size-14px txt-color-3">460 Cуток ареста</div>
-                </h3>
-            </li>
-            <li>
-                <h3>
-                    <a class="txt-underline txt-size-18px txt-nowrap" href="#">Суд Московского района г. Минска</a>
-                    <div class="txt-size-14px txt-color-2">220042, г. Минск, пр. газ. «Правда», 27</div>
-                    <div class="txt-size-14px txt-color-3">37,301 р. / 1,484 базовых велечин</div>
-                    <div class="txt-size-14px txt-color-3">460 Cуток ареста</div>
-                </h3>
-            </li>
-            <li>
-                <h3>
-                    <a class="txt-underline txt-size-18px txt-nowrap" href="#">Суд Московского района г. Минска</a>
-                    <div class="txt-size-14px txt-color-2">220042, г. Минск, пр. газ. «Правда», 27</div>
-                    <div class="txt-size-14px txt-color-3">37,301 р. / 1,484 базовых велечин</div>
-                    <div class="txt-size-14px txt-color-3">460 Cуток ареста</div>
-                </h3>
-            </li>
-
+            {{ end }}
         </ul>
     </div>
 </div>
 {{partial "footer"}}
 {{ end }}
 {{ define "js"}}
+{{ $jsVendor := resources.Get "generated/js/chunk-courts-vendors.js" | fingerprint }}
+<script src="{{ $jsVendor.Permalink }}"></script>
 {{ $jsCurrent := resources.Get "generated/js/courts.js" | fingerprint }}
 <script src="{{ $jsCurrent.Permalink }}"></script>
 {{end}}

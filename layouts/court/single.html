@@ -26,12 +26,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tags-wrp">
-                        <a class="tag-unit" href="#">Взятки</a>
-                        <a class="tag-unit" href="#">Длиный тег</a>
-                        <a class="tag-unit" href="#">Длиный тег</a>
-                        <a class="tag-unit" href="#">Длиный тег</a>
-                    </div>
+<!--                    <div class="tags-wrp">-->
+<!--                        <a class="tag-unit" href="#">Взятки</a>-->
+<!--                        <a class="tag-unit" href="#">Длиный тег</a>-->
+<!--                        <a class="tag-unit" href="#">Длиный тег</a>-->
+<!--                        <a class="tag-unit" href="#">Длиный тег</a>-->
+<!--                    </div>-->
                     <div class="court-info-footer flex-row" style="margin:30px -30px -30px -30px">
                         <div class="section size-50 pdng-t-20px pdng-b-20px txt-algn-c">
                             <h1 class="txt-size-24px txt-nottransform">
@@ -79,9 +79,7 @@
                         <div class="judge-unit-position">
                             {{ $element.court.position}}
                         </div>
-                        <p class="judge-unit-description pdng-t-20px">
-                            Краткая дополнительная информация, чем отличился конкретный судья
-                        </p>
+                        <p class="judge-unit-description pdng-t-20px"></p>
                         <div class="tags-wrp txt-algn-l pdng-t-10px">
                             <a class="tag-unit" href="#">Взятки</a>
                             <a class="tag-unit" href="#">Длиный тег</a>
@@ -104,10 +102,12 @@
 </div>
 {{end}}
 {{ define "js"}}
+{{ $jsVendor := resources.Get "generated/js/chunk-court-vendors.js" | fingerprint }}
 {{ $jsCurrent := resources.Get "generated/js/court.js" | fingerprint }}
 {{ $cssCurrent := resources.Get "generated/css/court.css" | fingerprint }}
-{{ $cssCurrent1 := resources.Get "generated/css/chunk-vendors.css" | fingerprint }}
+{{ $cssVendor := resources.Get "generated/css/chunk-court-vendors.css" | fingerprint }}
+<script src="{{ $jsVendor.Permalink }}"></script>
 <script src="{{ $jsCurrent.Permalink }}"></script>
 <link rel="stylesheet" href="{{$cssCurrent.Permalink}}"/>
-<link rel="stylesheet" href="{{$cssCurrent1.Permalink}}"/>
+<link rel="stylesheet" href="{{$cssVendor.Permalink}}"/>
 {{end}}

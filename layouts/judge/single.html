@@ -5,7 +5,7 @@
         <div class="scene flex-row mil-flex-column">
             <div class="section size-30 pdng-r-50px mil-size-100 mil-pdng-20px">
                 <div class="judge-unit-photo">
-                    <object data='https://cdn.zubr.ws/courts/judges/{{$.Param "full_name"}}.jpg'  type="image/jpeg">
+                    <object data='https://cdn.zubr.ws/courts/judges/{{$.Param "full_name"}}.jpg' type="image/jpeg">
                         <img alt="photo" src="/imgs/icons/svg/user-gray.svg">
                     </object>
                 </div>
@@ -17,10 +17,10 @@
                 {{ if $.Param "court"}}
                 <div class="judge-info-unit pdng-t-10px">
                     <div class="judge-info-unit-name txt-color-1">
-                        Название суда:
+                        Суд:
                     </div>
                     <div class="judge-info-unit-desc">
-                        <a href='/court/{{ .Param "court.id" }}'>{{ .Param "court.name" }}</a>
+                        {{ .Param "court.name" }}
                     </div>
                 </div>
                 <div class="judge-info-unit">
@@ -33,37 +33,40 @@
                 </div>
                 <div class="judge-info-unit">
                     <div class="judge-info-unit-name txt-color-1">
-                        Дата назначения:
+                        Назначение:
                     </div>
                     <div class="judge-info-unit-desc">
-                        {{ .Param "court.timestamp" }}
+                        {{ .Param "court.description" }}
                     </div>
                 </div>
                 {{ end }}
-                <ul>
-                {{ range $index, $element := .Param "career"}}
-                    {{if eq $element.type "appointed"}}
-                    <li>
-                        Назначен(а) с {{$element.timestamp}}
-                        {{if eq $element.termType "indefinitely"}}
-                        , бессрочно
+                <div class="judge-info-unit">
+                    <ul>
+                        {{ $collection := .Param "career"}}
+                        {{ range $index, $element := $collection}}
+                        {{if eq $element.type "appointed"}}
+                        <li>
+                            Назначен(а) с {{$element.timestamp}}
+                            {{if eq $element.termType "indefinitely"}}
+                            , бессрочно
+                            {{else}}
+                            , на срок {{$element.term}} лет
+                            {{end}}
+                        </li>
                         {{else}}
-                        , на срок {{$element.term}} лет
+                        <li>Освобожден(а) с {{$element.timestamp}}, {{$element.court.name}}</li>
                         {{end}}
-                    </li>
-                    {{else}}
-                    <li>Освобожден(а) с {{$element.timestamp}}, {{$element.court.name}}</li>
-                    {{end}}
-                {{end}}
-                </ul>
-<!--                <div class="judge-info-unit">-->
-<!--                    <div class="judge-info-unit-name txt-color-1">-->
-<!--                        Контакты:-->
-<!--                    </div>-->
-<!--                    <div class="judge-info-unit-desc">-->
-<!--                        +37529 000 00 00-->
-<!--                    </div>-->
-<!--                </div>-->
+                        {{end}}
+                    </ul>
+                </div>
+                <!--                <div class="judge-info-unit">-->
+                <!--                    <div class="judge-info-unit-name txt-color-1">-->
+                <!--                        Контакты:-->
+                <!--                    </div>-->
+                <!--                    <div class="judge-info-unit-desc">-->
+                <!--                        +37529 000 00 00-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </div>
         </div>
         <decisions :judge='{{.Param "id"}}'></decisions>
@@ -76,6 +79,8 @@
 <script>
     var id = '{{.Param "id"}}';
 </script>
+{{ $jsVendor := resources.Get "generated/js/chunk-judge-vendors.js" | fingerprint }}
+<script src="{{ $jsVendor.Permalink }}"></script>
 {{ $jsCurrent := resources.Get "generated/js/judge.js" | fingerprint }}
 <script src="{{ $jsCurrent.Permalink }}"></script>
 {{end}}

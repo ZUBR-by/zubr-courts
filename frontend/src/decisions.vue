@@ -5,7 +5,7 @@
                 Вынесенные решения
             </h2>
         </div>
-        <div class="filter-wrp flex-row txt-algn-c mrgn-b-20px">
+        <div class="filter-wrp flex-row txt-algn-c mrgn-b-20px" v-if="decisions.length !== 0">
             <div class="section size-25 pdng-r-10px">
                 <input class="input" placeholder="29.02.2010">
             </div>

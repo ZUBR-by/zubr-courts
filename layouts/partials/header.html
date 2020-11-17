@@ -64,7 +64,7 @@
         {{end}}
         {{if (.Param "court")}}
         <span class="hdr-nav-l-spr">/</span>
-        <span>{{ .Param "court.name"}}</span>
+        <a href='/court/{{.Param "court.id"}}'>{{ .Param "court.name"}}</a>
         {{end}}
         {{if (.Param "full_name")}}
         <span class="hdr-nav-l-spr">/</span>
