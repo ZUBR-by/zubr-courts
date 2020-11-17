@@ -23,6 +23,7 @@
             <table class="zbr-table">
                 <tbody>
                 <tr v-for="decision of decisions" :key="decision.id">
+                    <td class="txt-nowrap">{{ decision.fullName }}</td>
                     <td class="txt-nowrap">{{ decision.timestamp }}</td>
                     <td class="txt-nowrap">{{ decision.aftermath }}</td>
                     <td class="txt-nowrap">{{ decision.articles }}</td>

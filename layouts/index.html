@@ -86,11 +86,11 @@
     </div>
     <div class="flex-row pdng-t-20px mil-flex-column">
         {{ range $index, $element := $.Site.Data.judges }}
-        {{if in (slice "1293" "1218" "1253") $index}}
-        <div class="section size-30 mil-size-100 mil-pdng-0">
+        {{if in (slice "1293" "1218" "1253" "1416") $index}}
+        <div class="section size-25 mil-size-100 mil-pdng-0">
             <div class="judge-unit pdng-5prc txt-algn-c">
                 <div class="judge-unit-photo">
-                    <object data='https://cdn.zubr.ws/courts/judges/{{$element.fullName}}.jpg'  type="image/jpeg">
+                    <object data='https://cdn.zubr.ws/courts/judges/{{$element.id}}.jpg' type="image/jpeg">
                         <img alt="photo" src="/imgs/icons/svg/user-gray.svg">
                     </object>
                 </div>
@@ -99,14 +99,14 @@
                 </h3>
                 <div class="judge-unit-court">
                     {{if $element.court}}
-                        {{$element.court.name}}
+                    {{$element.court.name}}
                     {{end}}
                 </div>
                 <div class="judge-unit-position">
                     Судья
                 </div>
                 <p class="judge-unit-description pdng-t-20px">
-                    Краткая дополнительная информация, чем отличился конкретный судья
+                    Выдано штрафов на {{ $element.statistics.fines_rub}} руб., суток - {{ $element.statistics.arrests}}
                 </p>
                 <div class="pdng-t-20px">
                     <a class="button size-100" href='/judge/{{$element.id}}'>Подробнее</a>
@@ -126,22 +126,22 @@
     <div class="pdng-t-20px">
         <div class="stats-promo">
             <div class="stats-promo-header txt-bold">
-                <a class="txt-underline">2019</a>
+                <a class="txt-underline" href="#">2019</a>
                 <a class="txt-underline active" href="#">2020</a>
                 <a class="txt-underline disabled">2021</a>
             </div>
             <div class="stats-promo-data flex-row flex-algn-itms-c mil-flex-column">
                 <div class="section size-60 txt-algn-c mil-size-100">
                     <h1>
-                        1 037 301 р.
+                        1 234 872 р.
                     </h1>
                     <h3>
-                        30 484 базовых велечин
+                        45 736 базовых величин
                     </h3>
                 </div>
                 <div class="section size-40 txt-algn-c mil-size-100">
                     <h1>
-                        15 060
+                        28 527
                     </h1>
                     <h3>
                         суток ареста
@@ -162,7 +162,7 @@
                             <div style="height:35px;" class="stats-promo-dgrms-u-value">
                                 <div class="stats-promo-dgrms-u-v-count">
                                     <div>
-                                        170
+                                        243
                                     </div>
                                 </div>
                             </div>
@@ -183,7 +183,7 @@
                             <div style="height:38px;" class="stats-promo-dgrms-u-value">
                                 <div class="stats-promo-dgrms-u-v-count">
                                     <div>
-                                        180
+                                        186
                                     </div>
                                 </div>
                             </div>
@@ -197,14 +197,14 @@
                             <div style="height:5px;" class="stats-promo-dgrms-u-value">
                                 <div class="stats-promo-dgrms-u-v-count">
                                     <div>
-                                        12
+                                        4
                                     </div>
                                 </div>
                             </div>
                             <div style="height:43px;" class="stats-promo-dgrms-u-value">
                                 <div class="stats-promo-dgrms-u-v-count">
                                     <div>
-                                        223
+                                        245
                                     </div>
                                 </div>
                             </div>
@@ -225,7 +225,7 @@
                             <div style="height:45px;" class="stats-promo-dgrms-u-value">
                                 <div class="stats-promo-dgrms-u-v-count">
                                     <div>
-                                        93
+                                        102
                                     </div>
                                 </div>
                             </div>
@@ -246,7 +246,7 @@
                             <div style="height:115px;" class="stats-promo-dgrms-u-value">
                                 <div class="stats-promo-dgrms-u-v-count">
                                     <div>
-                                        785
+                                        1197
                                     </div>
                                 </div>
                             </div>
@@ -260,14 +260,14 @@
                             <div style="height:15px;" class="stats-promo-dgrms-u-value">
                                 <div class="stats-promo-dgrms-u-v-count">
                                     <div>
-                                        35
+                                        3
                                     </div>
                                 </div>
                             </div>
                             <div style="height:55px;" class="stats-promo-dgrms-u-value">
                                 <div class="stats-promo-dgrms-u-v-count">
                                     <div>
-                                        319
+                                        331
                                     </div>
                                 </div>
                             </div>
@@ -288,7 +288,7 @@
                             <div style="height:200px;" class="stats-promo-dgrms-u-value">
                                 <div class="stats-promo-dgrms-u-v-count">
                                     <div>
-                                        1 559
+                                        2 628
                                     </div>
                                 </div>
                             </div>
@@ -306,6 +306,9 @@
                     <div class="section">
                         <div class="stats-promo-i-mark orange"></div>
                         2020
+                    </div>
+                    <div class="section" style="padding-top: 2px">
+                        <span >Количество решений</span>
                     </div>
                 </div>
             </div>

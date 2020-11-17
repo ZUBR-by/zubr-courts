@@ -54,7 +54,7 @@
                         <a href="#" class="flex-row flex-algn-itms-c cursor-pointer">
                             <div class="section size-64px flex-noshrink">
                                 <div class="judge-unit-photo">
-                                    <object width="50" height="50" :data="'https://cdn.zubr.ws/courts/judges/' + judge['fullName'] + '.jpg'" type="image/jpeg">
+                                    <object width="50" height="50" :data="'https://cdn.zubr.ws/courts/judges/' + judge['id'] + '.jpg'" type="image/jpeg">
                                         <img alt="photo" width="50" height="50" src="/imgs/icons/svg/user-gray.svg">
                                     </object>
                                     <div class="judge-u-photo-icon" v-if="judge.id === 1">
