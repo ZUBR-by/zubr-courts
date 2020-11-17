@@ -39,7 +39,6 @@
                 {{index $.Site.Data.regions $region}}
             </h2>
             <ul class="courts-list mrgn-t-30px">
-                {{ inner := where $.Site.Data.courts }}
                 {{ range $index, $element := $.Site.Data.courts }}
                 {{if eq (slicestr $index 0 2) $region}}
                 <li>
