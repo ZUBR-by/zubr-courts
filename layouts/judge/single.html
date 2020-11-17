@@ -5,14 +5,14 @@
         <div class="scene flex-row mil-flex-column">
             <div class="section size-30 pdng-r-50px mil-size-100 mil-pdng-20px">
                 <div class="judge-unit-photo">
-                    <object data='https://cdn.zubr.ws/courts/judges/{{$.Param "full_name"}}.jpg' type="image/jpeg">
+                    <object data='https://cdn.zubr.ws/courts/judges/{{$.Param "fullName"}}.jpg' type="image/jpeg">
                         <img alt="photo" src="/imgs/icons/svg/user-gray.svg">
                     </object>
                 </div>
             </div>
             <div class="section size-70 mil-size-100">
                 <h1 class="txt-size-34px txt-nottransform">
-                    {{ $.Param "full_name"}}
+                    {{ $.Param "fullName"}}
                 </h1>
                 {{ if $.Param "court"}}
                 <div class="judge-info-unit pdng-t-10px">

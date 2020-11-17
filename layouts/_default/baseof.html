@@ -12,8 +12,8 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{$title}}">
     <title>{{$fullTitle}}</title>
-    {{if and (eq .Type "judge") (isset .Params "full_name")}}
-    <meta property="og:image" content='https://cdn.zubr.ws/courts/judges/{{.Param "full_name"}}.jpg'>
+    {{if and (eq .Type "judge") (isset .Params "fullName")}}
+    <meta property="og:image" content='https://cdn.zubr.ws/courts/judges/{{.Param "fullName"}}.jpg'>
     {{end}}
     {{ $cssMain := resources.Get "css/main.css" | minify | fingerprint}}
     {{ $cssMisc := resources.Get "css/misc.css" | minify | fingerprint}}

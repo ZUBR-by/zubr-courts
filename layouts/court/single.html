@@ -69,12 +69,12 @@
                 <div class="section size-25 mil-size-100 mil-pdng-b-50px">
                     <div class="judge-unit pdng-5prc txt-algn-c">
                         <div class="judge-unit-photo">
-                            <object data='https://cdn.zubr.ws/courts/judges/{{$element.full_name}}.jpg'  type="image/jpeg">
+                            <object data='https://cdn.zubr.ws/courts/judges/{{$element.fullName}}.jpg'  type="image/jpeg">
                                 <img alt="photo" src="/imgs/icons/svg/user-gray.svg">
                             </object>
                         </div>
                         <h3 class="judge-unit-name txt-color-1">
-                            {{ $element.full_name}}
+                            {{ $element.fullName}}
                         </h3>
                         <div class="judge-unit-position">
                             {{ $element.court.position}}
@@ -98,7 +98,6 @@
         {{ partial "footer"}}
     </div>
     {{ partial "disqus"}}
-</div>
 </div>
 {{end}}
 {{ define "js"}}

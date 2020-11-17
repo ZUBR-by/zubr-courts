@@ -1,4 +1,4 @@
-const pages = {
+const pages    = {
     judge : {
         entry: 'src/judge.js',
     },
@@ -14,9 +14,9 @@ const pages = {
 }
 module.exports = {
     outputDir          : './../assets/generated',
-    pages              ,
+    pages,
     filenameHashing    : false,
-    chainWebpack: config => {
+    chainWebpack       : config => {
         config.plugins.delete('html')
         config.plugins.delete('preload')
         config.plugins.delete('prefetch')

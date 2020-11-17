@@ -8,6 +8,7 @@ content.zip
 !content/court/_index.md
 
 data/courts.json
+data/data.json
 
 !content/judge
 /content/judge/*

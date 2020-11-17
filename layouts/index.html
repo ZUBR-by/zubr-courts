@@ -61,13 +61,13 @@
             <a class="txt-underline txt-bolder" href="">ZUBR</a> для показа обществу масштабов системы, которая создана в Республике Беларусь и должна была быть направлена на контроль соблюдения закона, а не быть карательным органом в руках правящей группировки.
         </h2>
     </div>
-    <div class="flex-row pdng-t-50px mil-flex-column">
+    <div class="flex-row pdng-t-50px mil-flex-column ">
         <div class="section size-50 pdng-r-2_5prc mil-size-100 mil-pdng-0">
             <h3>
                 <span class="txt-medium txt-color-1">Вся информация, отображенная на страницах проекта была получена из открытых источников</span> либо от лиц, потерпевших в результате произвола работников репрессивного аппарата. В связи с тем, что информация по судьям является практически закрытой, то мы благодарны были бы любым дополнительным данным как о судах, так и о судьях.
             </h3>
         </div>
-        <div class="section size-50 pdng-l-2_5prc mil-size-100 mil-pdng-0 mil-pdng-t-30px">
+        <div class="section size-50 pdng-l-2_5prc mil-size-100 mil-pdng-0 mil-pdng-t-30px ">
             <h3>
                 <span class="txt-medium txt-color-1">Своими историями и опытом отношений с ними вы можете поделиться</span> как через нашего бота в
                 <a class="txt-underline" href="https://t.me/zubr_watch_bot">Телеграмме</a>, так и через систему комментирования на
@@ -85,94 +85,36 @@
         </h2>
     </div>
     <div class="flex-row pdng-t-20px mil-flex-column">
-        <div class="section size-25 mil-size-100 mil-pdng-b-50px">
+        {{ range $index, $element := $.Site.Data.judges }}
+        {{if in (slice "1293" "1218" "1253") $index}}
+        <div class="section size-30 mil-size-100 mil-pdng-0">
             <div class="judge-unit pdng-5prc txt-algn-c">
                 <div class="judge-unit-photo">
-                    <img src="imgs/icons/svg/user-gray.svg">
+                    <object data='https://cdn.zubr.ws/courts/judges/{{$element.fullName}}.jpg'  type="image/jpeg">
+                        <img alt="photo" src="/imgs/icons/svg/user-gray.svg">
+                    </object>
                 </div>
                 <h3 class="judge-unit-name txt-color-1">
-                    Касперович Эдуард Валерьевич
+                    {{$element.fullName}}
                 </h3>
                 <div class="judge-unit-court">
-                    суд Барановичского района и г. Барановичи
+                    {{if $element.court}}
+                        {{$element.court.name}}
+                    {{end}}
                 </div>
                 <div class="judge-unit-position">
-                    Cудья
+                    Судья
                 </div>
                 <p class="judge-unit-description pdng-t-20px">
                     Краткая дополнительная информация, чем отличился конкретный судья
                 </p>
                 <div class="pdng-t-20px">
-                    <a class="button size-100" href="#">Подробнее</a>
+                    <a class="button size-100" href='/judge/{{$element.id}}'>Подробнее</a>
                 </div>
             </div>
         </div>
-        <div class="section size-25 mil-size-100 mil-pdng-b-50px">
-            <div class="judge-unit pdng-5prc txt-algn-c">
-                <div class="judge-unit-photo">
-                    <img src="imgs/icons/svg/user-gray.svg">
-                </div>
-                <h3 class="judge-unit-name txt-color-1">
-                    Касперович Эдуард Валерьевич
-                </h3>
-                <div class="judge-unit-court">
-                    суд Барановичского района и г. Барановичи
-                </div>
-                <div class="judge-unit-position">
-                    Cудья
-                </div>
-                <p class="judge-unit-description pdng-t-20px">
-                    Краткая дополнительная информация, чем отличился конкретный судья
-                </p>
-                <div class="pdng-t-20px">
-                    <a class="button size-100" href="#">Подробнее</a>
-                </div>
-            </div>
-        </div>
-        <div class="section size-25 mil-size-100 mil-pdng-b-50px">
-            <div class="judge-unit pdng-5prc txt-algn-c">
-                <div class="judge-unit-photo">
-                    <img src="imgs/icons/svg/user-gray.svg">
-                </div>
-                <h3 class="judge-unit-name txt-color-1">
-                    Касперович Эдуард Валерьевич
-                </h3>
-                <div class="judge-unit-court">
-                    суд Барановичского района и г. Барановичи
-                </div>
-                <div class="judge-unit-position">
-                    Cудья
-                </div>
-                <p class="judge-unit-description pdng-t-20px">
-                    Краткая дополнительная информация, чем отличился конкретный судья
-                </p>
-                <div class="pdng-t-20px">
-                    <a class="button size-100" href="#">Подробнее</a>
-                </div>
-            </div>
-        </div>
-        <div class="section size-25 mil-size-100 mil-pdng-b-50px">
-            <div class="judge-unit pdng-5prc txt-algn-c">
-                <div class="judge-unit-photo">
-                    <img src="imgs/icons/svg/user-gray.svg">
-                </div>
-                <h3 class="judge-unit-name txt-color-1">
-                    Касперович Эдуард Валерьевич
-                </h3>
-                <div class="judge-unit-court">
-                    суд Барановичского района и г. Барановичи
-                </div>
-                <div class="judge-unit-position">
-                    Cудья
-                </div>
-                <p class="judge-unit-description pdng-t-20px">
-                    Краткая дополнительная информация, чем отличился конкретный судья
-                </p>
-                <div class="pdng-t-20px">
-                    <a class="button size-100" href="#">Подробнее</a>
-                </div>
-            </div>
-        </div>
+        {{end}}
+        {{end}}
     </div>
 </div>
 <div class="scene">

@@ -9,34 +9,12 @@
             <div class="courts-list-linetabs txt-algn-c scroll-x-auto txt-nowrap">
                 <div class="inline-block">
                     <div class="line-tabs">
-                        <a class="tab-unit active">
+                        <a :class="{'tab-unit': true, 'active': activeTab === region}"
+                           @click="activeTab = region" v-for="(region, key) of map" :key="region">
                             <div>
-                                Минская обл.
-                            </div>
-                        </a>
-                        <a class="tab-unit">
-                            <div>
-                                Витебская обл.
-                            </div>
-                        </a>
-                        <a class="tab-unit">
-                            <div>
-                                Гомельская обл.
-                            </div>
-                        </a>
-                        <a class="tab-unit">
-                            <div>
-                                Гродненская обл.
-                            </div>
-                        </a>
-                        <a class="tab-unit">
-                            <div>
-                                Брестская обл.
-                            </div>
-                        </a>
-                        <a class="tab-unit">
-                            <div>
-                                Могилёвская обл.
+                                {{ safeHTML `
+                                {{ regions[region] }}
+                                ` }}
                             </div>
                         </a>
                     </div>
@@ -53,26 +31,39 @@
         </div>
     </div>
     <div class="scene">
-        <h2>
-            Минская область
-        </h2>
-        <ul class="courts-list mrgn-t-30px">
-            {{ range $index, $element := $.Site.Data.courts }}
-            <li>
-                <h3>
-                    <a class="txt-underline txt-size-18px txt-nowrap" href='/court/{{$index}}'>{{$element.name}}</a>
-                    <div class="txt-size-14px txt-color-2">{{$element.address}}</div>
-                    <div class="txt-size-14px txt-color-3">{{$element.statistic.fines_rub}} р. / {{$element.statistic.fines}} базовых велечин</div>
-                    <div class="txt-size-14px txt-color-3">{{$element.statistic.arrests}} Cуток ареста</div>
-                </h3>
-            </li>
-            {{ end }}
-        </ul>
+
+        {{ $range := slice "07" "06" "05" "04" "03" "02" "01"}}
+        {{ range $region := $range}}
+        <div v-show="activeTab === '{{$region}}'">
+            <h2>
+                {{index $.Site.Data.regions $region}}
+            </h2>
+            <ul class="courts-list mrgn-t-30px">
+                {{ inner := where $.Site.Data.courts }}
+                {{ range $index, $element := $.Site.Data.courts }}
+                {{if eq (slicestr $index 0 2) $region}}
+                <li>
+                    <h3>
+                        <a class="txt-underline txt-size-18px txt-nowrap" href='/court/{{$index}}'>{{$element.name}}</a>
+                        <div class="txt-size-14px txt-color-2">{{$element.address}}</div>
+                        <div class="txt-size-14px txt-color-3">{{$element.statistic.fines_rub}} р. / {{$element.statistic.fines}} базовых велечин</div>
+                        <div class="txt-size-14px txt-color-3">{{$element.statistic.arrests}} Cуток ареста</div>
+                    </h3>
+                </li>
+                {{end}}
+                {{end}}
+            </ul>
+        </div>
+
+        {{end}}
     </div>
 </div>
-{{partial "footer"}}
+{{ partial "footer" }}
 {{ end }}
 {{ define "js"}}
+<script>
+    var regions = {{ $.Site.Data.regions | jsonify  | safeJS}};
+</script>
 {{ $jsVendor := resources.Get "generated/js/chunk-courts-vendors.js" | fingerprint }}
 <script src="{{ $jsVendor.Permalink }}"></script>
 {{ $jsCurrent := resources.Get "generated/js/courts.js" | fingerprint }}
