@@ -11,23 +11,28 @@
                     <div class="txt-algn-l">
                         ФИО судьи
                     </div>
-                    <input class="input mrgn-t-5px"  v-model.lazy="search" autofocus placeholder="" >
+                    <input class="input mrgn-t-5px" v-model.lazy="filter.search" autofocus placeholder="">
                 </div>
-                <div class="section size-25 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">
-                    <div class="txt-algn-l">
-                        Суд
-                    </div>
-                    <input class="input mrgn-t-5px" placeholder="Минской городской суд">
-                </div>
+<!--                <div class="section size-25 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">-->
+<!--                    <div class="txt-algn-l">-->
+<!--                        Суд-->
+<!--                    </div>-->
+<!--                    <input class="input mrgn-t-5px" placeholder="Минской городской суд">-->
+<!--                </div>-->
                 <div class="section size-25 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">
                     <div class="txt-algn-l">
                         Метки
                     </div>
-                    <input class="input mrgn-t-5px" placeholder="Пособник, коррупционер">
+                    <el-select clearable v-model="filter.tag" placeholder="Метки" style="width: 100%;padding-top: 5px;height: 44px">
+                        <el-option :value="''"></el-option>
+                        <el-option :label="item" :value="key" v-for="(item, key) in translations" :key="key"></el-option>
+                    </el-select>
                 </div>
                 <div class="section size-25 mil-size-100 mil-pdng-t-20px txt-algn-r">
                     <div>&nbsp;</div>
-                    <button class="button primary mil-size-100 mil-pdng-t-20px mrgn-t-5px">Найти судью</button>
+                    <button class="button primary mil-size-100 mil-pdng-t-20px mrgn-t-5px" @click="loadData">
+                        Найти судью
+                    </button>
                 </div>
             </div>
             <div class="filter-table-sort mrgn-t-20px flex-row mil-notdisplay">
@@ -36,7 +41,7 @@
                     <div class="filter-t-s-arrow down"></div>
                 </div>
                 <div class="section size-25">
-                    Тэги
+                    Метки
                     <div class="filter-t-s-arrow up"></div>
                 </div>
                 <div class="section size-20">
@@ -49,7 +54,7 @@
         <div class="table-wrapper pdng-t-20px pdng-20px">
             <table class="zbr-table">
                 <tbody>
-                <tr :class="judge.id === 1 ? 'fav' :''" v-for="judge of judges" :key="judge.id">
+                <tr :class="judge.tags.includes('top') ? 'fav' :''" v-for="judge of judges" :key="judge.id">
                     <td class="size-25 min-size-250px valgn-c">
                         <a href="#" class="flex-row flex-algn-itms-c cursor-pointer">
                             <div class="section size-64px flex-noshrink">
@@ -57,7 +62,7 @@
                                     <object width="50" height="50" :data="'https://cdn.zubr.ws/courts/judges/' + judge['id'] + '.jpg'" type="image/jpeg">
                                         <img alt="photo" width="50" height="50" src="/imgs/icons/svg/user-gray.svg">
                                     </object>
-                                    <div class="judge-u-photo-icon" v-if="judge.id === 1">
+                                    <div class="judge-u-photo-icon" v-if="judge.tags.includes('favourite')">
                                         <img src="/imgs/icons/svg/star.svg">
                                     </div>
                                 </div>
@@ -71,10 +76,7 @@
                     </td>
                     <td class="size-25 min-size-250px valgn-c">
                         <div class="tags-wrp">
-                            <a class="tag-unit" href="#">Взятки</a>
-                            <a class="tag-unit" href="#">Длиный тег</a>
-                            <a class="tag-unit" href="#">Политические дела</a>
-                            <a class="tag-unit" href="#">Длиный тег</a>
+                            <a class="tag-unit" href="#" v-for="tag of judge.tags" :key="tag">{{ translate(tag) }}</a>
                         </div>
                     </td>
                     <td class="txt-nowrap size-20 valgn-c">
@@ -97,39 +99,69 @@
                 </tbody>
             </table>
         </div>
-        <div class="pdng-t-50px pdng-b-20px txt-algn-c">
+        <div class="pdng-t-50px pdng-b-20px txt-algn-c" v-if="judges.length !== count">
             <div class="button large size-50 mil-size-100">Показать больше судей</div>
         </div>
     </div>
 </template>
 
 <script>
+
+import {Select, Option} from 'element-ui'
+
 export default {
-    name   : 'judges',
+    name      : 'judges',
+    components: {
+        [Select.name]: Select,
+        [Option.name]: Option
+    },
     data() {
         return {
-            judges: [],
-            search: ''
+            translations: {
+                'list_2011': 'Санкционный список 2011',
+                'list_2017': 'Санкционный список 2017',
+                'top': 'favourite',
+            },
+            judges      : [],
+            count: 0,
+            filter: {
+                tag   : '',
+                search: '',
+            }
         }
     },
-    methods: {
+    methods   : {
+        translate(value) {
+            return this.translations[value];
+        },
         loadData() {
             let host   = process.env.VUE_APP_API_URL ? process.env.VUE_APP_API_URL : 'https://zubr.club';
             let url    = new URL(
                 host + '/judge'
             );
-            url.search = new URLSearchParams({
-                'search': this.search
-            });
+            let params = {
+                'sort[tags.tag]' : 'desc'
+            };
+            if (this.filter.tag) {
+                params['tags.tag'] = this.filter.tag;
+            }
+            if (this.filter.search) {
+                params['tags.search'] = this.filter.search;
+            }
+            url.search = new URLSearchParams(params);
 
             fetch(url).then(r => r.json()).then(r => {
+                this.count = r['hydra:totalItems']
                 this.judges = r['hydra:member'];
             })
         }
     },
-    watch  : {
-        search() {
-            this.loadData()
+    watch     : {
+        filter: {
+            deep: true,
+            handler() {
+                this.loadData()
+            }
         }
     },
     created() {

@@ -1,0 +1,6 @@
+@font-face {
+    font-family: 'element-icons';
+    src: url('element-icons.ttf'), url('element-icons.woff'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    font-weight: normal;
+    font-style: normal;
+}
