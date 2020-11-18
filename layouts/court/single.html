@@ -97,7 +97,7 @@
         <decisions :court='"{{.Param "id"}}"'></decisions>
         {{ partial "footer"}}
     </div>
-    {{ partial "disqus"}}
+    {{ partial "disqus" .}}
 </div>
 {{end}}
 {{ define "js"}}
