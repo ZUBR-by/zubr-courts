@@ -5,18 +5,21 @@
                 Вынесенные решения
             </h2>
         </div>
-        <div class="filter-wrp flex-row txt-algn-c mrgn-b-20px" v-if="decisions.length !== 0">
-            <div class="section size-25 pdng-r-10px">
-                <input class="input" placeholder="29.02.2010">
+        <div class="filter-wrp flex-row mrgn-b-20px" v-if="decisions.length !== 0">
+            <div class="section size-40 pdng-r-10px">
+                <input class="input" placeholder="ФИО" v-model.lazy="filter">
             </div>
-            <div class="section size-25 pdng-r-10px">
-                <input class="input" placeholder="23.34">
-            </div>
-            <div class="section size-25 pdng-r-10px">
-                <input class="input" placeholder="Введите текст решения">
-            </div>
-            <div class="section size-25 txt-algn-r">
+            <!--            <div class="section size-25 pdng-r-10px">-->
+            <!--                <input class="input" placeholder="23.34">-->
+            <!--            </div>-->
+            <!--            <div class="section size-25 pdng-r-10px">-->
+            <!--                <input class="input" placeholder="Введите текст решения">-->
+            <!--            </div>-->
+            <div class="section">
                 <button class="button">Найти</button>
+            </div>
+            <div class="section size-60 txt-algn-r" style="padding-top: 10px">
+                <b>Кол-во вынесенных решений</b>: {{ total }}
             </div>
         </div>
         <div class="table-wrapper pdng-t-20px pdng-20px">
@@ -27,7 +30,7 @@
                     <td class="txt-nowrap">{{ decision.timestamp }}</td>
                     <td class="txt-nowrap">{{ decision.aftermath }}</td>
                     <td class="txt-nowrap">{{ decision.articles }}</td>
-                    <td class="zbr-table-longtext"></td>
+                    <!--                    <td class="zbr-table-longtext"></td>-->
                 </tr>
                 <tr v-if="decisions.length === 0">
                     <td colspan="4">
@@ -42,42 +45,56 @@
 
 <script>
 export default {
-    name : 'decisions',
+    name   : 'decisions',
     data() {
         return {
             decisions: [],
+            filter   : '',
+            total    : 0,
             error    : ''
         }
     },
-    props: {
+    props  : {
         court: String,
         judge: String,
     },
+    watch  : {
+        filter() {
+            this.fetchData()
+        }
+    },
     created() {
-        let host   = process.env.VUE_APP_API_URL ? process.env.VUE_APP_API_URL : 'https://zubr.club';
-        let url    = new URL(
-            host + '/decision'
-        );
-        let params = {
-            'sort[timestamp]'     : 'desc',
-            'sort[aftermath_type]': 'asc',
-        };
-        if (this.court) {
-            params['court.id'] = this.court;
-        }
-        if (this.judge) {
-            params['judge.id'] = this.judge;
-        }
-        url.search = new URLSearchParams(params);
-        fetch(url).then(r => {
-            if (!r.ok) {
-                this.error = 'Произошла ошибка'
-                return {'hydra:member': []}
+        this.fetchData();
+    },
+    methods: {
+        fetchData() {
+            let host   = process.env.VUE_APP_API_URL ? process.env.VUE_APP_API_URL : 'https://zubr.club';
+            let url    = new URL(
+                host + '/decision'
+            );
+            let params = {
+                'sort[timestamp]'     : 'desc',
+                'sort[aftermath_type]': 'asc',
+                'fullName'            : this.filter
+            };
+            if (this.court) {
+                params['court.id'] = this.court;
             }
-            return r.json()
-        }).then(r => {
-            this.decisions = r['hydra:member'];
-        })
+            if (this.judge) {
+                params['judge.id'] = this.judge;
+            }
+            url.search = new URLSearchParams(params);
+            fetch(url).then(r => {
+                if (!r.ok) {
+                    this.error = 'Произошла ошибка'
+                    return {'hydra:member': [], 'hydra:totalItems': 0}
+                }
+                return r.json()
+            }).then(r => {
+                this.total     = r['hydra:totalItems'];
+                this.decisions = r['hydra:member'];
+            })
+        }
     }
 }
 </script>
