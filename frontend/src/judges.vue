@@ -11,19 +11,21 @@
                     <div class="txt-algn-l">
                         ФИО судьи
                     </div>
-                    <input class="input mrgn-t-5px" v-model.lazy="filter.search" autofocus placeholder="">
+                    <input
+                           class="input mrgn-t-5px"
+                           v-model.lazy="filter.search" autofocus placeholder="">
                 </div>
-<!--                <div class="section size-25 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">-->
-<!--                    <div class="txt-algn-l">-->
-<!--                        Суд-->
-<!--                    </div>-->
-<!--                    <input class="input mrgn-t-5px" placeholder="Минской городской суд">-->
-<!--                </div>-->
-                <div class="section size-25 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">
+                <!--                <div class="section size-25 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">-->
+                <!--                    <div class="txt-algn-l">-->
+                <!--                        Суд-->
+                <!--                    </div>-->
+                <!--                    <input class="input mrgn-t-5px" placeholder="Минской городской суд">-->
+                <!--                </div>-->
+                <div class="section size-50 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">
                     <div class="txt-algn-l">
                         Метки
                     </div>
-                    <el-select clearable v-model="filter.tag" placeholder="Метки" style="width: 100%;padding-top: 5px;height: 44px">
+                    <el-select clearable v-model="filter.tag" placeholder="" style="width: 350px;padding-top: 5px;height: 44px">
                         <el-option :value="''"></el-option>
                         <el-option :label="item" :value="key" v-for="(item, key) in translations" :key="key"></el-option>
                     </el-select>
@@ -31,7 +33,7 @@
                 <div class="section size-25 mil-size-100 mil-pdng-t-20px txt-algn-r">
                     <div>&nbsp;</div>
                     <button class="button primary mil-size-100 mil-pdng-t-20px mrgn-t-5px" @click="loadData">
-                        Найти судью
+                        Найти
                     </button>
                 </div>
             </div>
@@ -48,21 +50,22 @@
                     Решения
                     <div class="filter-t-s-arrow notdisplay"></div>
                 </div>
-                <div class="section size-30">Текущее/прошлое место работы</div>
+                <div class="section size-30">
+                    Текущее/прошлое место работы
+                </div>
             </div>
         </div>
-        <div class="table-wrapper pdng-t-20px pdng-20px">
+        <div class="table-wrapper pdng-t-20px pdng-20px" v-loading="this.loading">
             <table class="zbr-table">
                 <tbody>
-                <tr :class="judge.tags.includes('top') ? 'fav' :''" v-for="judge of judges" :key="judge.id">
+                <tr v-for="judge of judges" :key="judge.id">
                     <td class="size-25 min-size-250px valgn-c">
                         <a href="#" class="flex-row flex-algn-itms-c cursor-pointer">
                             <div class="section size-64px flex-noshrink">
                                 <div class="judge-unit-photo">
-                                    <object width="50" height="50" :data="'https://cdn.zubr.ws/courts/judges/' + judge['id'] + '.jpg'" type="image/jpeg">
-                                        <img alt="photo" width="50" height="50" src="/imgs/icons/svg/user-gray.svg">
-                                    </object>
-                                    <div class="judge-u-photo-icon" v-if="judge.tags.includes('favourite')">
+                                    <img alt="photo"
+                                         :src="'https://cdn.zubr.ws/courts/judges/' + judge['id'] + '.jpg'">
+                                    <div class="judge-u-photo-icon" v-if="judge.tags.includes('top')">
                                         <img src="/imgs/icons/svg/star.svg">
                                     </div>
                                 </div>
@@ -76,12 +79,14 @@
                     </td>
                     <td class="size-25 min-size-250px valgn-c">
                         <div class="tags-wrp">
-                            <a class="tag-unit" href="#" v-for="tag of judge.tags" :key="tag">{{ translate(tag) }}</a>
+                            <a class="tag-unit" v-for="tag of judge.tags" :key="tag">{{ translate(tag) }}</a>
                         </div>
                     </td>
                     <td class="txt-nowrap size-20 valgn-c">
                         <div>{{ judge.statistic.count }} решений</div>
-                        <div class="txt-color-3">{{ judge.statistic.fines_rub }} р. / {{ judge.statistic.arrests }} суток</div>
+                        <div class="txt-color-3">
+                            {{ judge.statistic.fines_rub }} р. / {{ judge.statistic.arrests }} суток адм. ареста
+                        </div>
                     </td>
                     <td class="txt-nowrap size-30 pdng-r-10px valgn-c">
                         <div v-if="judge.currentCourt">
@@ -96,6 +101,11 @@
                         </div>
                     </td>
                 </tr>
+                <tr v-if="judges.length === 0 && loading === false">
+                    <td colspan="4">
+                        Нет данных
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -107,27 +117,30 @@
 
 <script>
 
-import {Select, Option} from 'element-ui'
+import {Select, Option, Loading} from 'element-ui'
+import Vue from 'vue'
 
+Vue.use(Loading);
 export default {
     name      : 'judges',
     components: {
         [Select.name]: Select,
-        [Option.name]: Option
+        [Option.name]: Option,
     },
     data() {
         return {
             translations: {
                 'list_2011': 'Санкционный список 2011',
                 'list_2017': 'Санкционный список 2017',
-                'top': 'favourite',
+                'top'      : 'favourite',
             },
             judges      : [],
-            count: 0,
-            filter: {
+            count       : 0,
+            filter      : {
                 tag   : '',
                 search: '',
-            }
+            },
+            loading: false
         }
     },
     methods   : {
@@ -140,7 +153,7 @@ export default {
                 host + '/judge'
             );
             let params = {
-                'sort[tags.tag]' : 'desc'
+                'sort[tags.tag]': 'desc'
             };
             if (this.filter.tag) {
                 params['tags.tag'] = this.filter.tag;
@@ -149,10 +162,11 @@ export default {
                 params['tags.search'] = this.filter.search;
             }
             url.search = new URLSearchParams(params);
-
+            this.loading = true;
             fetch(url).then(r => r.json()).then(r => {
-                this.count = r['hydra:totalItems']
+                this.count  = r['hydra:totalItems'];
                 this.judges = r['hydra:member'];
+                this.loading = false;
             })
         }
     },

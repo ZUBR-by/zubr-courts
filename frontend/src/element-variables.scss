@@ -7,8 +7,10 @@ $--input-placeholder-color: rgba(255,92,1,0.3);
 
 $--select-border-color-hover: #FF5C01;
 
+$--border-color-base: #FF5C01;
 $--select-input-focus-border-color: #FF5C01;
 
 @import "~element-ui/packages/theme-chalk/src/select";
 @import "~element-ui/packages/theme-chalk/src/option";
 @import "~element-ui/packages/theme-chalk/src/input";
+@import "~element-ui/packages/theme-chalk/src/loading";

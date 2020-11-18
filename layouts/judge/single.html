@@ -44,7 +44,8 @@
                     <ul>
                         {{ $collection := .Param "career"}}
                         {{ range $index, $element := $collection}}
-                        {{if eq $element.type "appointed"}}
+
+                        {{if and (eq $element.type "appointed") (gt $index 0)}}
                         <li>
                             Назначен(а) с {{$element.timestamp}}
                             {{if eq $element.termType "indefinitely"}}
@@ -53,7 +54,7 @@
                             , на срок {{$element.term}} лет
                             {{end}}
                         </li>
-                        {{else}}
+                        {{else if eq $element.type "released"}}
                         <li>Освобожден(а) с {{$element.timestamp}}, {{$element.court.name}}</li>
                         {{end}}
                         {{end}}
