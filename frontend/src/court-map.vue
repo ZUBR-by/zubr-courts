@@ -6,7 +6,7 @@
 import 'ol/ol.css';
 import Map                       from "ol/Map";
 import TileLayer                 from "ol/layer/Tile";
-import OSM                       from "ol/source/OSM";
+import {OSM, Cluster}            from "ol/source";
 import View                      from "ol/View";
 import VectorLayer               from "ol/layer/Vector";
 import VectorSource              from "ol/source/Vector";
@@ -55,10 +55,8 @@ export default {
                 for (let courtCode in courts[regionCode]) {
                     array.push(
                         new Feature({
-                            properties: {
-                                name: courts[regionCode][courtCode].name
-                            },
-                            geometry  : new Point(fromLonLat([
+                            name    : courts[regionCode][courtCode].name,
+                            geometry: new Point(fromLonLat([
                                 courts[regionCode][courtCode].longitude,
                                 courts[regionCode][courtCode].latitude,
                             ])),
@@ -67,28 +65,34 @@ export default {
                 }
                 let styleCache          = {};
                 const layer             = new VectorLayer({
-                    source: new VectorSource({features: array}),
+                    source: new Cluster({
+                        distance: 55,
+                        source  : new VectorSource({features: array})
+                    }),
                     style(feature) {
                         // console.log(feature.getProperties());
-                        const size = feature.getProperties().properties.name;
+                        const size = feature.get('features').length;
                         let style  = styleCache[size];
 
                         if (!style) {
-
-                            style = new Style({
-                                image: new Icon({
-                                    anchor: [0.7, 1],
-                                    scale : 0.3,
-                                    src   : '/imgs/marker.png',
-                                }),
-                                text : new Text({
-                                    text: feature.getProperties().properties.name,
-                                    font: '14px sans-serif',
-                                    fill: new Fill({
-                                        color: '#000000',
+                            style      = new Style({
+                                    image: new Icon({
+                                        anchor: [0.7, 1],
+                                        scale : 0.3,
+                                        src   : '/imgs/marker.png',
+                                    })
+                                }
+                            );
+                            if (size === 1) {
+                                style = new Style({
+                                    image: new Icon({
+                                        anchor: [0.7, 1],
+                                        scale : 0.3,
+                                        src   : '/imgs/marker.png',
                                     }),
-                                }),
-                            });
+
+                                });
+                            }
 
                             styleCache[size] = style;
 
@@ -96,7 +100,7 @@ export default {
 
                         return style;
                     },
-                });
+                })
                 this.layers[regionCode] = layer;
                 if (regionCode !== (this.initialRegion ? this.initialRegion : '07')) {
                     continue;
