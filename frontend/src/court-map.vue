@@ -4,62 +4,107 @@
 
 <script>
 import 'ol/ol.css';
-import Map           from "ol/Map";
-import TileLayer     from "ol/layer/Tile";
-import OSM           from "ol/source/OSM";
-import View          from "ol/View";
-import VectorLayer   from "ol/layer/Vector";
-import VectorSource  from "ol/source/Vector";
+import Map                       from "ol/Map";
+import TileLayer                 from "ol/layer/Tile";
+import OSM                       from "ol/source/OSM";
+import View                      from "ol/View";
+import VectorLayer               from "ol/layer/Vector";
+import VectorSource              from "ol/source/Vector";
 // import Feature       from "ol/Feature";
 // import Point         from "ol/geom/Point";
-import {Icon, Style} from "ol/style";
-import {fromLonLat}  from "ol/proj";
-import courts        from './../../data/courts_location.json'
-import Feature       from "ol/Feature";
-import Point         from "ol/geom/Point";
+import {Icon, Style, Fill, Text} from "ol/style";
+import {fromLonLat}              from "ol/proj";
+import courts                    from './../../data/courts_location.json'
+import Feature                   from "ol/Feature";
+import Point                     from "ol/geom/Point";
 
 export default {
+    data() {
+        return {
+            currentLayer: null,
+            layers      : {},
+            map         : null,
+        }
+    },
+    props  : {
+        initialRegion: String
+    },
+    methods: {
+        changeLayer(regionCode) {
+            this.map.removeLayer(this.currentLayer);
+            this.currentLayer = this.layers[regionCode];
+            this.map.addLayer(this.layers[regionCode]);
+        }
+    },
     mounted() {
         setTimeout(() => {
             let map           = new Map({
-                layers      : [
+                layers: [
                     new TileLayer({
                         source: new OSM(),
                     })],
-                target      : 'map',
-                view        : new View({
+                target: 'map',
+                view  : new View({
                     zoom  : 7,
                     center: fromLonLat([27.9534, 53.7098])
                 }),
             });
             const updatedView = map.getView();
-            for(let regionCode in courts){
+            for (let regionCode in courts) {
                 let array = [];
                 for (let courtCode in courts[regionCode]) {
                     array.push(
                         new Feature({
-                            geometry: new Point(fromLonLat([
+                            properties: {
+                                name: courts[regionCode][courtCode].name
+                            },
+                            geometry  : new Point(fromLonLat([
                                 courts[regionCode][courtCode].longitude,
                                 courts[regionCode][courtCode].latitude,
                             ])),
                         })
                     )
                 }
-                console.log(array);
-                const layer      = new VectorLayer({
+                let styleCache          = {};
+                const layer             = new VectorLayer({
                     source: new VectorSource({features: array}),
-                    style : new Style({
-                        image: new Icon({
-                            anchor: [0.7, 1],
-                            scale  : 0.3,
-                            src: '/imgs/marker.png',
-                        }),
-                    }),
-                });
+                    style(feature) {
+                        // console.log(feature.getProperties());
+                        const size = feature.getProperties().properties.name;
+                        let style  = styleCache[size];
 
+                        if (!style) {
+
+                            style = new Style({
+                                image: new Icon({
+                                    anchor: [0.7, 1],
+                                    scale : 0.3,
+                                    src   : '/imgs/marker.png',
+                                }),
+                                text : new Text({
+                                    text: feature.getProperties().properties.name,
+                                    font: '14px sans-serif',
+                                    fill: new Fill({
+                                        color: '#000000',
+                                    }),
+                                }),
+                            });
+
+                            styleCache[size] = style;
+
+                        }
+
+                        return style;
+                    },
+                });
+                this.layers[regionCode] = layer;
+                if (regionCode !== (this.initialRegion ? this.initialRegion : '07')) {
+                    continue;
+                }
+                this.currentLayer = layer;
                 map.addLayer(layer);
             }
-
+            this.map = map;
             map.setView(
                 updatedView
             );

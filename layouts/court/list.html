@@ -10,7 +10,7 @@
                 <div class="inline-block">
                     <div class="line-tabs">
                         <a :class="{'tab-unit': true, 'active': activeTab === region}"
-                           @click="activeTab = region" v-for="(region, key) of map" :key="region">
+                           @click="changeTab(region)" v-for="(region, key) of map" :key="region">
                             <div>
                                 {{ safeHTML `
                                 {{ regions[region] }}
@@ -23,7 +23,9 @@
         </div>
         <div class="section pdng-t-50px">
             <div class="courts-list-map-wrp">
-                <court-map style="position:relative;overflow:hidden; width:100%; height:500px;"></court-map>
+                <court-map
+                    :initial-region="activeTab"
+                    ref="map" style="position:relative;overflow:hidden; width:100%; height:500px;"></court-map>
             </div>
         </div>
     </div>
