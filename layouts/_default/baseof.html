@@ -7,8 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="title" content="{{$title}}">
-    <meta name="description" content="Гражданский контроль судебной системы">
-    <meta property="og:description" content="Гражданский контроль судебной системы.">
+    {{ if cond .IsHome false true}}
+    <meta name="description" content="Гражданский мониторинг судебной системы.">
+    <meta property="og:description" content="Гражданский мониторинг судебной системы.">
+    {{end}}
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{$title}}">
     <title>{{$fullTitle}}</title>
