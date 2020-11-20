@@ -1,3 +1,6 @@
+if (! process.env.VUE_APP_API_URL) {
+    process.env.VUE_APP_API_URL = 'https://zubr.club'
+}
 const pages    = {
     judge : {
         entry: 'src/judge.js',

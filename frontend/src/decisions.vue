@@ -68,7 +68,7 @@ export default {
     },
     methods: {
         fetchData() {
-            let host   = process.env.VUE_APP_API_URL ? process.env.VUE_APP_API_URL : 'https://zubr.club';
+            let host   = process.env.VUE_APP_API_URL;
             let url    = new URL(
                 host + '/decision'
             );
