@@ -60,7 +60,7 @@
                 <tbody>
                 <tr v-for="judge of judges" :key="judge.id">
                     <td class="size-25 min-size-250px valgn-c">
-                        <a href="#" class="flex-row flex-algn-itms-c cursor-pointer">
+                        <a :href="'/judge/' + judge.id" class="flex-row flex-algn-itms-c cursor-pointer">
                             <div class="section size-64px flex-noshrink">
                                 <div class="judge-unit-photo">
                                     <img alt="photo"
@@ -72,7 +72,7 @@
                             </div>
                             <div class="section pdng-l-20px">
                                 <h3 class="txt-size-18px txt-color-1 txt-bold valgn-c">
-                                    <a :href="'/judge/' + judge.id">{{ judge.fullName }}</a>
+                                    {{ judge.fullName }}
                                 </h3>
                             </div>
                         </a>
