@@ -1,8 +1,12 @@
-import Vue from 'vue'
+import Vue           from 'vue'
+import map from './court-map'
 
 new Vue(
     {
         el: '#app',
+        components: {
+            'court-map' : map
+        },
         data() {
             return {
                 // eslint-disable-next-line

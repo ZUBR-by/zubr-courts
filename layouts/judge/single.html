@@ -5,9 +5,7 @@
         <div class="scene flex-row mil-flex-column">
             <div class="section size-30 pdng-r-50px mil-size-100 mil-pdng-20px">
                 <div class="judge-unit-photo">
-                    <object data='https://cdn.zubr.ws/courts/judges/{{$.Param "id"}}.jpg' type="image/jpeg">
-                        <img alt="photo" src="/imgs/icons/svg/user-gray.svg">
-                    </object>
+                    <img alt="photo" src='https://cdn.zubr.ws/courts/judges/{{$.Param "id"}}.jpg'>
                 </div>
             </div>
             <div class="section size-70 mil-size-100">
@@ -31,6 +29,21 @@
                         {{ .Param "court.position" }}
                     </div>
                 </div>
+                {{if and (.Param "statistics.fines_rub") (.Param "statistics.arrests")}}
+                <div>
+                    <div class="judge-info-unit-name txt-color-1">
+                        Статистика:
+                    </div>
+                    {{if .Param "statistics.fines_rub"}}
+                    <p>
+                        {{.Param "statistics.fines"}} баз. величин ({{ .Param "statistics.fines_rub" }} р.) штрафов
+                    </p>
+                    {{end}}
+                    {{if .Param "statistics.arrests"}}
+                    <p>{{ .Param "statistics.arrests" }} суток административного ареста</p>
+                    {{end}}
+                </div>
+                {{end}}
                 <div class="judge-info-unit">
                     <div class="judge-info-unit-name txt-color-1">
                         Назначение:
