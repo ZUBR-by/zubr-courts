@@ -12,8 +12,8 @@
                         ФИО судьи
                     </div>
                     <input
-                           class="input mrgn-t-5px"
-                           v-model.lazy="filter.search" autofocus placeholder="">
+                        class="input mrgn-t-5px"
+                        v-model.lazy="filter.search" autofocus placeholder="">
                 </div>
                 <!--                <div class="section size-25 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">-->
                 <!--                    <div class="txt-algn-l">-->
@@ -40,15 +40,14 @@
             <div class="filter-table-sort mrgn-t-20px flex-row mil-notdisplay">
                 <div class="section size-25">
                     ФИО судьи
-                    <div class="filter-t-s-arrow down"></div>
                 </div>
                 <div class="section size-25">
                     Метки
-                    <div class="filter-t-s-arrow up"></div>
+                    <!--                    <div class="filter-t-s-arrow up"></div>-->
                 </div>
-                <div class="section size-20">
+                <div class="section size-20" @click="setSort('decisions')">
                     Решения
-                    <div class="filter-t-s-arrow notdisplay"></div>
+                    <div :class="{'filter-t-s-arrow' : this.sort === 'decisions', 'down' : this.order === 'desc', 'up': this.order === 'asc'}"></div>
                 </div>
                 <div class="section size-30">
                     Текущее/прошлое место работы
@@ -118,7 +117,7 @@
 <script>
 
 import {Select, Option, Loading} from 'element-ui'
-import Vue from 'vue'
+import Vue                       from 'vue'
 
 Vue.use(Loading);
 export default {
@@ -136,14 +135,30 @@ export default {
             },
             judges      : [],
             count       : 0,
+            order       : 'desc',
+            sort        : 'decisions',
             filter      : {
                 tag   : '',
                 search: '',
             },
-            loading: false
+            loading     : false
         }
     },
     methods   : {
+        setSort(column) {
+            if (this.sort === column) {
+                if (this.order === 'desc') {
+                    this.order = 'asc';
+                } else {
+                    this.order = '';
+                    this.sort  = '';
+                }
+            } else {
+                this.sort  = column;
+                this.order = 'desc'
+            }
+            this.loadData();
+        },
         translate(value) {
             return this.translations[value];
         },
@@ -152,20 +167,21 @@ export default {
             let url    = new URL(
                 host + '/judge'
             );
-            let params = {
-                'sort[tags.tag]': 'desc'
-            };
+            let params = {}
+            if (this.sort) {
+                params['sort[' + this.sort + ']'] = this.order;
+            }
             if (this.filter.tag) {
-                params['tags.tag'] = this.filter.tag;
+                params['tag'] = this.filter.tag;
             }
             if (this.filter.search) {
-                params['tags.search'] = this.filter.search;
+                params['search'] = this.filter.search;
             }
-            url.search = new URLSearchParams(params);
+            url.search   = new URLSearchParams(params);
             this.loading = true;
             fetch(url).then(r => r.json()).then(r => {
-                this.count  = r['hydra:totalItems'];
-                this.judges = r['hydra:member'];
+                this.count   = r['hydra:totalItems'];
+                this.judges  = r['hydra:member'];
                 this.loading = false;
             })
         }

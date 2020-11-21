@@ -5,16 +5,14 @@
                 Вынесенные решения
             </h2>
         </div>
+        <p>
+            Если вы хотите скрыть вашу фамилию из публичного доступа, напишите в
+            <a href="https://t.me/zubr_watch_bot">телеграмм-бот</a>
+        </p>
         <div class="filter-wrp flex-row mrgn-b-20px" v-if="decisions.length !== 0">
             <div class="section size-40 pdng-r-10px">
                 <input class="input" placeholder="ФИО" v-model.lazy="filter">
             </div>
-            <!--            <div class="section size-25 pdng-r-10px">-->
-            <!--                <input class="input" placeholder="23.34">-->
-            <!--            </div>-->
-            <!--            <div class="section size-25 pdng-r-10px">-->
-            <!--                <input class="input" placeholder="Введите текст решения">-->
-            <!--            </div>-->
             <div class="section">
                 <button class="button">Найти</button>
             </div>

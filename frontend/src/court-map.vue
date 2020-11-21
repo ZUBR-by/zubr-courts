@@ -12,7 +12,7 @@ import VectorLayer               from "ol/layer/Vector";
 import VectorSource              from "ol/source/Vector";
 // import Feature       from "ol/Feature";
 // import Point         from "ol/geom/Point";
-import {Icon, Style, Fill, Text} from "ol/style";
+import {Icon, Style/*, Fill, Text*/} from "ol/style";
 import {fromLonLat}              from "ol/proj";
 import courts                    from './../../data/courts_location.json'
 import Feature                   from "ol/Feature";
