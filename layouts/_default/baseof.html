@@ -25,6 +25,8 @@
     <title>{{$fullTitle}}</title>
     {{if and (eq .Type "judge") (isset .Params "fullName")}}
     <meta property="og:image" content='https://cdn.zubr.ws/courts/judges/{{.Param "fullName"}}.jpg'>
+    {{else}}
+    <meta property="og:image" content='/imgs/logo.svg'>
     {{end}}
     {{ $cssMain := resources.Get "css/main.css" | minify | fingerprint}}
     {{ $cssMisc := resources.Get "css/misc.css" | minify | fingerprint}}
