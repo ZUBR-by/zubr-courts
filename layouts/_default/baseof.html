@@ -28,7 +28,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{$title}}">
     <title>{{$fullTitle}}</title>
-    {{if and (eq .Type "judge") (isset .Params "fullName")}}
+    {{if and (eq .Type "judge") $.Params.fullName }}
     <meta property="og:image" content='https://cdn.zubr.ws/courts/judges/{{.Param "fullName"}}.jpg'>
     <meta property="og:image:secure_url" content='https://cdn.zubr.ws/courts/judges/{{.Param "fullName"}}.jpg'>
     <meta property="og:image:height" content='210'>
