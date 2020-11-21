@@ -1,6 +1,6 @@
 baseURL = "https://zubr.cc/"
 languageCode = "ru-RU"
-title = "My New Hugo Site"
+title = "Гражданский контроль судебной системы"
 [taxonomies]
     judge = "judge"
     court = "court"

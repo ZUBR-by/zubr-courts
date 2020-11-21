@@ -14,15 +14,14 @@
 
         gtag('config', 'G-D6WW4ZCJG9');
     </script>
-    {{$title := cond (gt (.Title | len) 0) .Title "Гражданский мониторинг судебной системы"}}
+    {{$title := cond (gt (.Title | len) 0) .Title .Site.Title}}
     {{$fullTitle := printf "%s - %s" "ZUBR.cc" $title}}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="title" content="{{$title}}">
-
-    <meta name="description" content="Гражданский мониторинг судебной системы.">
-    <meta property="og:description" content="Гражданский мониторинг судебной системы.">
+    <meta name="description" content=".Site.Title">
+    <meta property="og:description" content=".Site.Title">
     <meta property="og:url" content="{{.Permalink | absURL}}">
 
     <meta property="og:type" content="website">
