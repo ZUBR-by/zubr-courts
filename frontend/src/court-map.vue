@@ -12,11 +12,21 @@ import VectorLayer               from "ol/layer/Vector";
 import VectorSource              from "ol/source/Vector";
 // import Feature       from "ol/Feature";
 // import Point         from "ol/geom/Point";
-import {Icon, Style/*, Fill, Text*/} from "ol/style";
+import {Icon, Style, Fill, Text} from "ol/style";
 import {fromLonLat}              from "ol/proj";
 import courts                    from './../../data/courts_location.json'
 import Feature                   from "ol/Feature";
 import Point                     from "ol/geom/Point";
+
+const centers = {
+    '01': [25.408217, 52.472241],
+    '02': [28.730089, 55.237508],
+    '03': [29.453430, 52.411738],
+    '04': [25.078919, 53.866871],
+    '05': [27.747928, 53.752841],
+    '06': [30.424774, 53.564610],
+    '07': [27.649054, 53.890890]
+};
 
 export default {
     data() {
@@ -24,30 +34,39 @@ export default {
             currentLayer: null,
             layers      : {},
             map         : null,
+            view        : null,
         }
     },
     props  : {
-        initialRegion: String
+        initialRegion: {
+            type   : String,
+            default: '07'
+        }
     },
     methods: {
         changeLayer(regionCode) {
             this.map.removeLayer(this.currentLayer);
             this.currentLayer = this.layers[regionCode];
             this.map.addLayer(this.layers[regionCode]);
-        }
+
+            this.view.setCenter(fromLonLat(centers[regionCode]))
+            this.view.setZoom(regionCode === '07' ? 11.5 : 7.5)
+        },
     },
     mounted() {
         setTimeout(() => {
+            this.view         = new View({
+                zoom  : this.initialRegion === '07' ? 12.5 : 7.5,
+                center: fromLonLat(centers[this.initialRegion])
+            });
             let map           = new Map({
                 layers: [
                     new TileLayer({
                         source: new OSM(),
-                    })],
+                    })
+                ],
                 target: 'map',
-                view  : new View({
-                    zoom  : 7,
-                    center: fromLonLat([27.9534, 53.7098])
-                }),
+                view  : this.view,
             });
             const updatedView = map.getView();
             for (let regionCode in courts) {
@@ -55,6 +74,7 @@ export default {
                 for (let courtCode in courts[regionCode]) {
                     array.push(
                         new Feature({
+                            id      : courtCode,
                             name    : courts[regionCode][courtCode].name,
                             geometry: new Point(fromLonLat([
                                 courts[regionCode][courtCode].longitude,
@@ -63,7 +83,7 @@ export default {
                         })
                     )
                 }
-                let styleCache          = {};
+                // let styleCache          = {};
                 const layer             = new VectorLayer({
                     source: new Cluster({
                         distance: 55,
@@ -72,43 +92,54 @@ export default {
                     style(feature) {
                         // console.log(feature.getProperties());
                         const size = feature.get('features').length;
-                        let style  = styleCache[size];
-
-                        if (!style) {
-                            style      = new Style({
-                                    image: new Icon({
-                                        anchor: [0.7, 1],
-                                        scale : 0.3,
-                                        src   : '/imgs/marker.png',
-                                    })
-                                }
-                            );
-                            if (size === 1) {
-                                style = new Style({
-                                    image: new Icon({
-                                        anchor: [0.7, 1],
-                                        scale : 0.3,
-                                        src   : '/imgs/marker.png',
-                                    }),
-
-                                });
+                        let style  = new Style({
+                                image: new Icon({
+                                    anchor: [0.7, 1],
+                                    scale : 0.3,
+                                    src   : '/imgs/marker.png',
+                                })
                             }
-
-                            styleCache[size] = style;
-
+                        );
+                        if (size === 1) {
+                            style = new Style({
+                                image: new Icon({
+                                    anchor: [0.7, 1],
+                                    scale : 0.3,
+                                    src   : '/imgs/marker.png',
+                                }),
+                                text : new Text({
+                                    offsetY: 5,
+                                    text   : size > 1 ? '' : feature.getProperties().features[0].getProperties().name,
+                                    font   : '14px sans-serif',
+                                    fill   : new Fill({
+                                        color: '#000000',
+                                    }),
+                                }),
+                            });
                         }
 
                         return style;
                     },
                 })
                 this.layers[regionCode] = layer;
-                if (regionCode !== (this.initialRegion ? this.initialRegion : '07')) {
+                if (regionCode !== this.initialRegion) {
                     continue;
                 }
                 this.currentLayer = layer;
                 map.addLayer(layer);
             }
             this.map = map;
+            this.map.on('click', e => {
+                this.map.forEachFeatureAtPixel(e.pixel, baseFeature => {
+                    let length = baseFeature.getProperties().features.length;
+                    if (length === 0) {
+                        return;
+                    }
+                    if (length === 1) {
+                        window.location = '/court/' + baseFeature.getProperties().features[0].getProperties().id;
+                    }
+                });
+            });
             map.setView(
                 updatedView
             );
