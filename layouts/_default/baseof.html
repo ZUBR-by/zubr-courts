@@ -5,7 +5,11 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D6WW4ZCJG9"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
 
         gtag('config', 'G-D6WW4ZCJG9');
@@ -19,6 +23,7 @@
 
     <meta name="description" content="Гражданский мониторинг судебной системы.">
     <meta property="og:description" content="Гражданский мониторинг судебной системы.">
+    <meta property="og:url" content="{{.Permalink | absURL}}">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{$title}}">
@@ -26,7 +31,7 @@
     {{if and (eq .Type "judge") (isset .Params "fullName")}}
     <meta property="og:image" content='https://cdn.zubr.ws/courts/judges/{{.Param "fullName"}}.jpg'>
     {{else}}
-    <meta property="og:image" content='/imgs/logo.svg'>
+    <meta property="og:image" content='{{"/imgs/logo.svg" | absURL}}'>
     {{end}}
     {{ $cssMain := resources.Get "css/main.css" | minify | fingerprint}}
     {{ $cssMisc := resources.Get "css/misc.css" | minify | fingerprint}}
