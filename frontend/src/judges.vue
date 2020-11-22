@@ -25,9 +25,14 @@
                     <div class="txt-algn-l">
                         Метки
                     </div>
-                    <el-select clearable multiple v-model="filter.tags" placeholder="" style="width: 350px;padding-top: 5px;height: 44px">
-                        <el-option :label="item" :value="key" v-for="(item, key) in translations" :key="key"></el-option>
-                    </el-select>
+                    <div style="padding-top: 5px;">
+                        <el-checkbox-group v-model="filter.tags" size="large">
+                            <el-checkbox-button :label="key" v-for="(item, key) in translations" :key="key" border>{{ item }}</el-checkbox-button>
+                        </el-checkbox-group>
+                    </div>
+                </div>
+                <div class="section size-25 txt-algn-l" style="padding-top: 35px">
+                    <b>Кол-во судей</b>: {{ count }}
                 </div>
                 <div class="section size-25 mil-size-100 mil-pdng-t-20px txt-algn-r">
                     <div>&nbsp;</div>
@@ -37,12 +42,15 @@
                 </div>
             </div>
             <div class="filter-table-sort mrgn-t-20px flex-row mil-notdisplay">
-                <div class="section size-25">
+                <div @click="setSort('fullName')"
+                     class="section size-25">
                     ФИО судьи
+                    <div :class="{'filter-t-s-arrow' : this.sort === 'fullName', 'down' : this.order === 'desc', 'up': this.order === 'asc'}"></div>
+
                 </div>
-                <div class="section size-25">
+                <div class="section size-25" @click="setSort('tags')">
                     Метки
-                    <!--                    <div class="filter-t-s-arrow up"></div>-->
+                    <div :class="{'filter-t-s-arrow' : this.sort === 'tags', 'down' : this.order === 'desc', 'up': this.order === 'asc'}"></div>
                 </div>
                 <div class="section size-20" @click="setSort('decisions')">
                     Решения
@@ -108,43 +116,45 @@
             </table>
         </div>
         <div class="pdng-t-50px pdng-b-20px txt-algn-c" v-if="judges.length !== count">
-            <div class="button large size-50 mil-size-100">Показать больше судей</div>
+            <button class="button large size-50 mil-size-100" @click="loadMore">Показать больше судей</button>
         </div>
     </div>
 </template>
 
 <script>
 
-import {Select, Option, Loading} from 'element-ui'
-import Vue                       from 'vue'
+import {CheckboxGroup, CheckboxButton, Loading} from 'element-ui'
+import Vue                                      from 'vue'
 import './styles/element-variables.scss'
+import translations                             from './../../data/translations.json'
 
 Vue.use(Loading);
 export default {
     name      : 'judges',
     components: {
-        [Select.name]: Select,
-        [Option.name]: Option,
+        [CheckboxGroup.name] : CheckboxGroup,
+        [CheckboxButton.name]: CheckboxButton,
     },
     data() {
         return {
-            translations: {
-                'list_2011': 'Санкционный список 2011',
-                'list_2017': 'Санкционный список 2017',
-                'top'      : 'favourite',
-            },
-            judges      : [],
-            count       : 0,
-            order       : 'desc',
-            sort        : 'decisions',
-            filter      : {
-                tags   : [],
+            translations,
+            judges : [],
+            page   : 1,
+            count  : 0,
+            order  : 'desc',
+            sort   : 'decisions',
+            filter : {
+                tags  : [],
                 search: '',
             },
-            loading     : false
+            loading: false
         }
     },
     methods   : {
+        loadMore(){
+            this.page++;
+            this.loadData()
+        },
         setSort(column) {
             if (this.sort === column) {
                 if (this.order === 'desc') {
@@ -157,6 +167,7 @@ export default {
                 this.sort  = column;
                 this.order = 'desc'
             }
+            this.page = 1;
             this.loadData();
         },
         translate(value) {
@@ -171,17 +182,36 @@ export default {
             if (this.sort) {
                 params['sort[' + this.sort + ']'] = this.order;
             }
-            for(let tag of this.filter.tags) {
+            for (let tag of this.filter.tags) {
                 params['tag[' + tag + ']'] = 1;
             }
             if (this.filter.search) {
                 params['search'] = this.filter.search;
             }
+            if (this.page > 1) {
+                params['page'] = this.page;
+            }
+
             url.search   = new URLSearchParams(params);
             this.loading = true;
-            fetch(url).then(r => r.json()).then(r => {
-                this.count   = r['hydra:totalItems'];
-                this.judges  = r['hydra:member'];
+            fetch(url).then(r => {
+                    if (!r.ok) {
+                        this.loading = false;
+                        return null;
+                    }
+                    return r.json()
+                }
+            ).then(r => {
+                if (r === null) {
+                    return;
+                }
+                if (this.page > 1) {
+                    this.judges = this.judges.concat(r['hydra:member']);
+                } else {
+                    this.count   = r['hydra:totalItems'];
+                    this.judges  = r['hydra:member'];
+                }
+
                 this.loading = false;
             })
         }
@@ -190,6 +220,7 @@ export default {
         filter: {
             deep: true,
             handler() {
+                this.page = 1;
                 this.loadData()
             }
         }
@@ -199,7 +230,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>
