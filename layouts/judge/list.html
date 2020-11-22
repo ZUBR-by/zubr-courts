@@ -13,7 +13,5 @@
 
 {{ $cssVendor := resources.Get "generated/css/judges.css" | fingerprint }}
 <link rel="stylesheet" href="{{$cssVendor.Permalink}}"/>
-
-<link rel="stylesheet" href="/fonts/element.css"/>
 {{end}}
 

@@ -97,5 +97,7 @@
 <script src="{{ $jsVendor.Permalink }}"></script>
 {{ $jsCurrent := resources.Get "generated/js/judge.js" | fingerprint }}
 <script src="{{ $jsCurrent.Permalink }}"></script>
+{{ $cssCurrent := resources.Get "generated/css/judge.css" | fingerprint }}
+<link rel="stylesheet" href="{{$cssCurrent.Permalink}}"/>
 {{end}}
 
