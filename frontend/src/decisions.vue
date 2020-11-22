@@ -30,9 +30,9 @@
                     <td class="txt-nowrap">
                         <div v-for="(article, index) in decision.articles" :key="index">
                             {{ article.split(' - ')[0] }}
-                            <el-tooltip :content="format(article)" placement="bottom" effect="light">
-                                <el-button type="primary" circle icon="el-icon-question"></el-button>
-                            </el-tooltip>
+                            <el-popover width="300" :content="format(article)" placement="bottom">
+                                <el-button slot="reference" type="primary" circle icon="el-icon-question"></el-button>
+                            </el-popover>
                         </div>
                     </td>
                     <!--                    <td class="zbr-table-longtext"></td>-->
@@ -49,13 +49,13 @@
 </template>
 
 <script>
-import {Tooltip, Button} from 'element-ui'
+import {Popover, Button} from 'element-ui'
 import './styles/element-variables.scss'
 
 export default {
     name      : 'decisions',
     components: {
-        [Tooltip.name]: Tooltip,
+        [Popover.name]: Popover,
         [Button.name] : Button,
     },
     data() {
