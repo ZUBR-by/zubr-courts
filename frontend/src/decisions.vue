@@ -80,7 +80,7 @@ export default {
     },
     methods   : {
         format(article){
-            return article.replace(/"/g, '');
+            return article.split(' - ')[1].replace(/"/g, '');
         },
         fetchData() {
             let host   = process.env.VUE_APP_API_URL;
