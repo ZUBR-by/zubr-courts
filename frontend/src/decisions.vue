@@ -27,7 +27,14 @@
                     <td class="txt-nowrap">{{ decision.fullName }}</td>
                     <td class="txt-nowrap">{{ decision.timestamp }}</td>
                     <td class="txt-nowrap">{{ decision.aftermath }}</td>
-                    <td class="txt-nowrap">{{ decision.articles }}</td>
+                    <td class="txt-nowrap">
+                        <div v-for="(article, index) in decision.articles" :key="index">
+                            {{ article.split(' - ')[0] }}
+                            <el-tooltip :content="format(article)" placement="bottom" effect="light">
+                                <el-button type="primary" circle icon="el-icon-question"></el-button>
+                            </el-tooltip>
+                        </div>
+                    </td>
                     <!--                    <td class="zbr-table-longtext"></td>-->
                 </tr>
                 <tr v-if="decisions.length === 0">
@@ -42,8 +49,15 @@
 </template>
 
 <script>
+import {Tooltip, Button} from 'element-ui'
+import './styles/element-variables.scss'
+
 export default {
-    name   : 'decisions',
+    name      : 'decisions',
+    components: {
+        [Tooltip.name]: Tooltip,
+        [Button.name] : Button,
+    },
     data() {
         return {
             decisions: [],
@@ -52,11 +66,11 @@ export default {
             error    : ''
         }
     },
-    props  : {
+    props     : {
         court: String,
         judge: String,
     },
-    watch  : {
+    watch     : {
         filter() {
             this.fetchData()
         }
@@ -64,7 +78,10 @@ export default {
     created() {
         this.fetchData();
     },
-    methods: {
+    methods   : {
+        format(article){
+            return article.replace(/"/g, '');
+        },
         fetchData() {
             let host   = process.env.VUE_APP_API_URL;
             let url    = new URL(

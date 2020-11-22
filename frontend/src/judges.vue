@@ -25,7 +25,7 @@
                     <div class="txt-algn-l">
                         Метки
                     </div>
-                    <el-select clearable v-model="filter.tag" placeholder="" style="width: 350px;padding-top: 5px;height: 44px">
+                    <el-select clearable multiple v-model="filter.tags" placeholder="" style="width: 350px;padding-top: 5px;height: 44px">
                         <el-option :value="''"></el-option>
                         <el-option :label="item" :value="key" v-for="(item, key) in translations" :key="key"></el-option>
                     </el-select>
@@ -118,6 +118,7 @@
 
 import {Select, Option, Loading} from 'element-ui'
 import Vue                       from 'vue'
+import './styles/element-variables.scss'
 
 Vue.use(Loading);
 export default {
@@ -138,7 +139,7 @@ export default {
             order       : 'desc',
             sort        : 'decisions',
             filter      : {
-                tag   : '',
+                tag   : [],
                 search: '',
             },
             loading     : false
