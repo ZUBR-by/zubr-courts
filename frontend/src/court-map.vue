@@ -92,33 +92,22 @@ export default {
                     style(feature) {
                         // console.log(feature.getProperties());
                         const size = feature.get('features').length;
-                        let style  = new Style({
-                                image: new Icon({
-                                    anchor: [0.7, 1],
-                                    scale : 0.3,
-                                    src   : '/imgs/marker.png',
-                                })
-                            }
-                        );
-                        if (size === 1) {
-                            style = new Style({
-                                image: new Icon({
-                                    anchor: [0.7, 1],
-                                    scale : 0.3,
-                                    src   : '/imgs/marker.png',
-                                }),
-                                text : new Text({
-                                    offsetY: 5,
-                                    text   : size > 1 ? '' : feature.getProperties().features[0].getProperties().name,
-                                    font   : '14px sans-serif',
-                                    fill   : new Fill({
-                                        color: '#000000',
-                                    }),
-                                }),
-                            });
-                        }
 
-                        return style;
+                        return new Style({
+                            image: new Icon({
+                                anchor: [0.7, 1],
+                                scale : 0.3,
+                                src   : '/imgs/marker.png',
+                            }),
+                            text : new Text({
+                                offsetY: 5,
+                                text   : (size === 1 ? '' : size) + '',
+                                font   : '14px sans-serif',
+                                fill   : new Fill({
+                                    color: '#000000',
+                                }),
+                            }),
+                        });
                     },
                 })
                 this.layers[regionCode] = layer;

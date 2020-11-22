@@ -29,21 +29,13 @@
                         {{ .Param "court.position" }}
                     </div>
                 </div>
-                {{if and (.Param "statistics.fines_rub") (.Param "statistics.arrests")}}
-                <div>
+                <div class="judge-info-unit">
                     <div class="judge-info-unit-name txt-color-1">
                         Статистика:
                     </div>
-                    {{if .Param "statistics.fines_rub"}}
-                    <p>
-                        {{.Param "statistics.fines"}} баз. величин ({{ .Param "statistics.fines_rub" }} р.) штрафов
-                    </p>
-                    {{end}}
-                    {{if .Param "statistics.arrests"}}
-                    <p>{{ .Param "statistics.arrests" }} суток административного ареста</p>
-                    {{end}}
+                    Выдано штрафов на <span id='{{$.Param "id"}}_fines_rub'></span> руб.,
+                    суток адм. ареста - <span id='{{$.Param "id"}}_arrests'></span>
                 </div>
-                {{end}}
                 <div class="judge-info-unit">
                     <div class="judge-info-unit-name txt-color-1">
                         Назначение:

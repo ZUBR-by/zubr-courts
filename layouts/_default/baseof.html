@@ -34,15 +34,15 @@
     <meta property="og:image:width" content='210'>
     {{end}}
     {{ $cssMain := resources.Get "css/main.css" | minify | fingerprint}}
-    {{ $cssMisc := resources.Get "css/misc.css" | minify | fingerprint}}
     <link rel="stylesheet" href="/fonts/roboto/roboto.css">
     <link rel="stylesheet" href="/fonts/element.css"/>
     <link rel="stylesheet" href="{{ $cssMain.Permalink }}">
-    <link rel="stylesheet" href="{{ $cssMisc.Permalink }}">
 </head>
-<body>
+<body {{ block "class_body" . }}{{end}}>
 {{ block "main" . }}
 {{ end }}
 </body>
+
 {{ block "js" . }}
 {{end}}
+</html>

@@ -29,10 +29,13 @@
                     <td class="txt-nowrap">{{ decision.aftermath }}</td>
                     <td class="txt-nowrap">
                         <div v-for="(article, index) in decision.articles" :key="index">
-                            {{ article.split(' - ')[0] }}
                             <el-popover width="300" :content="format(article)" placement="bottom">
-                                <el-button slot="reference" type="primary" circle icon="el-icon-question"></el-button>
+                                <el-button slot="reference" type="primary"
+                                           circle
+                                           icon="el-icon-question"
+                                           size="mini"></el-button>
                             </el-popover>
+                            {{ article.split(' - ')[0] }}
                         </div>
                     </td>
                     <!--                    <td class="zbr-table-longtext"></td>-->
@@ -134,5 +137,7 @@ export default {
 </script>
 
 <style scoped>
-
+.el-button--mini.is-circle {
+    padding: 5px !important;
+}
 </style>

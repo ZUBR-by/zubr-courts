@@ -94,8 +94,8 @@
     </div>
     <div class="flex-row pdng-t-20px mil-flex-column">
         {{ range $index, $element := $.Site.Data.judges }}
-        {{if in (slice "1293" "1218" "1253" "1166") $index}}
-        <div class="section size-25 mil-size-100 mil-pdng-0">
+        {{if in (slice "1293" "1218" "1253" "1166" "1416") $index}}
+        <div class="section size-20 mil-size-100 mil-pdng-0">
             <div class="judge-unit pdng-5prc txt-algn-c">
                 <div class="judge-unit-photo">
                     <img alt="photo" src="https://cdn.zubr.ws/courts/judges/{{$element.id}}.jpg">
@@ -338,4 +338,6 @@
 {{ $jsVendor := resources.Get "generated/js/index.js" | fingerprint }}
 <script src="{{ $jsVendor.Permalink }}"></script>
 {{end}}
-
+{{ define "class_body"}}
+class="homepage"
+{{end}}

@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{partial "header" . }}
 <div id="app">
-    <div class="scene" style="padding-bottom: 0">
+    <div class="scene">
         <div class="section">
             <h1 class="txt-color-1 txt-size-34px txt-algn-c">
                 Суды Беларуси
@@ -29,28 +29,48 @@
             </div>
         </div>
     </div>
-    <div class="scene" style="padding-top: 4%">
+    <div class="scene">
 
         {{ $range := slice "07" "06" "05" "04" "03" "02" "01"}}
         {{ range $region := $range}}
-        <div v-show="activeTab === '{{$region}}'">
+        <div v-show="activeTab === '{{$region}}'" class="section">
             <h2>
                 {{index $.Site.Data.regions $region}}
             </h2>
-            <ul class="courts-list mrgn-t-30px">
-                {{ range $index, $element := $.Site.Data.courts }}
-                {{if eq (slicestr $index 0 2) $region}}
-                <li>
-                    <h3>
-                        <a class="txt-underline txt-size-18px txt-nowrap" href='/court/{{$index}}'>{{$element.name}}</a>
-                        <div class="txt-size-14px txt-color-2">{{$element.address}}</div>
-                        <div class="txt-size-14px txt-color-3">0 р. / 0 базовых велечин</div>
-                        <div class="txt-size-14px txt-color-3">0 Cуток адм. ареста</div>
-                    </h3>
-                </li>
-                {{end}}
-                {{end}}
-            </ul>
+            <div class="flex-row mil-flex-column">
+                <div class="section size-50 mil-size-100">
+                    <ul class="courts-list mrgn-t-30px">
+                        {{ range $index, $element := $.Site.Data.courts }}
+                        {{if eq (slicestr $index 0 2) $region}}
+                        <li>
+                            <h3>
+                                <a class="txt-underline txt-size-18px" href='/court/{{$index}}'>{{$element.name}}</a>
+                                <div class="txt-size-14px txt-color-2">{{$element.address}}</div>
+                                <div class="txt-size-14px txt-color-3">0 р. / 0 базовых велечин</div>
+                                <div class="txt-size-14px txt-color-3">0 Cуток адм. ареста</div>
+                            </h3>
+                        </li>
+                        {{end}}
+                        {{end}}
+                    </ul>
+                </div>
+                <div class="section size-50 mil-size-100">
+                    <ul class="courts-list mrgn-t-30px">
+                        {{ range $index, $element := $.Site.Data.courts }}
+                        {{if eq (slicestr $index 0 2) $region}}
+                        <li>
+                            <h3>
+                                <a class="txt-underline txt-size-18px" href='/court/{{$index}}'>{{$element.name}}</a>
+                                <div class="txt-size-14px txt-color-2">{{$element.address}}</div>
+                                <div class="txt-size-14px txt-color-3">0 р. / 0 базовых велечин</div>
+                                <div class="txt-size-14px txt-color-3">0 Cуток адм. ареста</div>
+                            </h3>
+                        </li>
+                        {{end}}
+                        {{end}}
+                    </ul>
+                </div>
+            </div>
         </div>
 
         {{end}}

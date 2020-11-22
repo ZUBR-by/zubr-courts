@@ -64,7 +64,7 @@
         <div class="table-wrapper pdng-t-20px pdng-20px" v-loading="this.loading">
             <table class="zbr-table">
                 <tbody>
-                <tr v-for="judge of judges" :key="judge.id">
+                <tr v-for="judge of judges" :key="judge.id" :class="{'fav' : judge.tags.includes('top')}">
                     <td class="size-25 min-size-250px valgn-c">
                         <a :href="'/judge/' + judge.id" class="flex-row flex-algn-itms-c cursor-pointer">
                             <div class="section size-64px flex-noshrink">
@@ -91,7 +91,7 @@
                     <td class="txt-nowrap size-20 valgn-c">
                         <div>{{ judge.statistic.count }} решений</div>
                         <div class="txt-color-3">
-                            {{ judge.statistic.fines_rub }} р. / {{ judge.statistic.arrests }} суток адм. ареста
+                            {{ judge.statistic.fines_rub }} р. / {{ judge.statistic.arrests }} суток
                         </div>
                     </td>
                     <td class="txt-nowrap size-30 pdng-r-10px valgn-c">
