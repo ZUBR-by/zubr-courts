@@ -5,7 +5,7 @@
                 Вынесенные решения
             </h2>
         </div>
-        <p>
+        <p v-if="decisions.length !== 0">
             Если вы хотите скрыть вашу фамилию из публичного доступа, напишите в
             <a href="https://t.me/zubr_watch_bot">телеграмм-бот</a>
         </p>
@@ -45,6 +45,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="pdng-t-50px pdng-b-20px txt-algn-c" v-if="decisions.length !== total">
+            <button class="button large size-50 mil-size-100" @click="loadMore">Показать больше решений</button>
+        </div>
     </div>
 </template>
 
@@ -63,7 +66,8 @@ export default {
             decisions: [],
             filter   : '',
             total    : 0,
-            error    : ''
+            error    : '',
+            page     : 1,
         }
     },
     props     : {
@@ -72,6 +76,7 @@ export default {
     },
     watch     : {
         filter() {
+            this.page = 1;
             this.fetchData()
         }
     },
@@ -79,7 +84,11 @@ export default {
         this.fetchData();
     },
     methods   : {
-        format(article){
+        loadMore() {
+            this.page++;
+            this.fetchData()
+        },
+        format(article) {
             return article.split(' - ')[1].replace(/"/g, '');
         },
         fetchData() {
@@ -98,16 +107,26 @@ export default {
             if (this.judge) {
                 params['judge.id'] = this.judge;
             }
+            if (this.page > 1) {
+                params['page'] = this.page;
+            }
             url.search = new URLSearchParams(params);
             fetch(url).then(r => {
                 if (!r.ok) {
-                    this.error = 'Произошла ошибка'
-                    return {'hydra:member': [], 'hydra:totalItems': 0}
+                    return null
                 }
                 return r.json()
             }).then(r => {
-                this.total     = r['hydra:totalItems'];
-                this.decisions = r['hydra:member'];
+                if (r === null) {
+                    this.error = 'Произошла ошибка'
+                    return;
+                }
+                if (this.page > 1) {
+                    this.decisions = this.decisions.concat(r['hydra:member']);
+                } else {
+                    this.total  = r['hydra:totalItems'];
+                    this.decisions = r['hydra:member'];
+                }
             })
         }
     }
