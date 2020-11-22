@@ -87,13 +87,15 @@
                         <div class="judge-unit-position">
                             {{ $element.court.position}}
                         </div>
-                        <p class="judge-unit-description pdng-t-20px"></p>
-                        <div class="tags-wrp txt-algn-l pdng-t-10px">
-                            <a class="tag-unit" href="#">Взятки</a>
-                            <a class="tag-unit" href="#">Длиный тег</a>
-                            <a class="tag-unit" href="#">Политические дела</a>
-                            <a class="tag-unit" href="#">Длиный тег</a>
+<!--                        <p class="judge-unit-description pdng-t-20px"></p>-->
+                        {{ $length := len $element.tags}}
+                        {{ if (gt $length 0)}}
+                        <div class="tags-wrp txt-algn-l">
+                            {{ range $index, $element := $element.tags}}
+                            <a class="tag-unit" href="#">{{index $.Site.Data.translations $element}}</a>
+                            {{end}}
                         </div>
+                        {{end}}
                         <div class="pdng-t-30px">
                             <a class="button size-100" href="/judge/{{ $element.id}}">Подробнее</a>
                         </div>
