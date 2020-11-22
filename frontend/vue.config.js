@@ -14,6 +14,9 @@ const pages    = {
     courts: {
         entry: 'src/court_list.js',
     },
+    index: {
+        entry: 'src/index.js',
+    },
 }
 module.exports = {
     outputDir          : './../assets/generated',

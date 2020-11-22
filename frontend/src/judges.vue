@@ -26,7 +26,6 @@
                         Метки
                     </div>
                     <el-select clearable multiple v-model="filter.tags" placeholder="" style="width: 350px;padding-top: 5px;height: 44px">
-                        <el-option :value="''"></el-option>
                         <el-option :label="item" :value="key" v-for="(item, key) in translations" :key="key"></el-option>
                     </el-select>
                 </div>
@@ -139,7 +138,7 @@ export default {
             order       : 'desc',
             sort        : 'decisions',
             filter      : {
-                tag   : [],
+                tags   : [],
                 search: '',
             },
             loading     : false
@@ -172,8 +171,8 @@ export default {
             if (this.sort) {
                 params['sort[' + this.sort + ']'] = this.order;
             }
-            if (this.filter.tag) {
-                params['tag'] = this.filter.tag;
+            for(let tag of this.filter.tags) {
+                params['tag[' + tag + ']'] = 1;
             }
             if (this.filter.search) {
                 params['search'] = this.filter.search;

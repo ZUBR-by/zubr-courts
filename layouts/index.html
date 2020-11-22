@@ -94,13 +94,11 @@
     </div>
     <div class="flex-row pdng-t-20px mil-flex-column">
         {{ range $index, $element := $.Site.Data.judges }}
-        {{if in (slice "1293" "1218" "1253" "1416") $index}}
+        {{if in (slice "1293" "1218" "1253" "1166") $index}}
         <div class="section size-25 mil-size-100 mil-pdng-0">
             <div class="judge-unit pdng-5prc txt-algn-c">
                 <div class="judge-unit-photo">
-                    <object data='https://cdn.zubr.ws/courts/judges/{{$element.id}}.jpg' type="image/jpeg">
-                        <img alt="photo" src="/imgs/icons/svg/user-gray.svg">
-                    </object>
+                    <img alt="photo" src="https://cdn.zubr.ws/courts/judges/{{$element.id}}.jpg">
                 </div>
                 <h3 class="judge-unit-name txt-color-1">
                     {{$element.fullName}}
@@ -113,8 +111,17 @@
                 <div class="judge-unit-position">
                     Судья
                 </div>
+                {{ $length := len $element.tags}}
+                {{ if (gt $length 0)}}
+                <div class="tags-wrp txt-algn-l">
+                    {{ range $index, $element := $element.tags}}
+                    <a class="tag-unit" href="#">{{index $.Site.Data.translations $element}}</a>
+                    {{end}}
+                </div>
+                {{end}}
                 <p class="judge-unit-description pdng-t-20px">
-                    Выдано штрафов на {{ $element.statistics.fines_rub}} руб., суток - {{ $element.statistics.arrests}}
+                    Выдано штрафов на <span id="{{$element.id}}_fines_rub"></span> руб.,
+                    суток адм. ареста - <span id="{{$element.id}}_arrests"></span>
                 </p>
                 <div class="pdng-t-20px">
                     <a class="button size-100" href='/judge/{{$element.id}}'>Подробнее</a>
@@ -325,4 +332,10 @@
 </div>
 {{partial "footer"}}
 {{ end }}
+{{ define "js"}}
+{{ $jsVendor1 := resources.Get "generated/js/chunk-index-vendors.js" | fingerprint }}
+<script src="{{ $jsVendor1.Permalink }}"></script>
+{{ $jsVendor := resources.Get "generated/js/index.js" | fingerprint }}
+<script src="{{ $jsVendor.Permalink }}"></script>
+{{end}}
 
