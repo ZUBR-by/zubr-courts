@@ -46,24 +46,8 @@
                             <h3>
                                 <a class="txt-underline txt-size-18px" href='/court/{{$index}}'>{{$element.name}}</a>
                                 <div class="txt-size-14px txt-color-2">{{$element.address}}</div>
-                                <div class="txt-size-14px txt-color-3">0 р. / 0 базовых велечин</div>
-                                <div class="txt-size-14px txt-color-3">0 Cуток адм. ареста</div>
-                            </h3>
-                        </li>
-                        {{end}}
-                        {{end}}
-                    </ul>
-                </div>
-                <div class="section size-50 mil-size-100">
-                    <ul class="courts-list mrgn-t-30px">
-                        {{ range $index, $element := $.Site.Data.courts }}
-                        {{if eq (slicestr $index 0 2) $region}}
-                        <li>
-                            <h3>
-                                <a class="txt-underline txt-size-18px" href='/court/{{$index}}'>{{$element.name}}</a>
-                                <div class="txt-size-14px txt-color-2">{{$element.address}}</div>
-                                <div class="txt-size-14px txt-color-3">0 р. / 0 базовых велечин</div>
-                                <div class="txt-size-14px txt-color-3">0 Cуток адм. ареста</div>
+<!--                                <div class="txt-size-14px txt-color-3">0 р. / 0 базовых велечин</div>-->
+<!--                                <div class="txt-size-14px txt-color-3">0 Cуток адм. ареста</div>-->
                             </h3>
                         </li>
                         {{end}}
