@@ -58,6 +58,9 @@
                                 {{link}}
                             </a>
                         </div>
+                        <div v-else-if="decision.category !== 'criminal' && typeof decision.comment === 'object' && decision.comment.extra">
+                            {{decision.comment.extra}}
+                        </div>
                     </td>
                 </tr>
                 <tr v-if="decisions.length === 0">
