@@ -9,7 +9,7 @@
                            icon="el-icon-close"></el-button>
             </div>
             <div v-for="feature of selectedFeature" :key="feature.id">
-                <p>
+                <p class="padding">
                     <a :href="'/court/' + feature.getProperties().id">
                         {{ feature.getProperties().name }}
                     </a>
@@ -149,18 +149,20 @@ export default {
             this.map  = map;
             let popup = new Overlay({
                 positioning: 'center-center',
-                element: document.getElementById('popup'),
+                element    : document.getElementById('popup'),
             });
             map.addOverlay(popup);
             this.map.on('click', e => {
-                console.log(e);
                 this.map.forEachFeatureAtPixel(e.pixel, baseFeature => {
-                    setTimeout(() => {
-                        let coordinate = e.coordinate;
-                        popup.setPosition(coordinate);
-                        this.isVisible       = true;
-                        this.selectedFeature = baseFeature.getProperties().features;
-                    }, 150)
+                    setTimeout(
+                        () => {
+                            let coordinate = e.coordinate;
+                            popup.setPosition(coordinate);
+                            this.isVisible       = true;
+                            this.selectedFeature = baseFeature.getProperties().features;
+                        },
+                        150
+                    )
 
                 });
             });
@@ -177,7 +179,11 @@ export default {
     #popup {
         font-size: 14px;
     }
+    .padding {
+        padding-top: 6px;
+    }
 }
+
 .map {
     width: 100%;
     height: 100%;
