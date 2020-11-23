@@ -23,22 +23,41 @@
         <div class="table-wrapper pdng-t-20px pdng-20px">
             <table class="zbr-table">
                 <tbody>
-                <tr v-for="decision of decisions" :key="decision.id">
-                    <td class="txt-nowrap">{{ decision.fullName }}</td>
+                <tr v-for="decision of decisions" :key="decision.id" :class="{'fav' : decision.category === 'criminal'}">
+                    <td class="txt-nowrap size-10">{{ decision.fullName }}</td>
                     <td class="txt-nowrap">{{ decision.timestamp }}</td>
-                    <td class="txt-nowrap">{{ decision.aftermath }}</td>
+                    <td>
+                        <span v-if="decision.category !== 'criminal'">
+                            {{ decision.aftermath }}
+                        </span>
+                        <span v-else>
+                            {{ decision.aftermathExtra }}
+                        </span>
+
+                    </td>
                     <td class="txt-nowrap">
-                        <div v-for="(article, index) in decision.articles" :key="index">
-                            <el-popover width="300" :content="format(article)" placement="bottom">
-                                <el-button slot="reference" type="primary"
-                                           circle
-                                           icon="el-icon-question"
-                                           size="mini"></el-button>
-                            </el-popover>
-                            {{ article.split(' - ')[0] }}
+                        <div v-if="decision.category !== 'criminal'">
+                            <div v-for="(article, index) in decision.articles" :key="index" >
+                                <el-popover width="300" :content="format(decision, article)" placement="bottom">
+                                    <el-button slot="reference" type="primary"
+                                               circle
+                                               icon="el-icon-question"
+                                               size="mini"></el-button>
+                                </el-popover>
+                                {{ article.split(' - ')[0] }}
+                            </div>
+                        </div>
+                        <div v-else>
+                            <span v-for="(article, index) in decision.articles" :key="index">{{article}}</span>
                         </div>
                     </td>
-                    <!--                    <td class="zbr-table-longtext"></td>-->
+                    <td>
+                        <div v-if="decision.category === 'criminal'">
+                            <a target="_blank" :href="link" v-for="(link,index) of decision.comment.links" :key="index">
+                                {{link}}
+                            </a>
+                        </div>
+                    </td>
                 </tr>
                 <tr v-if="decisions.length === 0">
                     <td colspan="4">
@@ -91,7 +110,11 @@ export default {
             this.page++;
             this.fetchData()
         },
-        format(article) {
+        format(decision, article) {
+            if (decision.category === 'criminal') {
+                console.log(article)
+                return article;
+            }
             return article.split(' - ')[1].replace(/"/g, '');
         },
         fetchData() {
@@ -100,6 +123,7 @@ export default {
                 host + '/decision'
             );
             let params = {
+                'sort[category]'     : 'desc',
                 'sort[timestamp]'     : 'desc',
                 'sort[aftermath_type]': 'asc',
                 'fullName'            : this.filter
