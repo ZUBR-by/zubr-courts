@@ -86,6 +86,8 @@
 <script src="{{ $jsVendor.Permalink }}"></script>
 {{ $jsCurrent := resources.Get "generated/js/courts.js" | fingerprint }}
 <script src="{{ $jsCurrent.Permalink }}"></script>
-{{ $cssVendor := resources.Get "generated/css/chunk-court-vendors.css" | fingerprint }}
+{{ $cssVendor := resources.Get "generated/css/chunk-courts-vendors.css" | fingerprint }}
 <link rel="stylesheet" href="{{$cssVendor.Permalink}}"/>
+{{ $cssCourts := resources.Get "generated/css/courts.css" | fingerprint }}
+<link rel="stylesheet" href="{{$cssCourts.Permalink}}"/>
 {{end}}

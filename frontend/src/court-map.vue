@@ -1,5 +1,22 @@
 <template>
-    <div id="map" class="map"></div>
+    <div id="map" class="map">
+        <el-card id="popup" v-show="isVisible">
+            <div slot="header" class="clearfix">
+                <span style="color: #fff">Суды</span>
+                <el-button style="float: right;padding: 7px"
+                           circle
+                           @click="hide"
+                           icon="el-icon-close"></el-button>
+            </div>
+            <div v-for="feature of selectedFeature" :key="feature.id">
+                <p>
+                    <a :href="'/court/' + feature.getProperties().id">
+                        {{ feature.getProperties().id }} - {{ feature.getProperties().name }}
+                    </a>
+                </p>
+            </div>
+        </el-card>
+    </div>
 </template>
 
 <script>
@@ -10,13 +27,13 @@ import {OSM, Cluster}            from "ol/source";
 import View                      from "ol/View";
 import VectorLayer               from "ol/layer/Vector";
 import VectorSource              from "ol/source/Vector";
-// import Feature       from "ol/Feature";
-// import Point         from "ol/geom/Point";
+import Overlay                   from 'ol/Overlay';
 import {Icon, Style, Fill, Text} from "ol/style";
 import {fromLonLat}              from "ol/proj";
 import courts                    from './../../data/courts_location.json'
 import Feature                   from "ol/Feature";
 import Point                     from "ol/geom/Point";
+import {Card, Button}            from 'element-ui'
 
 const centers = {
     '01': [25.408217, 52.472241],
@@ -27,23 +44,36 @@ const centers = {
     '06': [30.424774, 53.564610],
     '07': [27.649054, 53.890890]
 };
+import 'element-ui/lib/theme-chalk/card.css'
+import 'element-ui/lib/theme-chalk/button.css'
+import 'element-ui/lib/theme-chalk/icon.css'
 
 export default {
+    components: {
+        [Card.name]  : Card,
+        [Button.name]: Button
+    },
     data() {
         return {
-            currentLayer: null,
-            layers      : {},
-            map         : null,
-            view        : null,
+            currentLayer   : null,
+            layers         : {},
+            map            : null,
+            view           : null,
+            selectedFeature: null,
+            isVisible      : false,
         }
     },
-    props  : {
+    props     : {
         initialRegion: {
             type   : String,
             default: '07'
         }
     },
-    methods: {
+    methods   : {
+        hide() {
+            this.isVisible       = false;
+            this.selectedFeature = null;
+        },
         changeLayer(regionCode) {
             this.map.removeLayer(this.currentLayer);
             this.currentLayer = this.layers[regionCode];
@@ -90,7 +120,6 @@ export default {
                         source  : new VectorSource({features: array})
                     }),
                     style(feature) {
-                        // console.log(feature.getProperties());
                         const size = feature.get('features').length;
 
                         return new Style({
@@ -117,16 +146,25 @@ export default {
                 this.currentLayer = layer;
                 map.addLayer(layer);
             }
-            this.map = map;
+            this.map  = map;
+            let popup = new Overlay({
+                element: document.getElementById('popup'),
+            });
+            map.addOverlay(popup);
             this.map.on('click', e => {
+                console.log(e);
                 this.map.forEachFeatureAtPixel(e.pixel, baseFeature => {
                     let length = baseFeature.getProperties().features.length;
                     if (length === 0) {
+                        console.log(1);
+                        this.isVisible       = false;
+                        this.selectedFeature = null;
                         return;
                     }
-                    if (length === 1) {
-                        window.location = '/court/' + baseFeature.getProperties().features[0].getProperties().id;
-                    }
+                    let coordinate = e.coordinate;
+                    popup.setPosition(coordinate);
+                    this.isVisible       = true;
+                    this.selectedFeature = baseFeature.getProperties().features;
                 });
             });
             map.setView(
@@ -163,5 +201,17 @@ a.skiplink:focus {
 
 #map:focus {
     outline: #4A74A8 solid 0.15em;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+
+.el-card__header {
+    padding: 5px 18px 16px;
+    border-bottom: 1px solid #ebeef5;
+    box-sizing: border-box;
 }
 </style>
