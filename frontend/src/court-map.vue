@@ -42,7 +42,7 @@ const centers = {
     '04': [25.078919, 53.866871],
     '05': [27.747928, 53.752841],
     '06': [30.424774, 53.564610],
-    '07': [27.649054, 53.890890]
+    '07': [27.551411, 53.895710]
 };
 import 'element-ui/lib/theme-chalk/card.css'
 import 'element-ui/lib/theme-chalk/button.css'
