@@ -21,14 +21,14 @@
                 <!--                    </div>-->
                 <!--                    <input class="input mrgn-t-5px" placeholder="Минской городской суд">-->
                 <!--                </div>-->
-                <div class="section size-50 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">
+                <div class="section size-25 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">
                     <div class="txt-algn-l">
                         Метки
                     </div>
                     <div style="padding-top: 5px;">
-                        <el-checkbox-group v-model="filter.tags" size="large">
-                            <el-checkbox-button :label="key" v-for="(item, key) in translations" :key="key" border>{{ item }}</el-checkbox-button>
-                        </el-checkbox-group>
+                        <el-select v-model="filter.tags" multiple clearable placeholder="" collapse-tags="true" style="width: 100%">
+                            <el-option :value="key" :label="item" v-for="(item, key) in translations" :key="key"></el-option>
+                        </el-select>
                     </div>
                 </div>
                 <div class="section size-25 txt-algn-l" style="padding-top: 35px">
@@ -123,7 +123,7 @@
 
 <script>
 
-import {CheckboxGroup, CheckboxButton, Loading} from 'element-ui'
+import {Option, Select, Loading} from 'element-ui'
 import Vue                                      from 'vue'
 import './styles/element-variables.scss'
 import translations                             from './../../data/translations.json'
@@ -132,8 +132,8 @@ Vue.use(Loading);
 export default {
     name      : 'judges',
     components: {
-        [CheckboxGroup.name] : CheckboxGroup,
-        [CheckboxButton.name]: CheckboxButton,
+        [Select.name] : Select,
+        [Option.name]: Option,
     },
     data() {
         return {
@@ -230,3 +230,8 @@ export default {
     }
 }
 </script>
+<style>
+ .el-input__inner {
+     height: 40px !important;
+ }
+</style>
