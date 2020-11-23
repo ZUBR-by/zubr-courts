@@ -148,19 +148,13 @@ export default {
             }
             this.map  = map;
             let popup = new Overlay({
+                positioning: 'center-center',
                 element: document.getElementById('popup'),
             });
             map.addOverlay(popup);
             this.map.on('click', e => {
                 console.log(e);
                 this.map.forEachFeatureAtPixel(e.pixel, baseFeature => {
-                    let length = baseFeature.getProperties().features.length;
-                    if (length === 0) {
-                        console.log(1);
-                        this.isVisible       = false;
-                        this.selectedFeature = null;
-                        return;
-                    }
                     let coordinate = e.coordinate;
                     popup.setPosition(coordinate);
                     this.isVisible       = true;
