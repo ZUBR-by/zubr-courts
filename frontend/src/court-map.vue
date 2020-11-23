@@ -11,7 +11,7 @@
             <div v-for="feature of selectedFeature" :key="feature.id">
                 <p>
                     <a :href="'/court/' + feature.getProperties().id">
-                        {{ feature.getProperties().id }} - {{ feature.getProperties().name }}
+                        {{ feature.getProperties().name }}
                     </a>
                 </p>
             </div>
@@ -176,6 +176,11 @@ export default {
 }
 </script>
 <style>
+@media (max-width: 820px) {
+    #popup {
+        font-size: 14px;
+    }
+}
 .map {
     width: 100%;
     height: 100%;
@@ -202,6 +207,7 @@ a.skiplink:focus {
 #map:focus {
     outline: #4A74A8 solid 0.15em;
 }
+
 
 .clearfix:before,
 .clearfix:after {
