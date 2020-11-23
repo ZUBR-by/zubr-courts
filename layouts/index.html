@@ -94,9 +94,9 @@
     </div>
     <div class="flex-row pdng-t-20px mil-flex-column">
         {{ range $index, $element := $.Site.Data.judges }}
-        {{if in (slice "1293" "1218" "1253" "1166" "1416") $index}}
-        <div class="section size-20 mil-size-100 mil-pdng-0">
-            <div class="judge-unit pdng-5prc txt-algn-c">
+        {{if in (slice "1293" "1218" "1253" "1166" "1300") $index}}
+        <div class="section flex-row size-20 mil-size-100 mil-pdng-b-50px">
+            <div class="judge-unit flex-column pdng-5prc txt-algn-c">
                 <div class="judge-unit-photo">
                     <img alt="photo" src="https://cdn.zubr.ws/courts/judges/{{$element.id}}.jpg">
                 </div>
@@ -109,21 +109,21 @@
                     {{end}}
                 </div>
                 <div class="judge-unit-position">
-                    Судья
-                </div>
-                {{ $length := len $element.tags}}
-                {{ if (gt $length 0)}}
-                <div class="tags-wrp txt-algn-l">
-                    {{ range $index, $element := $element.tags}}
-                    <a class="tag-unit" href="#">{{index $.Site.Data.translations $element}}</a>
+                    {{if $element.court}}
+                    {{$element.court.position}}
                     {{end}}
                 </div>
-                {{end}}
                 <p class="judge-unit-description pdng-t-20px">
                     Выдано штрафов на <span id="{{$element.id}}_fines_rub"></span> руб.,
                     суток адм. ареста - <span id="{{$element.id}}_arrests"></span>
                 </p>
-                <div class="pdng-t-20px">
+                <div class="tags-wrp txt-algn-l pdng-t-10px">
+                    {{ range $index, $element := $element.tags}}
+                    <a class="tag-unit">{{index $.Site.Data.translations $element}}</a>
+                    {{end}}
+                </div>
+                <div class="flex-grow-all"></div>
+                <div class="pdng-t-30px">
                     <a class="button size-100" href='/judge/{{$element.id}}'>Подробнее</a>
                 </div>
             </div>

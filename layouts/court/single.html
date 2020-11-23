@@ -76,12 +76,10 @@
             </div>
             <div class="flex-row flex-wrap pdng-t-20px mil-flex-column">
                 {{ range $index, $element := .Param "judges"}}
-                <div class="section size-25 mil-size-100 mil-pdng-b-50px">
-                    <div class="judge-unit pdng-5prc txt-algn-c">
+                <div class="section flex-row size-25 mil-size-100 mil-pdng-b-50px">
+                    <div class="judge-unit flex-column pdng-5prc txt-algn-c">
                         <div class="judge-unit-photo">
-                            <object data='https://cdn.zubr.ws/courts/judges/{{$element.id}}.jpg'  type="image/jpeg">
-                                <img alt="photo" src="/imgs/icons/svg/user-gray.svg">
-                            </object>
+                            <img src="https://cdn.zubr.ws/courts/judges/{{$element.id}}.jpg">
                         </div>
                         <h3 class="judge-unit-name txt-color-1">
                             {{ $element.fullName}}
@@ -89,7 +87,8 @@
                         <div class="judge-unit-position">
                             {{ $element.court.position}}
                         </div>
-<!--                        <p class="judge-unit-description pdng-t-20px"></p>-->
+                        <p class="judge-unit-description pdng-t-20px">
+                        </p>
                         {{ $length := len $element.tags}}
                         {{ if (gt $length 0)}}
                         <div class="tags-wrp txt-algn-l">
@@ -98,6 +97,7 @@
                             {{end}}
                         </div>
                         {{end}}
+                        <div class="flex-grow-all"></div>
                         <div class="pdng-t-30px">
                             <a class="button size-100" href="/judge/{{ $element.id}}">Подробнее</a>
                         </div>
