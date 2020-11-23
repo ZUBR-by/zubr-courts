@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{partial "header" . }}
-<div id="app">
+<div id="app" v-cloak>
     <div class="scene">
         <div class="section">
             <h1 class="txt-color-1 txt-size-34px txt-algn-c">
@@ -8,7 +8,7 @@
             </h1>
             <div class="courts-list-linetabs txt-algn-c scroll-x-auto txt-nowrap">
                 <div class="inline-block">
-                    <div class="line-tabs">
+                    <div class="line-tabs" >
                         <a :class="{'tab-unit': true, 'active': activeTab === region}"
                            @click="changeTab(region)" v-for="(region, key) of map" :key="region">
                             <div>

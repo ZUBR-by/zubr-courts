@@ -11,6 +11,9 @@ html, body {
   position:static;
   overflow:visible !important;
 }
+[v-cloak] {
+  display: none;
+}
 body {
   min-height:100%;
   font-family:Roboto;
