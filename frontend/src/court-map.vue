@@ -155,10 +155,13 @@ export default {
             this.map.on('click', e => {
                 console.log(e);
                 this.map.forEachFeatureAtPixel(e.pixel, baseFeature => {
-                    let coordinate = e.coordinate;
-                    popup.setPosition(coordinate);
-                    this.isVisible       = true;
-                    this.selectedFeature = baseFeature.getProperties().features;
+                    setTimeout(() => {
+                        let coordinate = e.coordinate;
+                        popup.setPosition(coordinate);
+                        this.isVisible       = true;
+                        this.selectedFeature = baseFeature.getProperties().features;
+                    }, 150)
+
                 });
             });
             map.setView(
