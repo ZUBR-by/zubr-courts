@@ -50,6 +50,10 @@ h3 {
   font-size:22px;
   font-weight:400;
 }
+p {}
+p + p {
+  margin-top:30px;
+}
 
 .button,
 .input {
@@ -138,6 +142,7 @@ h3 {
 .tag-unit {
   display:inline-block;
   font-size:12px;
+  white-space:nowrap;
   margin:6px 6px 0 0;
   padding:2px 8px;
   background:#fff;
@@ -146,6 +151,18 @@ h3 {
 }
 .tag-unit:hover {
   border:rgba(255,92,1,1) 1px solid;
+}
+
+.inline-notice {
+  margin:10px 0;
+  padding:20px;
+  border:1px solid #E5E5E5;
+  background:#f7f7f7;
+  border-radius:8px;
+}
+.inline-notice.yellow {
+  background:#fffbeb;
+  border-color:#ffe286;
 }
 
 .filter-wrp {
@@ -248,6 +265,9 @@ h3 {
   display:flex;
   flex-direction:column;
 }
+.flex-algn-itms-s {
+  align-items:start;
+}
 .flex-algn-itms-c {
   align-items:center;
 }
@@ -279,6 +299,7 @@ h3 {
 }
 
 /* Text Options */
+.txt-inline, .txt-inline * {display:inline}
 .txt-normal {font-weight:400;}
 .txt-medium {font-weight:500;}
 .txt-bold {font-weight:600;}
@@ -305,10 +326,15 @@ h3 {
 .txt-size-14px {font-size:14px;}
 .txt-size-16px {font-size:16px;}
 .txt-size-18px {font-size:18px;}
+.txt-size-22px {font-size:22px;}
 .txt-size-24px {font-size:24px;}
+.txt-size-28px {font-size:28px;}
 .txt-size-34px {font-size:34px;}
+.txt-size-48px {font-size:48px;}
+.txt-size-64px {font-size:64px;}
 
 .valgn-c {vertical-align:middle !important;}
+
 
 /* Width */
 .size-10 {width:10%;}
@@ -376,6 +402,7 @@ h3 {
 .pdng-5prc {padding:5%;}
 
 .pdng-t-10px {padding-top:10px;}
+.pdng-t-15px {padding-top:15px;}
 .pdng-t-20px {padding-top:20px;}
 .pdng-t-30px {padding-top:30px;}
 .pdng-t-50px {padding-top:50px;}
@@ -484,6 +511,43 @@ h1, a, .button, .txt-color-1 {color:#FF5C01;}
 .lang-swicher-button + .lang-swicher-button {
   margin-left:15px;
 }
+
+/* Guide on home page */
+.zbr-home-promoguide {}
+.zbr-home-promoguide-row {}
+.zbr-home-promoguide-row + .zbr-home-promoguide-row {
+  margin-top:80px;
+}
+.zbr-home-promoguide-unit {}
+.zbr-home-pg-unit-number {
+  width:90px;
+  color:#E5E5E5;
+  font-size:150px;
+  font-weight:800;
+  line-height:120px;
+}
+.zbr-home-pg-unit-img {
+  height:120px;
+}
+.zbr-home-pg-unit-img img,
+.zbr-home-pg-unit-img svg,
+.zbr-home-pg-unit-img .zbr-h-pg-u--txt {
+  max-height:100%;
+  filter:drop-shadow(0 5px 15px rgba(0,0,0,0.25))
+}
+.zbr-home-pg-unit-img img:hover,
+.zbr-home-pg-unit-img svg:hover,
+.zbr-home-pg-unit-img .zbr-h-pg-u--txt:hover {
+  filter:drop-shadow(0 5px 25px rgba(0,0,0,0.35))
+}
+.zbr-h-pg-u--txt {
+  position:absolute;
+  left:0;
+  bottom:0;
+}
+
+
+
 
 /* Court of Law - view */
 .court-info {
@@ -611,6 +675,12 @@ h1, a, .button, .txt-color-1 {color:#FF5C01;}
 }
 
 /* Diagrams on home page */
+.stats-promo-diagrams-wrp{padding-bottom:30px;}
+.stats-promo-diagrams-scroll {overflow:auto;}
+.stats-promo-diagrams-scroll-content {
+  display:inline-block;
+  min-width:100%;
+}
 .stats-promo-diagrams {
   display:flex;
   flex-direction:row;
@@ -925,6 +995,8 @@ input#brgrbtn:checked + label + .brgr-nav {
 
   .mil-height-250px {height:250px;}
 
+  .mil-mrgn-t-80px {margin-top:80px;}
+
   .mil-pdng-0 {padding:0;}
   .mil-pdng-10px {padding:10px;}
   .mil-pdng-20px {padding:20px;}
@@ -960,7 +1032,7 @@ input#brgrbtn:checked + label + .brgr-nav {
   }
 
   .stats-promo-diagrams {
-    padding:30px 10px 20px 10px;;
+    padding:0 10px 20px 10px;
   }
   .stats-promo-data .section {
     padding:30px 0 15px 0;
@@ -973,6 +1045,11 @@ input#brgrbtn:checked + label + .brgr-nav {
     border-top:rgba(255,92,1,0.2) 2px solid;
   }
 
+  .zbr-home-pg-unit-number {
+    width:55px;
+    font-size:100px;
+    line-height:160px;
+  }
 
   .mil-notdisplay {display:none;}
   .mil-show {display:block !important;}

@@ -5,11 +5,13 @@
                 Вынесенные решения
             </h2>
         </div>
-        <p v-if="decisions.length !== 0">
-            Если вы хотите скрыть вашу фамилию из публичного доступа, напишите в
-            <a href="https://t.me/zubr_watch_bot">телеграмм-бот</a>.
-            Часть данных по административным решениям взята из базы правозащитного центра <a href="https://spring96.org/">"Весна"</a>
-        </p>
+        <div class="inline-notice yellow">
+            <p v-if="decisions.length !== 0">
+                Если вы хотите скрыть вашу фамилию из публичного доступа, напишите в
+                <a href="https://t.me/zubr_watch_bot">телеграмм-бот</a>.
+                Часть данных по административным решениям взята из базы правозащитного центра <a href="https://spring96.org/">"Весна"</a>
+            </p>
+        </div>
         <div class="filter-wrp flex-row mrgn-b-20px" v-if="decisions.length !== 0">
             <div class="section size-40 pdng-r-10px">
                 <input class="input" placeholder="ФИО" v-model.lazy="filter">
