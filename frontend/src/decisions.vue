@@ -27,7 +27,7 @@
                 <tr v-for="decision of decisions" :key="decision.id" :class="{'fav' : decision.category === 'criminal'}">
                     <td class="txt-nowrap size-10">{{ decision.fullName }}</td>
                     <td class="txt-nowrap">{{ decision.timestamp }}</td>
-                    <td>
+                    <td class="size-10">
                         <span v-if="decision.category !== 'criminal'">
                             {{ decision.aftermath }}
                         </span>

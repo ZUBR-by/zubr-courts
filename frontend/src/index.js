@@ -1,4 +1,4 @@
-for (let id of ["1293" ,"1218" ,"1253" ,"1166", "1300"]){
+for (let id of ["1293" ,"1218" ,"1253" ,"1166", "36"]){
     fetch(process.env.VUE_APP_API_URL + '/judge/' + id ).then(
         r => r.json()
     ).then(
