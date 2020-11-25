@@ -9,7 +9,8 @@
             <p v-if="decisions.length !== 0">
                 Если вы хотите скрыть вашу фамилию из публичного доступа, напишите в
                 <a href="https://t.me/zubr_watch_bot">телеграмм-бот</a>.
-                Часть данных по административным решениям взята из базы правозащитного центра <a href="https://spring96.org/">"Весна"</a>
+                Часть данных по административным решениям взята из базы правозащитного центра
+                <a href="https://spring96.org/">"Весна"</a>
             </p>
         </div>
         <div class="filter-wrp flex-row mrgn-b-20px" v-if="decisions.length !== 0">
@@ -40,7 +41,7 @@
                     </td>
                     <td class="txt-nowrap">
                         <div v-if="decision.category !== 'criminal'">
-                            <div v-for="(article, index) in decision.articles" :key="index" >
+                            <div v-for="(article, index) in decision.articles" :key="index">
                                 <el-popover width="300" :content="format(decision, article)" placement="bottom">
                                     <el-button slot="reference" type="primary"
                                                circle
@@ -51,17 +52,17 @@
                             </div>
                         </div>
                         <div v-else>
-                            <span v-for="(article, index) in decision.articles" :key="index">{{article}}</span>
+                            <span v-for="(article, index) in decision.articles" :key="index">{{ article }}</span>
                         </div>
                     </td>
                     <td>
                         <div v-if="decision.category === 'criminal'">
                             <a target="_blank" :href="link" v-for="(link,index) of decision.comment.links" :key="index">
-                                {{link}}
+                                {{ link }}
                             </a>
                         </div>
                         <div v-else-if="decision.category !== 'criminal' && typeof decision.comment === 'object' && decision.comment.extra">
-                            {{decision.comment.extra}}
+                            {{ decision.comment.extra }}
                         </div>
                     </td>
                 </tr>
@@ -129,9 +130,10 @@ export default {
                 host + '/decision'
             );
             let params = {
-                'sort[category]'     : 'desc',
+                'sort[category]'      : 'desc',
                 'sort[timestamp]'     : 'desc',
                 'sort[aftermath_type]': 'asc',
+                'source'              : 'spring96',
                 'fullName'            : this.filter
             };
             if (this.court) {
@@ -157,7 +159,7 @@ export default {
                 if (this.page > 1) {
                     this.decisions = this.decisions.concat(r['hydra:member']);
                 } else {
-                    this.total  = r['hydra:totalItems'];
+                    this.total     = r['hydra:totalItems'];
                     this.decisions = r['hydra:member'];
                 }
             })
