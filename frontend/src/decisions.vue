@@ -56,13 +56,16 @@
                         </div>
                     </td>
                     <td>
-                        <div v-if="decision.category === 'criminal'">
-                            <a target="_blank" :href="link" v-for="(link,index) of decision.comment.links" :key="index">
+                        <div v-if="decision.extra.links && decision.extra.links.length > 0">
+                            <a target="_blank" :href="link" v-for="(link,index) of decision.extra.links" :key="index">
                                 {{ link }}
                             </a>
+                            &nbsp;
                         </div>
-                        <div v-else-if="decision.category !== 'criminal' && typeof decision.comment === 'object' && decision.comment.extra">
-                            {{ decision.comment.extra }}
+                        <div v-if="decision.category !== 'criminal'
+                                            && decision.source === 'spring96'
+                                            && typeof decision.extra === 'object' && decision.extra.extra">
+                            {{ decision.extra.extra }}
                         </div>
                     </td>
                 </tr>
@@ -119,7 +122,6 @@ export default {
         },
         format(decision, article) {
             if (decision.category === 'criminal') {
-                console.log(article)
                 return article;
             }
             return article.split(' - ')[1].replace(/"/g, '');
@@ -133,7 +135,6 @@ export default {
                 'sort[category]'      : 'desc',
                 'sort[timestamp]'     : 'desc',
                 'sort[aftermath_type]': 'asc',
-                'source'              : 'spring96',
                 'fullName'            : this.filter
             };
             if (this.court) {
