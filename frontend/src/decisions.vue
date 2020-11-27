@@ -135,6 +135,7 @@ export default {
                 'sort[category]'      : 'desc',
                 'sort[timestamp]'     : 'desc',
                 'sort[aftermath_type]': 'asc',
+                'exists[hiddenAt]'    : 'false',
                 'fullName'            : this.filter
             };
             if (this.court) {
