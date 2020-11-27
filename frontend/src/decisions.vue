@@ -5,8 +5,8 @@
                 Вынесенные решения
             </h2>
         </div>
-        <div class="inline-notice yellow">
-            <p v-if="decisions.length !== 0">
+        <div class="inline-notice yellow" v-if="decisions.length !== 0">
+            <p>
                 Если вы хотите скрыть вашу фамилию из публичного доступа, напишите в
                 <a href="https://t.me/zubr_watch_bot">телеграмм-бот</a>.
                 Часть данных по административным решениям взята из базы правозащитного центра
