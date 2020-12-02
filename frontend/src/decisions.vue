@@ -56,6 +56,15 @@
                         </div>
                     </td>
                     <td>
+                        <div v-if="decision.attachments.length > 0">
+                            <el-image
+                                :ref="'dec' + decision.id"
+                                :preview-src-list="decision.attachments">
+                                <div slot="error" class="image-slot">
+                                    <a @click="showDialog(decision)">Показать материалы</a>
+                                </div>
+                            </el-image>
+                        </div>
                         <div v-if="decision.extra.links && decision.extra.links.length > 0">
                             <a target="_blank" :href="link" v-for="(link,index) of decision.extra.links" :key="index">
                                 {{ link }}
@@ -84,22 +93,24 @@
 </template>
 
 <script>
-import {Popover, Button} from 'element-ui'
+import {Popover, Button, Image} from 'element-ui'
 import './styles/element-variables.scss'
 
 export default {
     name      : 'decisions',
     components: {
-        [Popover.name]: Popover,
-        [Button.name] : Button,
+        [Popover.name]     : Popover,
+        [Image.name]       : Image,
+        [Button.name]      : Button,
     },
     data() {
         return {
-            decisions: [],
-            filter   : '',
-            total    : 0,
-            error    : '',
-            page     : 1,
+            decisions    : [],
+            filter       : '',
+            total        : 0,
+            error        : '',
+            page         : 1,
+            current      : null,
         }
     },
     props     : {
@@ -116,6 +127,9 @@ export default {
         this.fetchData();
     },
     methods   : {
+        showDialog(decision) {
+            this.$refs['dec' + decision.id][0].clickHandler();
+        },
         loadMore() {
             this.page++;
             this.fetchData()
