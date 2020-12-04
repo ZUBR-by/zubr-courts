@@ -71,10 +71,8 @@
                             </a>
                             &nbsp;
                         </div>
-                        <div v-if="decision.category !== 'criminal'
-                                            && decision.source === 'spring96'
-                                            && typeof decision.extra === 'object' && decision.extra.extra">
-                            {{ decision.extra.extra }}
+                        <div>
+                            {{ decision.description }}
                         </div>
                     </td>
                 </tr>
