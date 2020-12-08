@@ -48,7 +48,8 @@
                                                icon="el-icon-question"
                                                size="mini"></el-button>
                                 </el-popover>
-                                {{ article.split(' - ')[0] }}
+                                <span v-if="article.includes('-')" v-text="article.split(' - ')[0]"></span>
+                                <span v-else>{{ article }}</span>
                             </div>
                         </div>
                         <div v-else>
@@ -97,18 +98,18 @@ import './styles/element-variables.scss'
 export default {
     name      : 'decisions',
     components: {
-        [Popover.name]     : Popover,
-        [Image.name]       : Image,
-        [Button.name]      : Button,
+        [Popover.name]: Popover,
+        [Image.name]  : Image,
+        [Button.name] : Button,
     },
     data() {
         return {
-            decisions    : [],
-            filter       : '',
-            total        : 0,
-            error        : '',
-            page         : 1,
-            current      : null,
+            decisions: [],
+            filter   : '',
+            total    : 0,
+            error    : '',
+            page     : 1,
+            current  : null,
         }
     },
     props     : {
@@ -134,6 +135,9 @@ export default {
         },
         format(decision, article) {
             if (decision.category === 'criminal') {
+                return article;
+            }
+            if (!article.includes(' - ')) {
                 return article;
             }
             return article.split(' - ')[1].replace(/"/g, '');
