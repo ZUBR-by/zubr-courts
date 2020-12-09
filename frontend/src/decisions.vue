@@ -96,8 +96,6 @@ import {Popover, Button, Image} from 'element-ui'
 import './styles/element-variables.scss'
 import articlesHashes           from './../../data/articles.json'
 
-console.log(articlesHashes);
-
 export default {
     name      : 'decisions',
     components: {
@@ -138,7 +136,6 @@ export default {
             this.fetchData()
         },
         format(decision, article) {
-            console.log(articlesHashes[article]);
             let text = articlesHashes[article] ? articlesHashes[article] : article;
             if (!text.includes(' - ')) {
                 return article;
