@@ -48,8 +48,8 @@
                                                icon="el-icon-question"
                                                size="mini"></el-button>
                                 </el-popover>
-                                <span v-if="article.includes('-')" v-text="article.split(' - ')[0]"></span>
-                                <span v-else>{{ article }}</span>
+                                <span v-if="hashes[article]" v-text="hashes[article].split(' - ')[0]" style="padding-left: 3px"></span>
+                                <span style="padding-left: 3px" v-else>{{ article }}</span>
                             </div>
                         </div>
                         <div v-else>
@@ -94,6 +94,9 @@
 <script>
 import {Popover, Button, Image} from 'element-ui'
 import './styles/element-variables.scss'
+import articlesHashes           from './../../data/articles.json'
+
+console.log(articlesHashes);
 
 export default {
     name      : 'decisions',
@@ -110,6 +113,7 @@ export default {
             error    : '',
             page     : 1,
             current  : null,
+            hashes   : articlesHashes,
         }
     },
     props     : {
@@ -134,13 +138,12 @@ export default {
             this.fetchData()
         },
         format(decision, article) {
-            if (decision.category === 'criminal') {
+            console.log(articlesHashes[article]);
+            let text = articlesHashes[article] ? articlesHashes[article] : article;
+            if (!text.includes(' - ')) {
                 return article;
             }
-            if (!article.includes(' - ')) {
-                return article;
-            }
-            return article.split(' - ')[1].replace(/"/g, '');
+            return text.split(' - ')[1].replace(/"/g, '');
         },
         fetchData() {
             let host   = process.env.VUE_APP_API_URL;
