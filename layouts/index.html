@@ -414,15 +414,15 @@
 
             <div class="stats-promo-data flex-row flex-algn-itms-c mil-flex-column">
                 <div class="section size-50 txt-algn-c mil-size-100">
-                    <h1>
+                    <h1 id="total_fines_rub">
                         1 234 872 р.
                     </h1>
-                    <h3>
+                    <h3 id="total_fines">
                         45 736 базовых величин
                     </h3>
                 </div>
                 <div class="section size-50 txt-algn-c mil-size-100">
-                    <h1>
+                    <h1 id="total_arrest">
                         28 527
                     </h1>
                     <h3>
@@ -430,157 +430,27 @@
                     </h3>
                 </div>
             </div>
-            <div class="stats-promo-diagrams-wrp">
-                <div class="stats-promo-diagrams">
-                    <div class="stats-promo-dgrms-unit">
+            <div class="stats-promo-diagrams-wrp" id="app">
+                <div class="stats-promo-diagrams" v-if="total">
+                    <div class="stats-promo-dgrms-unit" v-for="(label, key) in regions" :key="key">
                         <div class="stats-promo-dgrms-u-data">
-                            <div style="height:11px;" class="stats-promo-dgrms-u-value">
+                            <div :style="{ height : calculateHeight(2019, key)}" class="stats-promo-dgrms-u-value">
                                 <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        66
-                                    </div>
+                                    <div v-text="total['2019'][key]"></div>
                                 </div>
                             </div>
-                            <div style="height:35px;" class="stats-promo-dgrms-u-value">
+                            <div :style="{ height : calculateHeight(2020, key)}" class="stats-promo-dgrms-u-value">
                                 <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        243
-                                    </div>
+                                    <div v-text="total[2020][key]"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="stats-promo-dgrms-u-name">
+                        <div class="stats-promo-dgrms-u-name" v-text="label.replace(/обл./g, '')">
                             Брестская
                         </div>
                     </div>
-                    <div class="stats-promo-dgrms-unit">
-                        <div class="stats-promo-dgrms-u-data">
-                            <div style="height:9px;" class="stats-promo-dgrms-u-value">
-                                <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        20
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="height:38px;" class="stats-promo-dgrms-u-value">
-                                <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        186
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stats-promo-dgrms-u-name">
-                            Витебская
-                        </div>
-                    </div>
-                    <div class="stats-promo-dgrms-unit">
-                        <div class="stats-promo-dgrms-u-data">
-                            <div style="height:5px;" class="stats-promo-dgrms-u-value">
-                                <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        4
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="height:43px;" class="stats-promo-dgrms-u-value">
-                                <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        245
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stats-promo-dgrms-u-name">
-                            Гомельская
-                        </div>
-                    </div>
-                    <div class="stats-promo-dgrms-unit">
-                        <div class="stats-promo-dgrms-u-data">
-                            <div style="height:5px;" class="stats-promo-dgrms-u-value">
-                                <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        12
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="height:45px;" class="stats-promo-dgrms-u-value">
-                                <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        102
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stats-promo-dgrms-u-name">
-                            Гродненская
-                        </div>
-                    </div>
-                    <div class="stats-promo-dgrms-unit">
-                        <div class="stats-promo-dgrms-u-data">
-                            <div style="height:10px;" class="stats-promo-dgrms-u-value">
-                                <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        28
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="height:115px;" class="stats-promo-dgrms-u-value">
-                                <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        1197
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stats-promo-dgrms-u-name">
-                            Минская
-                        </div>
-                    </div>
-                    <div class="stats-promo-dgrms-unit">
-                        <div class="stats-promo-dgrms-u-data">
-                            <div style="height:15px;" class="stats-promo-dgrms-u-value">
-                                <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        3
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="height:55px;" class="stats-promo-dgrms-u-value">
-                                <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        331
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stats-promo-dgrms-u-name">
-                            Могилевская
-                        </div>
-                    </div>
-                    <div class="stats-promo-dgrms-unit">
-                        <div class="stats-promo-dgrms-u-data">
-                            <div style="height:23px;" class="stats-promo-dgrms-u-value">
-                                <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        157
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="height:200px;" class="stats-promo-dgrms-u-value">
-                                <div class="stats-promo-dgrms-u-v-count">
-                                    <div>
-                                        2 628
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stats-promo-dgrms-u-name">
-                            Минск
-                        </div>
-                    </div>
                 </div>
-                <div class="flex-row stats-promo-info txt-bold">
+                <div class="flex-row stats-promo-info txt-bold" v-if="total">
                     <div class="section">
                         <div class="stats-promo-i-mark gray"></div>
                         2019
