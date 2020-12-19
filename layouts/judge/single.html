@@ -13,6 +13,16 @@
                     {{ $.Param "fullName"}}
                 </h1>
                 {{ if $.Param "court"}}
+                    {{ if $.Param "comment"}}
+                <div class="judge-info-unit pdng-t-10px">
+                    <div class="judge-info-unit-name txt-color-1">
+                        Телефон:
+                    </div>
+                    <div class="judge-info-unit-desc">
+                        <a href='tel:+{{ .Param "comment" }}'>+{{ .Param "comment" }}</a>
+                    </div>
+                </div>
+                    {{ end }}
                 <div class="judge-info-unit pdng-t-10px">
                     <div class="judge-info-unit-name txt-color-1">
                         Суд:
@@ -31,13 +41,6 @@
                 </div>
                 <div class="judge-info-unit">
                     <div class="judge-info-unit-name txt-color-1">
-                        Статистика:
-                    </div>
-                    Выдано штрафов на <span id='{{$.Param "id"}}_fines_rub'></span> руб.,
-                    суток адм. ареста - <span id='{{$.Param "id"}}_arrests'></span>
-                </div>
-                <div class="judge-info-unit">
-                    <div class="judge-info-unit-name txt-color-1">
                         Назначение:
                     </div>
                     <div class="judge-info-unit-desc">
@@ -45,6 +48,13 @@
                     </div>
                 </div>
                 {{ end }}
+                <div class="judge-info-unit">
+                    <div class="judge-info-unit-name txt-color-1">
+                        Статистика:
+                    </div>
+                    Выдано штрафов на <span id='{{$.Param "id"}}_fines_rub'></span> руб.,
+                    суток адм. ареста - <span id='{{$.Param "id"}}_arrests'></span>
+                </div>
                 <div class="judge-info-unit">
                     <ul>
                         {{ $collection := .Param "career"}}
