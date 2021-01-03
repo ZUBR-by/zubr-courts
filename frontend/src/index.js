@@ -64,9 +64,6 @@ new Vue(
         },
         watch  : {
             year(value) {
-                if (value === 2021) {
-                    return;
-                }
                 this.fetchStatistic()
             }
         },
