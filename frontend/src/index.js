@@ -63,7 +63,7 @@ new Vue(
             }
         },
         watch  : {
-            year(value) {
+            year() {
                 this.fetchStatistic()
             }
         },
