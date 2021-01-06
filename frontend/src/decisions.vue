@@ -31,13 +31,7 @@
                     <td class="txt-nowrap size-10">{{ decision.fullName }}</td>
                     <td class="txt-nowrap">{{ decision.timestamp }}</td>
                     <td class="size-10">
-                        <span v-if="decision.category !== 'criminal'">
-                            {{ decision.aftermath }}
-                        </span>
-                        <span v-else>
-                            {{ decision.aftermathExtra }}
-                        </span>
-
+                        {{ decision.outcomeFormatted }}
                     </td>
                     <td class="txt-nowrap">
                         <div v-if="decision.category !== 'criminal'">
@@ -150,7 +144,6 @@ export default {
             let params = {
                 'sort[category]'      : 'desc',
                 'sort[timestamp]'     : 'desc',
-                'sort[aftermath_type]': 'asc',
                 'exists[hiddenAt]'    : 'false',
                 'fullName'            : this.filter
             };
