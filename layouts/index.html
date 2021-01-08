@@ -437,14 +437,14 @@
                 <div class="stats-promo-diagrams" v-if="total">
                     <div class="stats-promo-dgrms-unit" v-for="(label, key) in regions" :key="key">
                         <div class="stats-promo-dgrms-u-data">
-                            <div :style="{ height : calculateHeight(2019, key)}" class="stats-promo-dgrms-u-value">
-                                <div class="stats-promo-dgrms-u-v-count">
-                                    <div v-text="total['2019'][key]"></div>
-                                </div>
-                            </div>
                             <div :style="{ height : calculateHeight(2020, key)}" class="stats-promo-dgrms-u-value">
                                 <div class="stats-promo-dgrms-u-v-count">
                                     <div v-text="total[2020][key]"></div>
+                                </div>
+                            </div>
+                            <div :style="{ height : calculateHeight(2021, key)}" class="stats-promo-dgrms-u-value">
+                                <div class="stats-promo-dgrms-u-v-count">
+                                    <div v-text="total[2021][key]"></div>
                                 </div>
                             </div>
                         </div>
@@ -456,11 +456,11 @@
                 <div class="flex-row stats-promo-info txt-bold" v-if="total">
                     <div class="section">
                         <div class="stats-promo-i-mark gray"></div>
-                        2019
+                        2020
                     </div>
                     <div class="section">
                         <div class="stats-promo-i-mark orange"></div>
-                        2020
+                        2021
                     </div>
                     <div class="section" style="padding-top: 2px">
                         <span >Количество решений</span>
