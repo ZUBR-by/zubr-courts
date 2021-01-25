@@ -1,6 +1,6 @@
 {{ define "main" }}
-<div class="two-coll-wrapper flex-row mil-flex-column" id="app">
-    <div class="section size-70 mil-size-100">
+<div class="flex-row mil-flex-column" id="app">
+    <div class="section size-100 mil-size-100">
         {{ partial "header" . }}
         <div class="scene flex-row mil-flex-column" style="padding-bottom: 0">
             <div class="section size-20 pdng-r-50px mil-size-100 mil-pdng-20px">
@@ -88,7 +88,6 @@
         <decisions :judge='{{.Param "id"}}'></decisions>
         {{ partial "footer"}}
     </div>
-    {{ partial "disqus" . }}
 </div>
 {{ end }}
 {{ define "js"}}
