@@ -2,7 +2,7 @@
     <div class="scene">
         <div class="pdng-b-20px">
             <h1 class="txt-color-1 txt-size-34px txt-">
-                Судьи Баларуси
+                Судьи Беларуси
             </h1>
         </div>
         <div class="filter-wrp mrgn-0 mrgn-b-30px">
