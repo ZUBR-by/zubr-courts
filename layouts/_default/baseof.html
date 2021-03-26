@@ -40,7 +40,6 @@
     {{end}}
     {{ $cssMain := resources.Get "css/main.css" | minify | fingerprint}}
     <link rel="stylesheet" href="/fonts/roboto/roboto.css">
-    <link rel="stylesheet" href="/fonts/element.css"/>
     <link rel="stylesheet" href="{{ $cssMain.Permalink }}">
     <link rel="icon" type="image/png" href="/imgs/icons/favicon.png" />
 </head>

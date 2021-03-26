@@ -3,7 +3,7 @@
         <el-card id="popup" v-show="isVisible">
             <div slot="header" class="clearfix">
                 <span style="color: #fff">Суды</span>
-                <el-button style="float: right;padding: 7px"
+                <el-button style="float: right;"
                            circle
                            @click="hide"
                            icon="el-icon-close"></el-button>
@@ -33,7 +33,8 @@ import {fromLonLat}              from "ol/proj";
 import courts                    from './../../data/courts_location.json'
 import Feature                   from "ol/Feature";
 import Point                     from "ol/geom/Point";
-import {Card, Button}            from 'element-ui'
+import {ElCard, ElButton}        from 'element-plus'
+import {defineComponent}         from 'vue'
 
 const centers = {
     '01': [25.408217, 52.472241],
@@ -44,14 +45,11 @@ const centers = {
     '06': [30.424774, 53.564610],
     '07': [27.551411, 53.895710]
 };
-import 'element-ui/lib/theme-chalk/card.css'
-import 'element-ui/lib/theme-chalk/button.css'
-import 'element-ui/lib/theme-chalk/icon.css'
 
-export default {
+export default defineComponent({
     components: {
-        [Card.name]  : Card,
-        [Button.name]: Button
+        ElCard,
+        ElButton
     },
     data() {
         return {
@@ -172,13 +170,14 @@ export default {
         }, 1000)
 
     },
-}
+})
 </script>
 <style>
 @media (max-width: 820px) {
     #popup {
         font-size: 14px;
     }
+
     .padding {
         padding-top: 6px;
     }
@@ -222,5 +221,62 @@ a.skiplink:focus {
     padding: 5px 18px 16px;
     border-bottom: 1px solid #ebeef5;
     box-sizing: border-box;
+}
+
+@font-face {
+    font-family: element-icons;
+    src: url(/fonts/element-icons.woff) format("woff"), url(/fonts/element-icons.ttf) format("truetype");
+    font-weight: 400;
+    font-display: "auto";
+    font-style: normal
+}
+
+[class*=" el-icon-"], [class^=el-icon-] {
+    font-family: element-icons !important;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: baseline;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+.el-icon-ice-cream-round:before {
+    content: ""
+}
+
+
+.el-icon-question:before {
+    content: ""
+}
+
+
+.el-icon-eleme:before {
+    content: ""
+}
+
+.el-icon-platform-eleme:before {
+    content: ""
+}
+
+.el-icon-close:before {
+    content: ""
+}
+
+.el-icon-loading {
+    -webkit-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite
+}
+
+.el-icon--right {
+    margin-left: 5px
+}
+
+.el-icon--left {
+    margin-right: 5px
 }
 </style>

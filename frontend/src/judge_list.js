@@ -1,11 +1,9 @@
-import Vue       from 'vue'
-import judges from "./judges";
+import 'vite/dynamic-import-polyfill'
+import judges from "./judges.vue";
+import {createApp} from 'vue'
 
-new Vue(
-    {
-        el        : '#app',
-        components: {
-            judges
-        }
+createApp({
+    components: {
+        judges
     }
-);
+}).mount('#app')

@@ -448,9 +448,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="stats-promo-dgrms-u-name" v-text="label.replace(/обл./g, '')">
-                            Брестская
-                        </div>
+                        <div class="stats-promo-dgrms-u-name" v-text="label.replace(/обл./g, '')"></div>
                     </div>
                 </div>
                 <div class="flex-row stats-promo-info txt-bold" v-if="total">
@@ -473,12 +471,12 @@
 </div>
 {{partial "footer"}}
 {{ end }}
+
 {{ define "js"}}
-{{ $jsVendor1 := resources.Get "generated/js/chunk-index-vendors.js" | fingerprint }}
-<script src="{{ $jsVendor1.Permalink }}"></script>
-{{ $jsVendor := resources.Get "generated/js/index.js" | fingerprint }}
-<script src="{{ $jsVendor.Permalink }}"></script>
-{{end}}
+{{ .Scratch.Set "entry" "index" }}
+{{ partial "assets" . }}
+{{ end }}
+
 {{ define "class_body"}}
 class="homepage"
 {{end}}

@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="table-wrapper pdng-t-20px pdng-20px">
-            <table class="zbr-table">
+            <table class="zbr-table" v-loading="loading">
                 <tbody>
                 <tr v-for="decision of decisions" :key="decision.id" :class="{'fav' : decision.category === 'criminal'}">
                     <td class="txt-nowrap size-10">{{ decision.fullName }}</td>
@@ -36,11 +36,14 @@
                     <td class="txt-nowrap">
                         <div v-if="decision.category !== 'criminal'">
                             <div v-for="(article, index) in decision.articles" :key="index">
-                                <el-popover width="300" :content="format(decision, article)" placement="bottom">
-                                    <el-button slot="reference" type="primary"
-                                               circle
-                                               icon="el-icon-question"
-                                               size="mini"></el-button>
+                                <el-popover width="300" :content="format(decision, article)"
+                                            placement="bottom">
+                                    <template #reference>
+                                        <el-button type="primary"
+                                                   circle
+                                                   icon="el-icon-question"
+                                                   size="mini"></el-button>
+                                    </template>
                                 </el-popover>
                                 <span v-if="hashes[article]" v-text="hashes[article].split(' - ')[0]" style="padding-left: 3px"></span>
                                 <span style="padding-left: 3px" v-else>{{ article }}</span>
@@ -86,16 +89,15 @@
 </template>
 
 <script>
-import {Popover, Button, Image} from 'element-ui'
-import './styles/element-variables.scss'
-import articlesHashes           from './../../data/articles.json'
+import {ElPopover, ElButton, ElImage, ElLoading} from 'element-plus'
+import articlesHashes                            from './../../data/articles.json'
 
 export default {
     name      : 'decisions',
     components: {
-        [Popover.name]: Popover,
-        [Image.name]  : Image,
-        [Button.name] : Button,
+        ElPopover,
+        ElImage,
+        ElButton,
     },
     data() {
         return {
@@ -105,6 +107,7 @@ export default {
             error    : '',
             page     : 1,
             current  : null,
+            loading  : false,
             hashes   : articlesHashes,
         }
     },
@@ -120,6 +123,9 @@ export default {
     },
     created() {
         this.fetchData();
+    },
+    directives: {
+        loading: ElLoading.directive
     },
     methods   : {
         showDialog(decision) {
@@ -137,15 +143,16 @@ export default {
             return text.split(' - ')[1].replace(/"/g, '');
         },
         fetchData() {
-            let host   = process.env.VUE_APP_API_URL;
+            this.loading = true;
+            let host   = import.meta.env.VITE_API_URL;
             let url    = new URL(
                 host + '/decision'
             );
             let params = {
-                'sort[category]'      : 'desc',
-                'sort[timestamp]'     : 'desc',
-                'exists[hiddenAt]'    : 'false',
-                'fullName'            : this.filter
+                'sort[category]'  : 'desc',
+                'sort[timestamp]' : 'desc',
+                'exists[hiddenAt]': 'false',
+                'fullName'        : this.filter
             };
             if (this.court) {
                 params['court.id'] = this.court;
@@ -163,6 +170,7 @@ export default {
                 }
                 return r.json()
             }).then(r => {
+                this.loading = false;
                 if (r === null) {
                     this.error = 'Произошла ошибка'
                     return;
@@ -178,9 +186,83 @@ export default {
     }
 }
 </script>
+<style>
 
-<style scoped>
-.el-button--mini.is-circle {
-    padding: 5px !important;
+@charset "UTF-8";
+@font-face {
+    font-family: element-icons;
+    src: url(/fonts/element-icons.woff) format("woff"), url(/fonts/element-icons.ttf) format("truetype");
+    font-weight: 400;
+    font-display: "auto";
+    font-style: normal
 }
+
+[class*=" el-icon-"], [class^=el-icon-] {
+    font-family: element-icons !important;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: baseline;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+.el-icon-ice-cream-round:before {
+    content: ""
+}
+
+
+.el-icon-question:before {
+    content: ""
+}
+
+
+.el-icon-eleme:before {
+    content: ""
+}
+
+.el-icon-platform-eleme:before {
+    content: ""
+}
+
+.el-icon-loading {
+    -webkit-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite
+}
+
+.el-icon--right {
+    margin-left: 5px
+}
+
+.el-icon--left {
+    margin-right: 5px
+}
+
+@-webkit-keyframes rotating {
+    0% {
+        -webkit-transform: rotateZ(0);
+        transform: rotateZ(0)
+    }
+    100% {
+        -webkit-transform: rotateZ(360deg);
+        transform: rotateZ(360deg)
+    }
+}
+
+@keyframes rotating {
+    0% {
+        -webkit-transform: rotateZ(0);
+        transform: rotateZ(0)
+    }
+    100% {
+        -webkit-transform: rotateZ(360deg);
+        transform: rotateZ(360deg)
+    }
+}
+
 </style>
+

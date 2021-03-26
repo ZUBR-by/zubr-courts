@@ -1,5 +1,6 @@
-import Vue           from 'vue'
-import map from './court-map'
+import 'vite/dynamic-import-polyfill'
+import {createApp}           from 'vue'
+import map from './court-map.vue'
 
 function setCookie(name, value) {
     let options = {
@@ -41,9 +42,8 @@ function getCookie(name) {
     }
     return null;
 }
-new Vue(
+createApp(
     {
-        el: '#app',
         components: {
             'court-map' : map
         },
@@ -63,4 +63,4 @@ new Vue(
             }
         },
     }
-);
+).mount('#app');

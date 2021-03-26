@@ -11,27 +11,24 @@
                     <div class="txt-algn-l">
                         ФИО судьи
                     </div>
-                    <input
-                        class="input mrgn-t-5px"
-                        v-model.lazy="filter.search" autofocus placeholder="">
+                    <el-input v-model.lazy="filter.search" autofocus :placeholder="''"></el-input>
                 </div>
-                <!--                <div class="section size-25 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">-->
-                <!--                    <div class="txt-algn-l">-->
-                <!--                        Суд-->
-                <!--                    </div>-->
-                <!--                    <input class="input mrgn-t-5px" placeholder="Минской городской суд">-->
-                <!--                </div>-->
                 <div class="section size-25 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">
                     <div class="txt-algn-l">
                         Метки
                     </div>
-                    <div style="padding-top: 5px;">
-                        <el-select v-model="filter.tags" multiple clearable placeholder="" collapse-tags="true" style="width: 100%">
-                            <el-option :value="key" :label="item" v-for="(item, key) in translations" :key="key"></el-option>
-                        </el-select>
-                    </div>
+                    <el-select v-model="filter.tags"
+                               multiple
+                               clearable
+                               :placeholder="'Метки'"
+                               style="width: 100%"
+                               :collapse-tags="true">
+                        <el-option :value="key"
+                                   :label="item" v-for="(item, key) in translations"
+                                   :key="key"></el-option>
+                    </el-select>
                 </div>
-                <div class="section size-25 txt-algn-l" style="padding-top: 35px">
+                <div class="section size-50 txt-algn-l" style="padding-top: 30px">
                     <b>Кол-во судей</b>: {{ count }}
                 </div>
                 <div class="section size-25 mil-size-100 mil-pdng-t-20px txt-algn-r">
@@ -72,7 +69,7 @@
                                     <img alt="photo"
                                          :src="'https://cdn.zubr.ws/courts/judges/' + judge['id'] + '.jpg'">
                                     <div class="judge-u-photo-icon" v-if="judge.tags.includes('top')">
-                                        <img src="/imgs/icons/svg/star.svg">
+<!--                                        <img src="/imgs/icons/svg/star.svg">-->
                                     </div>
                                 </div>
                             </div>
@@ -123,17 +120,16 @@
 
 <script>
 
-import {Option, Select, Loading} from 'element-ui'
-import Vue                                      from 'vue'
-import './styles/element-variables.scss'
-import translations                             from './../../data/translations.json'
+import {ElOption, ElSelect, ElLoading, ElInput} from 'element-plus'
+import translations                    from './../../data/translations.json'
+import {defineComponent}               from 'vue'
 
-Vue.use(Loading);
-export default {
+export default defineComponent({
     name      : 'judges',
     components: {
-        [Select.name] : Select,
-        [Option.name]: Option,
+        ElSelect,
+        ElOption,
+        ElInput
     },
     data() {
         return {
@@ -150,8 +146,11 @@ export default {
             loading: false
         }
     },
+    directives: {
+        loading: ElLoading.directive
+    },
     methods   : {
-        loadMore(){
+        loadMore() {
             this.page++;
             this.loadData()
         },
@@ -174,7 +173,7 @@ export default {
             return this.translations[value];
         },
         loadData() {
-            let host   = process.env.VUE_APP_API_URL;
+            let host   = import.meta.env.VITE_API_URL;
             let url    = new URL(
                 host + '/judge'
             );
@@ -208,8 +207,8 @@ export default {
                 if (this.page > 1) {
                     this.judges = this.judges.concat(r['hydra:member']);
                 } else {
-                    this.count   = r['hydra:totalItems'];
-                    this.judges  = r['hydra:member'];
+                    this.count  = r['hydra:totalItems'];
+                    this.judges = r['hydra:member'];
                 }
 
                 this.loading = false;
@@ -228,10 +227,10 @@ export default {
     created() {
         this.loadData()
     }
-}
+})
 </script>
 <style>
- .el-input__inner {
-     height: 40px !important;
- }
+.el-input__inner {
+    height: 40px !important;
+}
 </style>

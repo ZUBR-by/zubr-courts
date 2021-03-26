@@ -1,22 +1,23 @@
 <template>
-    <div id="map" class="map"></div>
+    <div id="location" class="location"></div>
 </template>
 
 <script>
 import 'ol/ol.css';
-import Map           from 'ol/Map';
-import OSM           from 'ol/source/OSM';
-import TileLayer     from 'ol/layer/Tile';
-import View          from 'ol/View';
-import {fromLonLat}  from 'ol/proj';
-import Feature       from 'ol/Feature';
-import Point         from 'ol/geom/Point'
-import VectorLayer   from 'ol/layer/Vector';
-import VectorSource  from 'ol/source/Vector';
-import {Icon, Style} from 'ol/style';
+import Map               from 'ol/Map';
+import OSM               from 'ol/source/OSM';
+import TileLayer         from 'ol/layer/Tile';
+import View              from 'ol/View';
+import {fromLonLat}      from 'ol/proj';
+import Feature           from 'ol/Feature';
+import Point             from 'ol/geom/Point'
+import VectorLayer       from 'ol/layer/Vector';
+import VectorSource      from 'ol/source/Vector';
+import {Icon, Style}     from 'ol/style';
+import {defineComponent} from 'vue'
 
-export default {
-    name : "map",
+export default defineComponent({
+    name : "location",
     props: {
         longitude: Number,
         latitude : Number
@@ -24,12 +25,12 @@ export default {
     mounted() {
         setTimeout(() => {
             let map           = new Map({
-                layers      : [
+                layers: [
                     new TileLayer({
                         source: new OSM(),
                     })],
-                target      : 'map',
-                view        : new View({
+                target: 'location',
+                view  : new View({
                     center: fromLonLat([this.longitude, this.latitude]),
                     zoom  : 15.5,
                 }),
@@ -48,8 +49,8 @@ export default {
                 style : new Style({
                     image: new Icon({
                         anchor: [0.7, 1],
-                        scale  : 0.3,
-                        src: '/imgs/marker.png',
+                        scale : 0.3,
+                        src   : '/imgs/marker.png',
                     }),
                 }),
             });
@@ -66,11 +67,11 @@ export default {
             features: []
         }
     }
-}
+})
 </script>
 
 <style>
-.map {
+.location {
     width: 100%;
     height: 100%;
 }
@@ -93,7 +94,7 @@ a.skiplink:focus {
     padding: 0.3em;
 }
 
-#map:focus {
+#location:focus {
     outline: #4A74A8 solid 0.15em;
 }
 </style>

@@ -6,12 +6,7 @@
 {{partial "footer"}}
 {{ end }}
 {{ define "js"}}
-{{ $jsVendor := resources.Get "generated/js/chunk-judges-vendors.js" | fingerprint }}
-<script src="{{ $jsVendor.Permalink }}"></script>
-{{ $jsCurrent := resources.Get "generated/js/judges.js" | fingerprint }}
-<script src="{{ $jsCurrent.Permalink }}"></script>
-
-{{ $cssVendor := resources.Get "generated/css/judges.css" | fingerprint }}
-<link rel="stylesheet" href="{{$cssVendor.Permalink}}"/>
+{{ .Scratch.Set "entry" "judge_list" }}
+{{ partial "assets" . }}
 {{end}}
 

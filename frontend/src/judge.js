@@ -1,15 +1,15 @@
-import Vue       from 'vue'
-import decisions from "./decisions";
+import 'vite/dynamic-import-polyfill'
+import {createApp}       from 'vue'
+import decisions from "./decisions.vue";
 
-new Vue(
+createApp(
     {
-        el        : '#app',
         components: {
             decisions
         },
         mounted() {
             // eslint-disable-next-line
-            fetch(process.env.VUE_APP_API_URL + '/judge/' + id ).then(
+            fetch(import.meta.env.VITE_API_URL + '/judge/' + id ).then(
                 r => r.json()
             ).then(
                 r => {
@@ -21,4 +21,4 @@ new Vue(
             )
         }
     }
-);
+).mount('#app');

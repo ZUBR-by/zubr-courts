@@ -85,7 +85,8 @@
                 <!--                </div>-->
             </div>
         </div>
-        <decisions :judge='{{.Param "id"}}'></decisions>
+        {{ $id := .Param "id"}}
+        <decisions :judge="'{{$id}}'"></decisions>
         {{ partial "footer"}}
     </div>
 </div>
@@ -94,11 +95,8 @@
 <script>
     var id = '{{.Param "id"}}';
 </script>
-{{ $jsVendor := resources.Get "generated/js/chunk-judge-vendors.js" | fingerprint }}
-<script src="{{ $jsVendor.Permalink }}"></script>
-{{ $jsCurrent := resources.Get "generated/js/judge.js" | fingerprint }}
-<script src="{{ $jsCurrent.Permalink }}"></script>
-{{ $cssCurrent := resources.Get "generated/css/judge.css" | fingerprint }}
-<link rel="stylesheet" href="{{$cssCurrent.Permalink}}"/>
+{{ .Scratch.Set "entry" "judge" }}
+{{ partial "assets" . }}
+
 {{end}}
 

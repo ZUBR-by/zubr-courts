@@ -125,12 +125,7 @@
 <script>
     var id = '{{.Param "id"}}';
 </script>
-{{ $jsVendor := resources.Get "generated/js/chunk-court-vendors.js" | fingerprint }}
-{{ $jsCurrent := resources.Get "generated/js/court.js" | fingerprint }}
-{{ $cssVendor := resources.Get "generated/css/chunk-court-vendors.css" | fingerprint }}
-{{ $cssCurrent := resources.Get "generated/css/court.css" | fingerprint }}
-<script src="{{ $jsVendor.Permalink }}"></script>
-<script src="{{ $jsCurrent.Permalink }}"></script>
-<link rel="stylesheet" href="{{$cssVendor.Permalink}}"/>
-<link rel="stylesheet" href="{{$cssCurrent.Permalink}}"/>
+
+{{ .Scratch.Set "entry" "court" }}
+{{ partial "assets" . }}
 {{end}}

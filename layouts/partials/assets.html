@@ -1,0 +1,16 @@
+{{ $entry := print "src/" (.Scratch.Get "entry") ".js" }}
+{{- if not hugo.IsProduction -}}
+<script type="module" src="http://localhost:3000/@vite/client"></script>
+<script type="module" src="http://localhost:3000/{{$entry}}"></script>
+{{ else }}
+{{ $manifest := getJSON "assets/generated/manifest.json" }}
+{{ $entry := index $manifest $entry}}
+{{ $entryJs := resources.Get (print "generated/" (index $entry "file")) }}
+<script type="module" src="{{$entryJs.Permalink}}"></script>
+{{if gt (index $entry "css") 0 }}
+{{ range $val := (index $entry "css")}}
+{{$css := resources.Get (print "generated/" $val) }}
+<link rel="stylesheet" href="{{$css.Permalink}}"/>
+{{ end }}
+{{ end }}
+{{- end -}}
