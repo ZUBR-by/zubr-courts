@@ -50,7 +50,7 @@
                     <div :class="{'filter-t-s-arrow' : this.sort === 'tags', 'down' : this.order === 'desc', 'up': this.order === 'asc'}"></div>
                 </div>
                 <div class="section size-20" @click="setSort('decisions')">
-                    Решения
+                    Адм. Решения
                     <div :class="{'filter-t-s-arrow' : this.sort === 'decisions', 'down' : this.order === 'desc', 'up': this.order === 'asc'}"></div>
                 </div>
                 <div class="section size-30">
