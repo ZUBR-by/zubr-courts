@@ -69,13 +69,9 @@ export default defineComponent({
             let url      = new URL(
                 import.meta.env.VITE_API_URL + '/trial'
             );
-            let format   = (input) => {
-                let day, month, year;
-                [month, day, year] = input.split('/')
-
-                return [year, pad(month), pad(day)].join('-')
-            }
-            let datetime = this.date ? this.date.toISOString().split('T')[0] : null;
+            let datetime = this.date
+                ? new Date( this.date.getTime() - this.date.getTimezoneOffset() * 60000 ).toISOString().split('T')[0]
+                : null;
             let params   = {
                 'court.id'         : this.court ? this.court : this.region,
                 'timestamp[after]' : datetime ? datetime + ' 00:00:00' : '',
