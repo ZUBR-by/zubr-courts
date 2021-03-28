@@ -2,6 +2,7 @@ import 'vite/dynamic-import-polyfill'
 import {createApp} from 'vue'
 import decisions   from "./decisions.vue";
 import location    from "./court-location.vue";
+import trials      from "./trials.vue";
 
 // eslint-disable-next-line
 let cid = id;
@@ -10,7 +11,8 @@ createApp(
     {
         components: {
             decisions,
-            location
+            location,
+            trials,
         },
         mounted() {
             fetch(import.meta.env.VITE_API_URL + '/court/' + cid).then(

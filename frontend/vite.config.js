@@ -9,6 +9,9 @@ export default defineConfig({
             libraryName: "element-plus",
             libraryDirectory: "es",
             customStyleName: (name) => {
+                if (name === 'locale') {
+                    return `element-plus/packages/theme-chalk/src/button.scss`
+                }
                 return `element-plus/packages/theme-chalk/src/${name.replace('el-','')}.scss`;
             },
         }),

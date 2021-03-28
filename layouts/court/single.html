@@ -2,7 +2,7 @@
 <div class="flex-row mil-flex-column" id="app">
     <div class="section size-100 mil-size-100">
         {{ partial "header" . }}
-        <div class="scene">
+        <div class="scene pdng-b-10px pdng-t-40px">
             <div class="court-info flex-row flex-algn-itms-strch mil-flex-column-reserve">
                 <div class="section size-50 pdng-30px mil-size-100">
                     <h1 class="txt-size-34px txt-nottransform">
@@ -78,54 +78,128 @@
                 </div>
             </div>
         </div>
-        <div class="scene">
-            <div class="pdng-t-5prc pdng-b-20px">
-                <h2 class="txt-uppercase txt-color-1 txt-nottransform txt-algn-c">
-                    Состав
-                </h2>
-            </div>
-            <div class="flex-row flex-wrap pdng-t-20px mil-flex-column">
-                {{ range $index, $element := .Param "judges"}}
-                <div class="section flex-row size-25 mil-size-100 mil-pdng-b-50px">
-                    <div class="judge-unit flex-column pdng-5prc txt-algn-c">
-                        <div class="judge-unit-photo">
-                            <img src="https://cdn.zubr.ws/courts/judges/{{$element.id}}.jpg">
-                        </div>
-                        <h3 class="judge-unit-name txt-color-1">
-                            {{ $element.fullName}}
-                        </h3>
-                        <div class="judge-unit-position">
-                            {{ $element.court.position}}
-                        </div>
-                        <p class="judge-unit-description pdng-t-20px">
-                        </p>
-                        {{ $length := len $element.tags}}
-                        {{ if (gt $length 0)}}
-                        <div class="tags-wrp txt-algn-l">
-                            {{ range $index, $element := $element.tags}}
-                            <a class="tag-unit" href="#">{{index $.Site.Data.translations $element}}</a>
+        <div class="scene pdng-t-10px pdng-b-10px">
+            <div class="tabset">
+                <input type="radio" name="tabset" id="tab1" aria-controls="staff-control" autofocus checked>
+                <label for="tab1">Состав</label>
+                <input type="radio" name="tabset" id="tab2" aria-controls="calendar-control">
+                <label for="tab2">Слушания</label>
+                <input type="radio" name="tabset" id="tab3" aria-controls="decision-control">
+                <label for="tab3">Решения</label>
+                <div class="tab-panels">
+                    <section id="staff-control" class="tab-panel">
+                        <div class="flex-row flex-wrap pdng-t-20px mil-flex-column">
+                            {{ range $index, $element := .Param "judges"}}
+                            <div class="section flex-row size-25 mil-size-100 mil-pdng-b-50px">
+                                <div class="judge-unit flex-column pdng-5prc txt-algn-c">
+                                    <div class="judge-unit-photo">
+                                        <img src="https://cdn.zubr.ws/courts/judges/{{$element.id}}.jpg">
+                                    </div>
+                                    <h3 class="judge-unit-name txt-color-1">
+                                        {{ $element.fullName}}
+                                    </h3>
+                                    <div class="judge-unit-position">
+                                        {{ $element.court.position}}
+                                    </div>
+                                    <p class="judge-unit-description pdng-t-20px">
+                                    </p>
+                                    {{ $length := len $element.tags}}
+                                    {{ if (gt $length 0)}}
+                                    <div class="tags-wrp txt-algn-l">
+                                        {{ range $index, $element := $element.tags}}
+                                        <a class="tag-unit" href="#">{{index $.Site.Data.translations $element}}</a>
+                                        {{end}}
+                                    </div>
+                                    {{end}}
+                                    <div class="flex-grow-all"></div>
+                                    <div class="pdng-t-30px">
+                                        <a class="button size-100" href="/judge/{{ $element.id}}">Подробнее</a>
+                                    </div>
+                                </div>
+                            </div>
                             {{end}}
                         </div>
-                        {{end}}
-                        <div class="flex-grow-all"></div>
-                        <div class="pdng-t-30px">
-                            <a class="button size-100" href="/judge/{{ $element.id}}">Подробнее</a>
-                        </div>
-                    </div>
+                    </section>
+                    <section id="calendar-control" class="tab-panel">
+                        {{$id := .Param "id"}}
+                        <trials :initial-court="'{{$id}}'"></trials>
+                    </section>
+                    <section id="decision-control" class="tab-panel">
+                        <decisions :court='"{{.Param "id"}}"'></decisions>
+                    </section>
                 </div>
-                {{end}}
             </div>
         </div>
-        <decisions :court='"{{.Param "id"}}"'></decisions>
         {{ partial "footer"}}
     </div>
 </div>
 {{end}}
-{{ define "js"}}
+{{ define "assets"}}
 <script>
     var id = '{{.Param "id"}}';
 </script>
+<style>
+    .tabset > input[type="radio"] {
+        position: absolute;
+        left: -200vw;
+    }
 
+    .tabset .tab-panel {
+        display: none;
+    }
+
+    .tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+    .tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+    .tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+    .tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+    .tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+    .tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
+        display: block;
+    }
+
+    .tabset > label {
+        position: relative;
+        display: inline-block;
+        padding: 15px 15px 25px;
+        border: 1px solid transparent;
+        border-bottom: 0;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .tabset > label::after {
+        content: "";
+        position: absolute;
+        left: 15px;
+        bottom: 10px;
+        width: 22px;
+        height: 4px;
+        background: #8d8d8d;
+    }
+
+    .tabset > label:hover,
+    .tabset > input:focus + label {
+        color: rgba(255,92,1,1);
+    }
+
+    .tabset > label:hover::after,
+    .tabset > input:focus + label::after,
+    .tabset > input:checked + label::after {
+        background: rgba(255,92,1,1);
+    }
+
+    .tabset > input:checked + label {
+        border-color: #ccc;
+        border-bottom: 1px solid #fff;
+        margin-bottom: -1px;
+    }
+
+    .tab-panel {
+        padding: 30px 0;
+        border-top: 1px solid #ccc;
+    }
+</style>
 {{ .Scratch.Set "entry" "court" }}
 {{ partial "assets" . }}
 {{end}}

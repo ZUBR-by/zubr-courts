@@ -1,6 +1,6 @@
 <template>
-    <div class="scene">
-        <div class="pdng-t-5prc pdng-b-20px">
+    <div>
+        <div class="pdng-b-20px">
             <h2 class=" txt-uppercase txt-color-1">
                 Вынесенные решения
             </h2>
@@ -13,7 +13,7 @@
                 <a href="https://spring96.org/">"Весна"</a>
             </p>
         </div>
-        <div class="filter-wrp flex-row mrgn-b-20px">
+        <div class="filter-wrp flex-row mrgn-b-20px ">
             <div class="section size-40 pdng-r-10px">
                 <input class="input" placeholder="ФИО" v-model.lazy="filter">
             </div>

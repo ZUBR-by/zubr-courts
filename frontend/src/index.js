@@ -1,19 +1,20 @@
 import 'vite/dynamic-import-polyfill'
 import {createApp} from 'vue'
 import regions     from "../../data/regions.json";
-console.log(import.meta.env.VITE_API_URL)
-for (let id of ["1293", "1218", "1253", "1166", "36"]) {
-    fetch(import.meta.env.VITE_API_URL + '/judge/' + id).then(
-        r => r.json()
-    ).then(
-        r => {
-            document.getElementById(id + '_fines_rub').innerText = r.statistic.fines_rub;
-            document.getElementById(id + '_arrests').innerText   = r.statistic.arrests;
-        }
-    )
+import {ElCard}    from "element-plus";
+
+function pad(number) {
+    if (number < 10) {
+        return '0' + number;
+    }
+    return number;
 }
 
+
 createApp({
+    components: {
+        ElCard
+    },
     data() {
         return {
             regions,
@@ -21,17 +22,54 @@ createApp({
             maxYear  : 2020,
             maxRegion: '07',
             year     : 2020,
+            trials   : [],
         }
     },
     mounted() {
         this.fetchStatistic()
+        this.fetchTrials()
+        for (let id of ["1293", "1218", "1253", "1166", "36"]) {
+            fetch(import.meta.env.VITE_API_URL + '/judge/' + id).then(
+                r => r.json()
+            ).then(
+                r => {
+                    document.getElementById(id + '_fines_rub').innerText = r.statistic.fines_rub;
+                    document.getElementById(id + '_arrests').innerText   = r.statistic.arrests;
+                }
+            )
+        }
     },
-    watch  : {
+    watch     : {
         year() {
             this.fetchStatistic()
         }
     },
-    methods: {
+    methods   : {
+        fetchTrials() {
+            let url      = new URL(
+                import.meta.env.VITE_API_URL + '/trial'
+            );
+            let format   = (input) => {
+                let day, month, year;
+                [month, day, year] = input.split('/')
+
+                return [year, pad(month), pad(day)].join('-')
+            }
+            let datetime = format((new Date()).toLocaleDateString());
+            let params   = {
+                'count'           : 3,
+                'timestamp[after]': datetime + ' 00:00:00',
+                'sort[timestamp]' : 'asc',
+                'sort[court]'     : 'asc',
+            }
+            url.search   = new URLSearchParams(params);
+
+            fetch(url)
+                .then(r => r.json())
+                .then(r => {
+                    this.trials = r['hydra:member']
+                });
+        },
         calculateHeight(year, region) {
             if (year === this.maxYear && this.maxRegion === region) {
                 return '200px'

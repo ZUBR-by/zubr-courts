@@ -233,4 +233,7 @@ export default defineComponent({
 .el-input__inner {
     height: 40px !important;
 }
+.el-icon-close:before {
+    content: ""
+}
 </style>

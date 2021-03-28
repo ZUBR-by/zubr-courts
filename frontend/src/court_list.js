@@ -1,6 +1,7 @@
 import 'vite/dynamic-import-polyfill'
-import {createApp}           from 'vue'
-import map from './court-map.vue'
+import {createApp}    from 'vue'
+import map            from './court-map.vue'
+import trials         from './trials.vue'
 
 function setCookie(name, value) {
     let options = {
@@ -45,13 +46,14 @@ function getCookie(name) {
 createApp(
     {
         components: {
-            'court-map' : map
+            'court-map' : map,
+            trials
         },
         methods: {
             changeTab(region){
                 setCookie('region', region);
                 this.activeTab = region;
-                this.$refs.map.changeLayer(region);
+                this.$refs.trials.changeRegion(region);
             }
         },
         data() {

@@ -86,12 +86,14 @@
             </div>
         </div>
         {{ $id := .Param "id"}}
-        <decisions :judge="'{{$id}}'"></decisions>
+        <div class="scene">
+            <decisions :judge="'{{$id}}'"></decisions>
+        </div>
         {{ partial "footer"}}
     </div>
 </div>
 {{ end }}
-{{ define "js"}}
+{{ define "assets"}}
 <script>
     var id = '{{.Param "id"}}';
 </script>
