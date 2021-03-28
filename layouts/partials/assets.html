@@ -11,15 +11,14 @@
 {{ $sub := index $manifest $val}}
 {{ $subFileEntry := resources.Get (print "generated/" (index $sub "file"))}}
 <script type="module" src="{{$subFileEntry.Permalink}}"></script>
-{{if gt (index $sub "css") 0 }}
-{{ range $val := (index $entry "css")}}
-{{$css := resources.Get (print "generated/" $val) }}
+{{if (isset $sub "css") }}
+{{ range $cssVal := (index $sub "css")}}
+{{$css := resources.Get (print "generated/" $cssVal) }}
 <link rel="stylesheet" href="{{$css.Permalink}}"/>
 {{ end }}
 {{ end }}
 {{ end }}
-
-{{if gt (index $entry "css") 0 }}
+{{if isset $entry "css" }}
 {{ range $val := (index $entry "css")}}
 {{$css := resources.Get (print "generated/" $val) }}
 <link rel="stylesheet" href="{{$css.Permalink}}"/>
