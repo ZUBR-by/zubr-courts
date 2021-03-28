@@ -55,7 +55,7 @@ createApp({
 
                 return [year, pad(month), pad(day)].join('-')
             }
-            let datetime = format((new Date()).toLocaleDateString());
+            let datetime = (new Date()).toISOString().split('T')[0];
             let params   = {
                 'count'           : 3,
                 'timestamp[after]': datetime + ' 00:00:00',

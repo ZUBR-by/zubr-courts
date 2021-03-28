@@ -75,7 +75,7 @@ export default defineComponent({
 
                 return [year, pad(month), pad(day)].join('-')
             }
-            let datetime = this.date ? format(this.date.toLocaleDateString()) : null;
+            let datetime = this.date ? this.date.toISOString().split('T')[0] : null;
             let params   = {
                 'court.id'         : this.court ? this.court : this.region,
                 'timestamp[after]' : datetime ? datetime + ' 00:00:00' : '',
