@@ -55,7 +55,9 @@ createApp({
 
                 return [year, pad(month), pad(day)].join('-')
             }
-            let datetime = (new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0];
+            let datetime = (
+                new Date((new Date()).getTime() - (new Date()).getTimezoneOffset() * 60000)
+            ).toISOString().split('T')[0];
             let params   = {
                 'count'           : 3,
                 'timestamp[after]': datetime + ' 00:00:00',
