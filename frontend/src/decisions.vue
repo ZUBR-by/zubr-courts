@@ -58,9 +58,12 @@
                             <el-image
                                 :ref="'dec' + decision.id"
                                 :preview-src-list="decision.attachments">
-                                <div slot="error" class="image-slot">
-                                    <a @click="showDialog(decision)">Показать материалы</a>
-                                </div>
+                                <template #error>
+                                    <div class="image-slot">
+                                        <a @click="showDialog(decision)">Показать материалы</a>
+                                    </div>
+                                </template>
+
                             </el-image>
                         </div>
                         <div v-if="decision.extra.links && decision.extra.links.length > 0">
@@ -91,8 +94,9 @@
 <script>
 import {ElPopover, ElButton, ElImage, ElLoading} from 'element-plus'
 import articlesHashes                            from './../../data/articles.json'
+import {defineComponent}                         from "vue";
 
-export default {
+export default defineComponent({
     name      : 'decisions',
     components: {
         ElPopover,
@@ -129,7 +133,7 @@ export default {
     },
     methods   : {
         showDialog(decision) {
-            this.$refs['dec' + decision.id][0].clickHandler();
+            this.$refs['dec' + decision.id].clickHandler();
         },
         loadMore() {
             this.page++;
@@ -184,7 +188,7 @@ export default {
             })
         }
     }
-}
+})
 </script>
 <style>
 

@@ -126,59 +126,6 @@ export default defineComponent({
     --vdp-selected-bg-color: #FF5C01;
 }
 
-@charset "UTF-8";
-@font-face {
-    font-family: element-icons;
-    src: url(/fonts/element-icons.woff) format("woff"), url(/fonts/element-icons.ttf) format("truetype");
-    font-weight: 400;
-    font-display: "auto";
-    font-style: normal
-}
-
-[class*=" el-icon-"], [class^=el-icon-] {
-    font-family: element-icons !important;
-    speak: none;
-    font-style: normal;
-    font-weight: 400;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    vertical-align: baseline;
-    display: inline-block;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
-}
-
-.el-icon-ice-cream-round:before {
-    content: ""
-}
-
-
-.el-icon-question:before {
-    content: ""
-}
-
-
-.el-icon-eleme:before {
-    content: ""
-}
-
-.el-icon-platform-eleme:before {
-    content: ""
-}
-
-.el-icon-loading {
-    -webkit-animation: rotating 2s linear infinite;
-    animation: rotating 2s linear infinite
-}
-
-.el-icon--right {
-    margin-left: 5px
-}
-
-.el-icon--left {
-    margin-right: 5px
-}
 
 @-webkit-keyframes rotating {
     0% {
