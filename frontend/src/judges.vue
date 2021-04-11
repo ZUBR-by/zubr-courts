@@ -65,7 +65,7 @@
                     <td class="size-25 min-size-250px valgn-c">
                         <a :href="'/judge/' + judge.id" class="flex-row flex-algn-itms-c cursor-pointer">
                             <div class="section size-64px flex-noshrink">
-                                <div class="judge-unit-photo">
+                                <div class="judge-unit-photo" style="width: 64px;height: 64px">
                                     <img alt="photo"
                                          :src="'https://cdn.zubr.ws/courts/judges/' + judge['id'] + '.jpg'">
                                     <div class="judge-u-photo-icon" v-if="judge.tags.includes('top')">
