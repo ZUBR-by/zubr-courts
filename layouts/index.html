@@ -52,7 +52,9 @@
                                 </template>
                             </h4>
                             <p>{{trial.person}}</p>
-                            {{trial.comment}}
+                            <template v-if="trial.comment">{{trial.comment}}</template>
+                            <template v-else>&nbsp;</template>
+
                         </el-card>
                         </a>
                         `}}
