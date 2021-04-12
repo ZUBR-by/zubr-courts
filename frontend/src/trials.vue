@@ -1,5 +1,6 @@
 <template>
     <div class="calendar" v-loading="this.loading">
+        <h4 v-if="initialRegion">Расписание слушаний по области:</h4>
         <div class="pdng-b-20px">
             <label style="float: left;padding-top: 14px;padding-right: 5px">Выберите дату:</label>
             <datepicker v-model="date"
