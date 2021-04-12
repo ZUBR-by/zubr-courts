@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="flex-row">
-            <div class="inline-notice mrgn-t-20px min-size-200px">
+            <div class="inline-notice mrgn-t-20px min-size-300px">
                 <div class="section">
                     <p>
                         Если вас задержали в связи с протестами, заполните форму проекта
@@ -44,7 +44,8 @@
                 <div class="pdng-t-15px"  style="font-size: 19px">
                     <div v-for="trial of trials" :key="trial.id" v-cloak>
                         {{ safeHTML `
-                        <el-card class="trial-card mrgn-l-5px" shadow="always">
+                        <a :href="trial.court ? '/court/' + trial.court.id : '#'">
+                        <el-card class="trial-card mrgn-l-5px" shadow="always" style="min-width:550px;min-height: 120px">
                             <h4>{{trial.timestampFormatted}}
                                 <template v-if="trial.court">
                                     - <a :href="'/court/' + trial.court.id"> {{trial.court.name}}</a>
@@ -53,6 +54,7 @@
                             <p>{{trial.person}}</p>
                             {{trial.comment}}
                         </el-card>
+                        </a>
                         `}}
                     </div>
                 </div>
