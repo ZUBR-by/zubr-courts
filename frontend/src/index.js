@@ -59,7 +59,7 @@ createApp({
 
             let datetime = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().split('T')[0];
             let params   = {
-                'count'           : 3,
+                'count'           : 4,
                 'timestamp[after]': datetime + ' 00:00:00',
                 'sort[timestamp]' : 'asc',
                 'sort[court]'     : 'asc',
