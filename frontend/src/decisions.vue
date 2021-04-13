@@ -155,7 +155,6 @@ export default defineComponent({
             let params = {
                 'sort[category]'  : 'desc',
                 'sort[timestamp]' : 'desc',
-                'exists[hiddenAt]': 'false',
                 'fullName'        : this.filter
             };
             if (this.court) {
