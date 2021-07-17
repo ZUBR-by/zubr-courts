@@ -28,7 +28,7 @@ $FRONTEND_HOST
             ansiblePlaybook(
                   playbook: 'infrastructure/deploy.yml',
                   inventory: "hosts",
-                  credentialsId: "SSH_PRIVATE_KEY",
+                  credentialsId: "CURRENT_DEPLOY_KEY",
                   hostKeyChecking: false
             )
         }
