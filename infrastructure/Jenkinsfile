@@ -7,9 +7,10 @@ pipeline {
     stage('Build') {
         environment {
             VITE_API_URL = 'https://zubr.club'
+            def VERSION = sh(script: "echo `date +%s`", returnStdout: true).trim()
         }
         steps {
-            sh 'wget https://api.zubr.in/content.zip -O content.zip'
+            sh "wget https://api.zubr.in/content.zip?v=$VERSION -O content.zip"
             sh 'rm content/court/*'
             sh 'rm content/judge/*'
             sh 'unzip -q -o content.zip'
