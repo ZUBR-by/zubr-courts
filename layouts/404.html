@@ -1,12 +1,17 @@
 
 {{ define "main" }}
 {{partial "header" . }}
-<main id="main">
-    <div>
-        Страница не найдена
+<div class="flex-row mil-flex-column" id="app">
+    <div class="section size-100 mil-size-100">
+        {{ partial "header" . }}
+        <div class="scene pdng-b-10px pdng-t-40px">
+            <div class="court-info flex-row flex-algn-itms-strch mil-flex-column-reserve">
+                Страница не найдена
 
-        <a href="{{ "/" | relURL }}">На главную</a>
+                <a href="{{ "/" | relURL }}">На главную</a>
+            </div>
+        </div>
     </div>
-</main>
+</div>
 {{partial "footer"}}
 {{end}}
