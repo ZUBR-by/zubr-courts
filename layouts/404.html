@@ -1,6 +1,4 @@
-
 {{ define "main" }}
-{{partial "header" . }}
 <div class="flex-row mil-flex-column" id="app">
     <div class="section size-100 mil-size-100">
         {{ partial "header" . }}
@@ -11,7 +9,7 @@
                 <a href="{{ "/" | relURL }}">На главную</a>
             </div>
         </div>
+        {{partial "footer"}}
     </div>
 </div>
-{{partial "footer"}}
 {{end}}
