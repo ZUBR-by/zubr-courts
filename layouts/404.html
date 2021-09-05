@@ -1,9 +1,13 @@
-{{ define "main"}}
+
+{{ define "main" }}
+{{partial "header" . }}
 <main id="main">
     <div>
         Страница не найдена
-        <h1 id="title"><a href="{{ "/" | relURL }}">На главную</a></h1>
+
+        <a href="{{ "/" | relURL }}">На главную</a>
     </div>
 </main>
+{{partial "footer"}}
 {{ end }}
-
+{{end}}
