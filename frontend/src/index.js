@@ -21,7 +21,7 @@ createApp({
             total    : null,
             maxYear  : 2020,
             maxRegion: '07',
-            year     : 2020,
+            year     : 2021,
             trials   : [],
         }
     },
