@@ -22,16 +22,16 @@ pipeline {
     }
     stage('Deploy') {
         environment {
-            CONSUL_HTTP_TOKEN    = credentials('CONSUL_HTTP_TOKEN')
-            def FRONTEND_HOST = sh(script: "consul kv get ci/api-ip", returnStdout: true).trim()
+            DIGITALOCEAN_ACCESS_TOKEN = credentials('DIGITALOCEAN_ACCESS_TOKEN')
+            def HOSTS = sh(
+                script: "doctl compute droplet list --format PublicIPv4 --no-header --tag-name zubr_in| tr '\n' ','",
+                returnStdout: true
+            ).trim()
         }
         steps {
-            writeFile file: 'hosts', text: """
-$FRONTEND_HOST
-"""
             ansiblePlaybook(
                   playbook: 'infrastructure/deploy.yml',
-                  inventory: "hosts",
+                  inventory: "$HOSTS,",
                   credentialsId: "CURRENT_DEPLOY_KEY",
                   hostKeyChecking: false
             )
