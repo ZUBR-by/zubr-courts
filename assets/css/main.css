@@ -735,6 +735,11 @@ h1, a, .button, .txt-color-1 {color:#FF5C01;}
   margin-left:10px;
   background:#FF5C01;
 }
+
+.stats-promo-dgrms-u-value + .stats-promo-dgrms-u-value + .stats-promo-dgrms-u-value {
+  margin-left:10px;
+  background:#ff0901;
+}
 .stats-promo-dgrms-u-v-count {
   position:absolute;
   left:0;
@@ -773,7 +778,7 @@ h1, a, .button, .txt-color-1 {color:#FF5C01;}
 }
 .stats-promo-i-mark.gray {background:#C4C4C4;}
 .stats-promo-i-mark.orange {background:#FF5C01;}
-
+.stats-promo-i-mark.red {background: #ff0901;}
 
 .judge-info-unit {
   margin:10px 0;

@@ -1,5 +1,5 @@
 {{ define "main" }}
-<div class="flex-row mil-flex-column" id="app">
+<div class="flex-row mil-flex-column" >
     <div class="section size-100 mil-size-100">
         {{ partial "header" . }}
         <div class="scene pdng-b-10px pdng-t-40px">
@@ -53,17 +53,15 @@
                     <div class="court-info-footer flex-row" style="margin:30px -30px -30px -30px">
                         <div class="section size-50 pdng-t-20px pdng-b-20px txt-algn-c">
                             <h1 class="txt-size-24px txt-nottransform">
-                                <span id='{{$.Param "id"}}_fines_rub'></span> р.
-
-
+                                <span id='stat_fines_rub'></span> р.
                             </h1>
                             <h3 class="txt-size-18px">
-                                <span id='{{$.Param "id"}}_fines'></span> баз. величин
+                                <span id='stat_fines'></span> баз. величин
                             </h3>
                         </div>
                         <div class="section size-50 pdng-t-20px pdng-b-20px txt-algn-c">
                             <h1 class="txt-size-24px">
-                                <span id='{{$.Param "id"}}_arrests'></span>
+                                <span id='stat_arrests'></span>
                             </h1>
                             <h3 class="txt-size-18px">
                                 Суток административного ареста
@@ -72,13 +70,13 @@
                     </div>
                 </div>
                 <div class="section size-50 mil-size-100 mil-height-250px mil-noborders">
-                    <div style="position:relative;overflow:hidden; width:100%; height:100%;">
+                    <div style="position:relative;overflow:hidden; width:100%; height:100%;" id="location">
                         <location :longitude='{{.Param "longitude"}}' :latitude='{{.Param "latitude"}}'></location>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="scene pdng-t-10px pdng-b-10px">
+        <div class="scene pdng-t-10px pdng-b-10px" id="app">
             <div class="tabset">
                 <input type="radio" name="tabset" id="tab1" aria-controls="staff-control" autofocus checked>
                 <label for="tab1">Состав</label>

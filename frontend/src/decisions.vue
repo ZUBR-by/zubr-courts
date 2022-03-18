@@ -1,4 +1,13 @@
 <template>
+    <Teleport :to="'#stat_fines_rub'" v-if="judge || court">
+        {{ fines_rub }}
+    </Teleport>
+    <Teleport :to="'#stat_fines'" v-if="judge || court">
+        {{ fines }}
+    </Teleport>
+    <Teleport :to="'#stat_arrests'" v-if="judge || court">
+        {{ arrests }}
+    </Teleport>
     <div>
         <div class="pdng-b-20px">
             <h2 class=" txt-uppercase txt-color-1">
@@ -27,11 +36,14 @@
         <div class="table-wrapper pdng-t-20px pdng-20px">
             <table class="zbr-table" v-loading="loading">
                 <tbody>
-                <tr v-for="decision of decisions" :key="decision.id" :class="{'fav' : decision.category === 'criminal'}">
-                    <td class="txt-nowrap size-10">{{ decision.fullName }}</td>
-                    <td class="txt-nowrap">{{ decision.timestamp }}</td>
+                <tr v-for="decision of decisions" :key="decision.id"
+                    :class="{'fav' : decision.category === 'criminal'}">
+                    <td class="txt-nowrap size-10">{{ decision.full_name }}</td>
+                    <td class="txt-nowrap">
+                        {{ decision.timestamp.split('T')[0] }}
+                    </td>
                     <td class="size-10">
-                        {{ decision.outcomeFormatted }}
+                        {{ decision.outcome_formatted }}
                     </td>
                     <td class="txt-nowrap">
                         <div v-if="decision.category !== 'criminal'">
@@ -45,7 +57,8 @@
                                                    size="mini"></el-button>
                                     </template>
                                 </el-popover>
-                                <span v-if="hashes[article]" v-text="hashes[article].split(' - ')[0]" style="padding-left: 3px"></span>
+                                <span v-if="hashes[article]" v-text="hashes[article].split(' - ')[0]"
+                                      style="padding-left: 3px"></span>
                                 <span style="padding-left: 3px" v-else>{{ article }}</span>
                             </div>
                         </div>
@@ -57,20 +70,21 @@
                         <div v-if="decision.attachments.length > 0">
                             <el-image
                                 :ref="'dec' + decision.id"
-                                :preview-src-list="decision.attachments">
+                                :preview-src-list="decision.attachments.map(i => i.url)">
                                 <template #error>
                                     <div class="image-slot">
                                         <a @click="showDialog(decision)">Показать материалы</a>
                                     </div>
                                 </template>
-
                             </el-image>
                         </div>
                         <div v-if="decision.extra.links && decision.extra.links.length > 0">
-                            <a target="_blank" :href="link" v-for="(link,index) of decision.extra.links" :key="index">
-                                {{ link }}
-                            </a>
-                            &nbsp;
+                            <template v-for="(link,index) of decision.extra.links" :key="index">
+                                <a target="_blank" :href="link">
+                                    {{ link }}
+                                </a>
+                                <br>
+                            </template>
                         </div>
                         <div>
                             {{ decision.description }}
@@ -93,11 +107,11 @@
 
 <script>
 import {ElPopover, ElButton, ElImage, ElLoading} from 'element-plus'
-import articlesHashes                            from './../../data/articles.json'
-import {defineComponent}                         from "vue";
+import articlesHashes from './../../data/articles.json'
+import {defineComponent} from "vue";
 
 export default defineComponent({
-    name      : 'decisions',
+    name: 'decisions',
     components: {
         ElPopover,
         ElImage,
@@ -106,20 +120,23 @@ export default defineComponent({
     data() {
         return {
             decisions: [],
-            filter   : '',
-            total    : 0,
-            error    : '',
-            page     : 1,
-            current  : null,
-            loading  : false,
-            hashes   : articlesHashes,
+            arrests: 0,
+            fines: 0,
+            fines_rub: 0,
+            filter: '',
+            total: 0,
+            error: '',
+            page: 1,
+            current: null,
+            loading: false,
+            hashes: articlesHashes,
         }
     },
-    props     : {
+    props: {
         court: String,
         judge: String,
     },
-    watch     : {
+    watch: {
         filter() {
             this.page = 1;
             this.fetchData()
@@ -131,7 +148,7 @@ export default defineComponent({
     directives: {
         loading: ElLoading.directive
     },
-    methods   : {
+    methods: {
         showDialog(decision) {
             this.$refs['dec' + decision.id].clickHandler();
         },
@@ -148,23 +165,14 @@ export default defineComponent({
         },
         fetchData() {
             this.loading = true;
-            let host   = import.meta.env.VITE_API_URL;
-            let url    = new URL(
-                host + '/decision'
+            let url      = new URL(
+                import.meta.env.VITE_BACKEND_URL
+                + (this.court ? 'house/' + this.court : 'judge/' + this.judge)
+                + '/decisions'
             );
-            let params = {
-                'sort[category]'  : 'desc',
-                'sort[timestamp]' : 'desc',
-                'fullName'        : this.filter
-            };
-            if (this.court) {
-                params['court.id'] = this.court;
-            }
-            if (this.judge) {
-                params['judge.id'] = this.judge;
-            }
+            let params   = {};
             if (this.page > 1) {
-                params['page'] = this.page;
+                params['offset'] = this.page * 30;
             }
             url.search = new URLSearchParams(params);
             fetch(url).then(r => {
@@ -178,11 +186,19 @@ export default defineComponent({
                     this.error = 'Произошла ошибка'
                     return;
                 }
+                let prop = this.court ? 'house' : 'judge';
                 if (this.page > 1) {
-                    this.decisions = this.decisions.concat(r['hydra:member']);
+                    this.decisions = this.decisions.concat(r[prop]['decisions']);
                 } else {
-                    this.total     = r['hydra:totalItems'];
-                    this.decisions = r['hydra:member'];
+                    this.total     = r[prop]['aggregate']['data']['count'];
+                    this.decisions = r[prop]['decisions'];
+                    if (r[prop]['fines']['aggregate']['sum']['amount']) {
+                        this.fines = r[prop]['fines']['aggregate']['sum']['amount'];
+                    }
+                    if (r[prop]['fines']['aggregate']['sum']['amount_rub']) {
+                        this.fines_rub = r[prop]['fines']['aggregate']['sum']['amount_rub'];
+                    }
+                    this.arrests = r[prop]['arrests']['aggregate']['sum']['amount'];
                 }
             })
         }
@@ -191,7 +207,6 @@ export default defineComponent({
 </script>
 <style>
 
-@charset "UTF-8";
 @font-face {
     font-family: element-icons;
     src: url(/fonts/element-icons.woff) format("woff"), url(/fonts/element-icons.ttf) format("truetype");

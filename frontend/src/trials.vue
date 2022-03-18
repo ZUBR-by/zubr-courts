@@ -11,19 +11,19 @@
         <el-timeline v-if="trials.length > 0">
             <el-timeline-item v-for="trial of trials" :key="trial.id">
                 <el-card>
-                    <h4>{{ trial.timestampFormatted }}
-                        <template v-if="trial.court">
-                            - <a :href="'/court/' + trial.court.id">
-                            {{ trial.court.name }}
+                    <h4>{{ trial.timestamp }}
+                        <template v-if="trial.house">
+                            - <a :href="'/court/' + trial.house.id">
+                            {{ trial.house.name }}
                         </a>
                         </template>
                     </h4>
                     <p>{{ trial.person }}</p>
                     <template v-if="trial.judge">
-                        <span>Судья: {{ trial.judge.fullName }}</span>
+                        <span>Судья: {{ trial.judge.full_name }}</span>
                     </template>
                     <span style="word-wrap: break-word;" v-if="trial.comment">
-                        {{ trial.comment}}
+                        {{ trial.comment }}
                     </span>
                 </el-card>
             </el-timeline-item>
@@ -36,10 +36,10 @@
 </template>
 
 <script>
-import {defineComponent}                               from "vue";
+import {defineComponent} from "vue";
 import {ElTimeline, ElCard, ElTimelineItem, ElLoading} from 'element-plus'
-import datepicker                                      from 'vue3-datepicker'
-import locale                                          from 'date-fns/locale/ru'
+import datepicker from 'vue3-datepicker'
+import locale from 'date-fns/locale/ru'
 
 function pad(number) {
     if (number < 10) {
@@ -49,43 +49,65 @@ function pad(number) {
 }
 
 export default defineComponent({
-    name      : "trials",
-    props     : {
+    name: "trials",
+    props: {
         initialRegion: {
             type: String
         },
-        initialCourt : {
+        initialCourt: {
             type: String
         }
     },
     directives: {
         loading: ElLoading.directive
     },
-    methods   : {
+    methods: {
         changeRegion(regionCode) {
             this.region = regionCode;
         },
         fetchData() {
             this.loading = true;
             let url      = new URL(
-                import.meta.env.VITE_API_URL + '/trial'
+                import.meta.env.VITE_BACKEND_URL + 'trials'
             );
             let datetime = this.date
-                ? new Date( this.date.getTime() - this.date.getTimezoneOffset() * 60000 ).toISOString().split('T')[0]
+                ? new Date(this.date.getTime() - this.date.getTimezoneOffset() * 60000).toISOString().split('T')[0]
                 : null;
             let params   = {
-                'court.id'         : this.court ? this.court : this.region,
-                'timestamp[after]' : datetime ? datetime + ' 00:00:00' : '',
-                'timestamp[before]': datetime ? datetime + ' 23:59:00' : '',
-                'sort[timestamp]'  : 'asc'
+                filter: {
+                    _or: [
+                        {
+                            'house_id': {
+                                _like: (this.court || this.region) + '%'
+                            },
+                        },
+                        {
+                            'house_id': {
+                                _is_null: true
+                            },
+                        }
+                    ],
+                    'timestamp': {
+                        _gte: datetime ? datetime + ' 00:00:00' : '',
+                        _lt: datetime ? datetime + ' 23:59:00' : ''
+                    },
+                },
+                sort: [{timestamp: 'asc'}]
             }
-            url.search   = new URLSearchParams(params);
 
-            fetch(url)
+            fetch(
+                url,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(params)
+                }
+            )
                 .then(r => r.json())
                 .then(r => {
-
-                    this.trials = r['hydra:member']
+                    this.trials = r['courts_trial']
                 }).finally(() => {
                 this.loading = false;
             });
@@ -100,7 +122,7 @@ export default defineComponent({
     mounted() {
         this.fetchData()
     },
-    watch     : {
+    watch: {
         region() {
             this.fetchData()
         },
@@ -111,10 +133,10 @@ export default defineComponent({
     data() {
         return {
             locale,
-            region : this.initialRegion,
-            court  : this.initialCourt,
-            date   : new Date(),
-            trials : [],
+            region: this.initialRegion,
+            court: this.initialCourt,
+            date: new Date(),
+            trials: [],
             loading: false
         };
     }

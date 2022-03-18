@@ -1,7 +1,7 @@
 import 'vite/dynamic-import-polyfill'
 import {createApp} from 'vue'
-import regions     from "../../data/regions.json";
-import {ElCard}    from "element-plus";
+import regions from "../../data/regions.json";
+import {ElCard} from "element-plus";
 
 function pad(number) {
     if (number < 10) {
@@ -10,7 +10,6 @@ function pad(number) {
     return number;
 }
 
-
 createApp({
     components: {
         ElCard
@@ -18,58 +17,67 @@ createApp({
     data() {
         return {
             regions,
-            total    : null,
-            maxYear  : 2020,
+            total: null,
+            maxYear: 2020,
             maxRegion: '07',
-            year     : 2021,
-            trials   : [],
+            year: 2022,
+            yearsOverall: [2020, 2021, 2022],
+            trials: [],
         }
     },
     mounted() {
         this.fetchStatistic()
         this.fetchTrials()
-        for (let id of ["1293", "1218", "1253", "1166", "36"]) {
-            fetch(import.meta.env.VITE_API_URL + '/judge/' + id).then(
-                r => r.json()
-            ).then(
-                r => {
-                    document.getElementById(id + '_fines_rub').innerText = r.statistic.fines_rub;
-                    document.getElementById(id + '_arrests').innerText   = r.statistic.arrests;
+        fetch(import.meta.env.VITE_BACKEND_URL + 'courts/judges/top').then(
+            r => r.json()
+        ).then(
+            r => {
+                if (!r.judges || !Array.isArray(r.judges)) {
+                    return
                 }
-            )
-        }
+                r.judges.forEach((elem) => {
+                    document.getElementById(elem.id + '_fines_rub').innerText = elem.fines.aggregate.sum.amount_rub;
+                    document.getElementById(elem.id + '_arrests').innerText   = elem.arrests.aggregate.sum.amount;
+                })
+            }
+        )
     },
-    watch     : {
+    watch: {
         year() {
             this.fetchStatistic()
         }
     },
-    methods   : {
+    methods: {
         fetchTrials() {
-            let url      = new URL(
-                import.meta.env.VITE_API_URL + '/trial'
+            let url  = new URL(
+                import.meta.env.VITE_BACKEND_URL + 'trials'
             );
-            let format   = (input) => {
-                let day, month, year;
-                [month, day, year] = input.split('/')
-
-                return [year, pad(month), pad(day)].join('-')
-            }
             let date = new Date();
 
             let datetime = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().split('T')[0];
             let params   = {
-                'count'           : 4,
-                'timestamp[after]': datetime + ' 00:00:00',
-                'sort[timestamp]' : 'asc',
-                'sort[court]'     : 'asc',
+                limit: 4,
+                filter: {
+                    timestamp: {
+                        _gte: datetime + ' 00:00:00'
+                    },
+                },
+                sort: [{timestamp: 'asc'}, {'house_id': 'asc'}]
             }
-            url.search   = new URLSearchParams(params);
 
-            fetch(url)
+            fetch(
+                url,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(params)
+                }
+            )
                 .then(r => r.json())
                 .then(r => {
-                    this.trials = r['hydra:member']
+                    this.trials = r['courts_trial']
                 });
         },
         calculateHeight(year, region) {
@@ -80,7 +88,7 @@ createApp({
             return (value === 0 ? 1 : value) + 'px';
         },
         fetchStatistic() {
-            fetch(import.meta.env.VITE_API_URL + '/statistic?year=' + this.year).then(
+            fetch(import.meta.env.VITE_BACKEND_URL + 'courts/decisions/stat/count?year=' + this.year).then(
                 r => {
                     if (!r.ok) {
                         return null;
@@ -91,19 +99,37 @@ createApp({
                 if (!r) {
                     return;
                 }
-                this.total     = r.data.regions;
-                this.maxRegion = r.data.max.region;
-                this.maxYear   = r.data.max.year;
+                const result   = {
+                    2019: {},
+                    2020: {},
+                    2021: {},
+                    2022: {},
+                }
+                this.maxYear   = 2019
+                this.maxRegion = '07'
+                let maxValue   = 0;
+                let value;
+                for (let row of r.stat) {
+                    value = row['count']
+                    if (value > maxValue) {
+                        maxValue       = value;
+                        this.maxYear   = row['year']
+                        this.maxRegion = '0' + row['region']
+                    }
+                    result[row['year']]['0' + row['region']] = value
+                }
+                this.total = result;
+
                 document
                     .getElementById('total_fines_rub')
-                    .innerText = parseInt(r.data.total.finesRub).toLocaleString().replace(/,/g, ' ') + ' р.';
+                    .innerText = parseInt(r.sum_fines.aggregate.sum.amount_rub).toLocaleString().replace(/,/g, ' ') + ' р.';
                 document
                     .getElementById('total_fines')
-                    .innerText = parseInt(r.data.total.fines).toLocaleString().replace(/,/g, ' ') + ' базовых величин';
+                    .innerText = parseInt(r.sum_fines.aggregate.sum.amount).toLocaleString().replace(/,/g, ' ') + ' базовых величин';
 
                 document
                     .getElementById('total_arrest')
-                    .innerText = parseInt(r.data.total.arrests).toLocaleString().replace(/,/g, ' ');
+                    .innerText = parseInt(r.sum_arrests.aggregate.sum.amount).toLocaleString().replace(/,/g, ' ');
             })
         }
     },

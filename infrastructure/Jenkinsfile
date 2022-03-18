@@ -7,6 +7,7 @@ pipeline {
     stage('Build') {
         environment {
             VITE_API_URL = 'https://zubr.club'
+            VITE_BACKEND_URL = 'https://graph.zubr.app/api/rest/'
             def VERSION = sh(script: "echo `date +%s`", returnStdout: true).trim()
         }
         steps {
