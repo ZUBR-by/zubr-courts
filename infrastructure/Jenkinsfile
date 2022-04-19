@@ -25,7 +25,7 @@ pipeline {
         environment {
             DIGITALOCEAN_ACCESS_TOKEN = credentials('DIGITALOCEAN_ACCESS_TOKEN')
             def HOSTS = sh(
-                script: "doctl compute droplet list --format PublicIPv4 --no-header --tag-name zubr_in| tr '\n' ','",
+                script: "doctl compute droplet list --format PublicIPv4 --no-header --tag-name zubr_cc| tr '\n' ','",
                 returnStdout: true
             ).trim()
         }
