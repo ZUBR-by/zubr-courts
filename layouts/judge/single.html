@@ -67,7 +67,7 @@
                             , бессрочно
                             {{else}}
                             , на срок {{$element.term}} лет
-                            {{end}}
+                            {{end}} ,{{$element.court.name}}
                         </li>
                         {{else if eq $element.type "released"}}
                         <li>Освобожден(а) с {{$element.timestamp}}, {{$element.court.name}}</li>
