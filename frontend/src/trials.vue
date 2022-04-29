@@ -20,7 +20,7 @@
                     </h4>
                     <p>{{ trial.person }}</p>
                     <template v-if="trial.judge">
-                        <span>Судья: {{ trial.judge.full_name }}</span>
+                        <span>Судья: {{ trial.judge.person.full_name }}</span>
                     </template>
                     <span style="word-wrap: break-word;" v-if="trial.comment">
                         {{ trial.comment }}
