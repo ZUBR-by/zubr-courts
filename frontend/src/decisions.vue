@@ -198,7 +198,9 @@ export default defineComponent({
                     if (r[prop]['fines']['aggregate']['sum']['amount_rub']) {
                         this.fines_rub = r[prop]['fines']['aggregate']['sum']['amount_rub'];
                     }
-                    this.arrests = r[prop]['arrests']['aggregate']['sum']['amount'];
+                    if (r[prop]['arrests']['aggregate']['sum']['amount']) {
+                        this.arrests = r[prop]['arrests']['aggregate']['sum']['amount'];
+                    }
                 }
             })
         }
