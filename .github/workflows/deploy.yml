@@ -28,3 +28,4 @@ jobs:
           NETLIFY_DEPLOY_TO_PROD: true
           build_directory: './'
           install_command: 'dir'
+          build_command: 'dir'
