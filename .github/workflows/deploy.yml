@@ -5,6 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: wget https://graph.zubr.app/courts/ -O content.zip
+      - run: rm content/court/*
+      - run: rm content/judge/*
+      - run: unzip -q -o content.zip
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
