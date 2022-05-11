@@ -5,12 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Symfony
-        working-directory: ./frontend
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
-          cache: 'yarn'
-      - run: yarn install
-      - run: yarn run build --emptyOutDir
+      - name: install
+        run: yarn install
+        working-directory: ./frontend
+      - name: build
+        run: yarn run build --emptyOutDir
+        working-directory: ./frontend
       - run: dir
