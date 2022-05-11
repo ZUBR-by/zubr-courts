@@ -25,7 +25,7 @@ jobs:
         with:
           hugo-version: '0.83.1'
       - name: Build
-        run: hugo
+        run: hugo --baseURL=https://silver-toffee-8ddebe.netlify.app/
       - run: dir
       - uses: jsmrcaga/action-netlify-deploy@v1.7.2
         with:
