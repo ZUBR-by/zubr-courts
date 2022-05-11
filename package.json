@@ -1,6 +1,24 @@
 {
-  "name": "courts",
+  "name": "zubr-courts",
   "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd frontend && vite",
+    "build": "cd frontend && vite build",
+    "serve": "cd frontend && vite preview"
+  },
   "dependencies": {
+    "element-plus": "^1.0.2-beta.35",
+    "vue3-datepicker" : "^0.2.4",
+    "ol": "^6.3.1",
+    "sass": "^1.29.0",
+    "sass-loader": "^10.1.0",
+    "vite-plugin-importer": "^0.2.1",
+    "vue": "^3.0.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.1.5",
+    "@vue/compiler-sfc": "^3.0.5",
+    "vite": "^2.1.0"
   }
 }

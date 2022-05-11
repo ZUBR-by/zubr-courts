@@ -16,10 +16,8 @@ jobs:
           node-version: '14'
       - name: install
         run: yarn install
-        working-directory: ./frontend
       - name: build
         run: yarn run build --emptyOutDir
-        working-directory: ./frontend
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
