@@ -11,10 +11,10 @@ pipeline {
             def VERSION = sh(script: "echo `date +%s`", returnStdout: true).trim()
         }
         steps {
-            sh "wget https://graph.zubr.app/courts/?v=$VERSION -O content.zip"
-            sh 'rm content/court/*'
-            sh 'rm content/judge/*'
-            sh 'unzip -q -o content.zip'
+//             sh "wget https://graph.zubr.app/courts/?v=$VERSION -O content.zip"
+//             sh 'rm content/court/*'
+//             sh 'rm content/judge/*'
+//             sh 'unzip -q -o content.zip'
             sh 'yarn'
             sh 'yarn run build --emptyOutDir'
             sh 'rm -rf public'

@@ -3,21 +3,6 @@ public/
 resources/
 content.zip
 
-!content/court
-/content/court/*
-!content/court/foo.md
-!content/court/_index.md
-
-data/courts.json
-data/courts_location.json
-data/data.json
-data/judges.json
-
-!content/judge
-/content/judge/*
-!content/judge/foo.md
-!content/judge/_index.md
-
 /assets/generated/*
 
 frontend/node_modules
