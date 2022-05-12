@@ -70,7 +70,7 @@
                             <div class="section size-64px flex-noshrink">
                                 <div class="judge-unit-photo" style="width: 64px;height: 64px">
                                     <img alt="photo"
-                                         :src="'https://cdn.zubr.ws/courts/judges/' + judge['id'] + '.jpg'">
+                                         :src="judge['photo_url']">
                                     <div class="judge-u-photo-icon" v-if="judge.tags.includes('top')">
                                         <img src="/imgs/icons/svg/star.svg">
                                     </div>
