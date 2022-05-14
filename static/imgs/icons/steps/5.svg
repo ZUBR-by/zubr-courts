@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="130" height="138" viewBox="0 0 130 138" fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+    <rect width="129.341" height="138" rx="9" fill="#FF5C01"/>
+    <rect x="9.19995" y="21.1064" width="34.6353" height="46.5412" rx="6" fill="white"/>
+    <rect x="9.20001" y="70.8945" width="34.6353" height="46.5412" rx="6" fill="white"/>
+    <rect x="86.0471" y="21.1064" width="34.6353" height="46.5412" rx="6" fill="white"/>
+    <rect x="86.0471" y="70.8945" width="34.6353" height="46.5412" rx="6" fill="white"/>
+    <rect x="47.6235" y="21.1064" width="34.6353" height="46.5412" rx="6" fill="white"/>
+    <rect x="47.6235" y="70.8945" width="34.6353" height="46.5412" rx="6" fill="white"/>
+    <path d="M17.0471 36.2588H37.6118" stroke="#C4C4C4" stroke-width="2"/>
+    <path d="M54.6588 36.2588H75.2235" stroke="#C4C4C4" stroke-width="2"/>
+    <path d="M93.0823 36.2588H113.647" stroke="#C4C4C4" stroke-width="2"/>
+    <path d="M93.0823 86.0469H113.647" stroke="#C4C4C4" stroke-width="2"/>
+    <path d="M17.3176 44.377H37.8823" stroke="#C4C4C4" stroke-width="2"/>
+    <path d="M54.9294 44.377H75.4942" stroke="#C4C4C4" stroke-width="2"/>
+    <path d="M93.3529 44.377H113.918" stroke="#C4C4C4" stroke-width="2"/>
+    <path d="M93.3529 94.165H113.918" stroke="#C4C4C4" stroke-width="2"/>
+    <path d="M17.3176 51.9531H37.8823" stroke="#C4C4C4" stroke-width="2"/>
+    <path d="M54.9294 51.9531H75.4942" stroke="#C4C4C4" stroke-width="2"/>
+    <path d="M93.3529 51.9531H113.918" stroke="#C4C4C4" stroke-width="2"/>
+    <path d="M93.3529 101.741H113.918" stroke="#C4C4C4" stroke-width="2"/>
+</svg>
