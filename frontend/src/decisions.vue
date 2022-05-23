@@ -48,6 +48,7 @@
                     <td class="txt-nowrap">
                         <div v-if="decision.category !== 'criminal'">
                             <div v-for="(article, index) in decision.articles" :key="index">
+                                <template v-if="index !== decision.articles.length && index !== 0">,</template>
                                 <el-popover width="300" :content="format(decision, article)"
                                             placement="bottom">
                                     <template #reference>
@@ -63,7 +64,11 @@
                             </div>
                         </div>
                         <div v-else>
-                            <span v-for="(article, index) in decision.articles" :key="index">{{ article }}</span>
+                            <span v-for="(article, index) in decision.articles" :key="index">
+                                <template
+                                    v-if="index !== decision.articles.length && index !== 0">,</template>
+                                {{ article }}
+                            </span>
                         </div>
                     </td>
                     <td>
