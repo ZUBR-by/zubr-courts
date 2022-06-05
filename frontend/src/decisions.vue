@@ -45,31 +45,22 @@
                     <td class="size-10">
                         {{ decision.outcome_formatted }}
                     </td>
-                    <td class="txt-nowrap">
-                        <div v-if="decision.category !== 'criminal'">
-                            <div v-for="(article, index) in decision.articles" :key="index">
-                                <template v-if="index !== decision.articles.length && index !== 0">,</template>
-                                <el-popover width="300" :content="format(decision, article)"
-                                            placement="bottom">
-                                    <template #reference>
-                                        <el-button type="primary"
-                                                   circle
-                                                   icon="el-icon-question"
-                                                   size="mini"></el-button>
-                                    </template>
-                                </el-popover>
-                                <span v-if="hashes[article]" v-text="hashes[article].split(' - ')[0]"
-                                      style="padding-left: 3px"></span>
-                                <span style="padding-left: 3px" v-else>{{ article }}</span>
-                            </div>
-                        </div>
-                        <div v-else>
-                            <span v-for="(article, index) in decision.articles" :key="index">
-                                <template
-                                    v-if="index !== decision.articles.length && index !== 0">,</template>
-                                {{ article }}
-                            </span>
-                        </div>
+                    <td class="size-25">
+                        <p v-for="(article, index) in decision.articles" :key="index">
+                            <el-popover width="300" :content="format(decision, article)"
+                                        placement="bottom">
+                                <template #reference>
+                                    <el-button type="primary"
+                                               circle
+                                               icon="el-icon-question"
+                                               size="mini"></el-button>
+                                </template>
+                            </el-popover>
+                            <span v-if="hashes[article]"
+                                  v-text="hashes[article].name"
+                                  style="padding-left: 3px"></span>
+                            <span style="padding-left: 3px" v-else>{{ article }}</span>
+                        </p>
                     </td>
                     <td>
                         <div v-if="decision.attachments.length > 0">
@@ -162,11 +153,7 @@ export default defineComponent({
             this.fetchData()
         },
         format(decision, article) {
-            let text = articlesHashes[article] ? articlesHashes[article] : article;
-            if (!text.includes(' - ')) {
-                return article;
-            }
-            return text.split(' - ')[1].replace(/"/g, '');
+            return articlesHashes[article] ? articlesHashes[article].description : article;
         },
         fetchData() {
             this.loading = true;
