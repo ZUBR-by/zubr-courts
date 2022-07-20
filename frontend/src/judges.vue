@@ -11,7 +11,7 @@
                     <div class="txt-algn-l">
                         ФИО судьи
                     </div>
-                    <el-input v-model.lazy="filter.search" autofocus :placeholder="''"></el-input>
+                    <input class="input" style="padding:8px 15px;" v-model.lazy="filter.search" autofocus :placeholder="''">
                 </div>
                 <div class="section size-25 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">
                     <div class="txt-algn-l">
@@ -124,11 +124,11 @@
 <script>
 
 import {ElOption, ElSelect, ElLoading, ElInput} from 'element-plus'
-import translations from './../../data/translations.json'
-import {defineComponent} from 'vue'
+import translations                             from './../../data/translations.json'
+import {defineComponent}                        from 'vue'
 
 export default defineComponent({
-    name: 'judges',
+    name      : 'judges',
     components: {
         ElSelect,
         ElOption,
@@ -137,13 +137,13 @@ export default defineComponent({
     data() {
         return {
             translations,
-            judges: [],
-            page: 1,
-            count: 0,
-            order: 'desc',
-            sort: 'administrative_decisions_count',
-            filter: {
-                tags: [],
+            judges : [],
+            page   : 1,
+            count  : 0,
+            order  : 'desc',
+            sort   : 'administrative_decisions_count',
+            filter : {
+                tags  : [],
                 search: '',
             },
             loading: false
@@ -152,7 +152,7 @@ export default defineComponent({
     directives: {
         loading: ElLoading.directive
     },
-    methods: {
+    methods   : {
         loadMore() {
             this.page++;
             this.loadData()
@@ -200,11 +200,11 @@ export default defineComponent({
             fetch(
                 url,
                 {
-                    method: 'POST',
+                    method : 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(params)
+                    body   : JSON.stringify(params)
                 }
             ).then(r => {
                     if (!r.ok) {
@@ -272,7 +272,7 @@ export default defineComponent({
             })
         }
     },
-    watch: {
+    watch     : {
         filter: {
             deep: true,
             handler() {
