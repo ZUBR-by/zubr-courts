@@ -70,7 +70,7 @@
                             <div class="section size-64px flex-noshrink">
                                 <div class="judge-unit-photo" style="width: 64px;height: 64px">
                                     <img alt="photo"
-                                         :src="judge['photo_url']">
+                                         :src="judge['photo_url'] || '/imgs/icons/svg/user.svg'">
                                     <div class="judge-u-photo-icon" v-if="judge.tags.includes('top')">
                                         <img src="/imgs/icons/svg/star.svg">
                                     </div>
