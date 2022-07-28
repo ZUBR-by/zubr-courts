@@ -1,4 +1,3 @@
-import 'vite/dynamic-import-polyfill'
 import {createApp} from 'vue'
 import decisions from "./decisions.vue";
 import location from "./court-location.vue";

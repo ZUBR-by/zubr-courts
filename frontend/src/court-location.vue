@@ -1,5 +1,5 @@
 <template>
-    <div id="location" class="location"></div>
+    <div id="court-location" class="location"></div>
 </template>
 
 <script>
@@ -24,19 +24,18 @@ export default defineComponent({
     },
     mounted() {
         setTimeout(() => {
-            let map           = new Map({
+            let map      = new Map({
                 layers: [
                     new TileLayer({
                         source: new OSM(),
                     })],
-                target: 'location',
+                target: 'court-location',
                 view  : new View({
                     center: fromLonLat([this.longitude, this.latitude]),
                     zoom  : 15.5,
                 }),
             });
-            const updatedView = map.getView();
-            const marker      = new VectorLayer({
+            const marker = new VectorLayer({
                 source: new VectorSource({
                     features: [
                         new Feature({
@@ -56,9 +55,6 @@ export default defineComponent({
             });
 
             map.addLayer(marker);
-            map.setView(
-                updatedView
-            );
         }, 1000)
 
     },

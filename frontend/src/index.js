@@ -1,7 +1,6 @@
-import 'vite/dynamic-import-polyfill'
 import {createApp} from 'vue'
-import regions from "../../data/regions.json";
-import {ElCard} from "element-plus";
+import regions     from "../../data/regions.json";
+import {ElCard}    from "element-plus";
 
 function pad(number) {
     if (number < 10) {
@@ -17,12 +16,12 @@ createApp({
     data() {
         return {
             regions,
-            total: null,
-            maxYear: 2020,
-            maxRegion: '07',
-            year: 2022,
+            total       : null,
+            maxYear     : 2020,
+            maxRegion   : '07',
+            year        : 2022,
             yearsOverall: [2020, 2021, 2022],
-            trials: [],
+            trials      : [],
         }
     },
     mounted() {
@@ -42,7 +41,7 @@ createApp({
             }
         )
     },
-    watch: {
+    watch  : {
         year() {
             this.fetchStatistic()
         }
@@ -56,23 +55,23 @@ createApp({
 
             let datetime = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().split('T')[0];
             let params   = {
-                limit: 4,
+                limit : 4,
                 filter: {
                     timestamp: {
                         _gte: datetime + ' 00:00:00'
                     },
                 },
-                sort: [{timestamp: 'asc'}, {'house_id': 'asc'}]
+                sort  : [{timestamp: 'asc'}, {'house_id': 'asc'}]
             }
 
             fetch(
                 url,
                 {
-                    method: 'POST',
+                    method : 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(params)
+                    body   : JSON.stringify(params)
                 }
             )
                 .then(r => r.json())

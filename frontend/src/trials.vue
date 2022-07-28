@@ -37,7 +37,7 @@
 
 <script>
 import {defineComponent} from "vue";
-import {ElTimeline, ElCard, ElTimelineItem, ElLoading} from 'element-plus'
+import {ElLoading} from 'element-plus'
 import datepicker from 'vue3-datepicker'
 import locale from 'date-fns/locale/ru'
 
@@ -114,9 +114,6 @@ export default defineComponent({
         }
     },
     components: {
-        ElCard,
-        ElTimeline,
-        ElTimelineItem,
         datepicker
     },
     mounted() {

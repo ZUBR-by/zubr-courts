@@ -287,6 +287,10 @@ export default defineComponent({
 })
 </script>
 <style>
+:root {
+    --el-border-color: var(--el-color-primary)
+}
+
 .el-input__inner {
     height: 40px !important;
 }

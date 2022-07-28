@@ -52,8 +52,8 @@
                                 <template #reference>
                                     <el-button type="primary"
                                                circle
-                                               icon="el-icon-question"
-                                               size="mini"></el-button>
+                                               :icon="Question"
+                                               size="default"></el-button>
                                 </template>
                             </el-popover>
                             <span v-if="hashes[article]"
@@ -102,30 +102,29 @@
 </template>
 
 <script>
-import {ElPopover, ElButton, ElImage, ElLoading} from 'element-plus'
-import articlesHashes from './../../data/articles.json'
-import {defineComponent} from "vue";
+import articlesHashes                from './../../data/articles.json'
+import {defineComponent, shallowRef} from "vue";
+import {QuestionFilled}              from '@element-plus/icons-vue'
 
 export default defineComponent({
-    name: 'decisions',
+    name      : 'decisions',
     components: {
-        ElPopover,
-        ElImage,
-        ElButton,
+        QuestionFilled
     },
     data() {
         return {
             decisions: [],
-            arrests: 0,
-            fines: 0,
+            arrests  : 0,
+            fines    : 0,
             fines_rub: 0,
-            filter: '',
-            total: 0,
-            error: '',
-            page: 1,
-            current: null,
-            loading: false,
-            hashes: articlesHashes,
+            filter   : '',
+            total    : 0,
+            error    : '',
+            page     : 1,
+            current  : null,
+            loading  : false,
+            hashes   : articlesHashes,
+            Question : shallowRef(QuestionFilled)
         }
     },
     props: {
@@ -140,9 +139,6 @@ export default defineComponent({
     },
     created() {
         this.fetchData();
-    },
-    directives: {
-        loading: ElLoading.directive
     },
     methods: {
         showDialog(decision) {
@@ -200,81 +196,9 @@ export default defineComponent({
 })
 </script>
 <style>
-
-@font-face {
-    font-family: element-icons;
-    src: url(/fonts/element-icons.woff) format("woff"), url(/fonts/element-icons.ttf) format("truetype");
-    font-weight: 400;
-    font-display: "auto";
-    font-style: normal
+.zbr-table {
+    --el-color-primary: #ff5c01;
+    --el-button-hover-bg-color: rgba(255,92,1,0.3);
 }
-
-[class*=" el-icon-"], [class^=el-icon-] {
-    font-family: element-icons !important;
-    speak: none;
-    font-style: normal;
-    font-weight: 400;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    vertical-align: baseline;
-    display: inline-block;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
-}
-
-.el-icon-ice-cream-round:before {
-    content: ""
-}
-
-
-.el-icon-question:before {
-    content: ""
-}
-
-
-.el-icon-eleme:before {
-    content: ""
-}
-
-.el-icon-platform-eleme:before {
-    content: ""
-}
-
-.el-icon-loading {
-    -webkit-animation: rotating 2s linear infinite;
-    animation: rotating 2s linear infinite
-}
-
-.el-icon--right {
-    margin-left: 5px
-}
-
-.el-icon--left {
-    margin-right: 5px
-}
-
-@-webkit-keyframes rotating {
-    0% {
-        -webkit-transform: rotateZ(0);
-        transform: rotateZ(0)
-    }
-    100% {
-        -webkit-transform: rotateZ(360deg);
-        transform: rotateZ(360deg)
-    }
-}
-
-@keyframes rotating {
-    0% {
-        -webkit-transform: rotateZ(0);
-        transform: rotateZ(0)
-    }
-    100% {
-        -webkit-transform: rotateZ(360deg);
-        transform: rotateZ(360deg)
-    }
-}
-
 </style>
 

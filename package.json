@@ -8,17 +8,20 @@
     "serve": "cd frontend && vite preview"
   },
   "dependencies": {
-    "element-plus": "^1.0.2-beta.35",
-    "vue3-datepicker" : "^0.2.4",
-    "ol": "^6.3.1",
-    "sass": "^1.29.0",
-    "sass-loader": "^10.1.0",
-    "vite-plugin-importer": "^0.2.1",
-    "vue": "^3.0.5"
+    "@element-plus/icons-vue": "2.0.6",
+    "element-plus": "2.2.11",
+    "ol": "6.15.1",
+    "sass": "1.54.0",
+    "vue": "3.2.37",
+    "vue3-datepicker": "0.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.1.5",
-    "@vue/compiler-sfc": "^3.0.5",
-    "vite": "^2.1.0"
+    "@vitejs/plugin-vue": "1.10.2",
+    "@vue/compiler-sfc": "3.2.37",
+    "unplugin-auto-import": "0.8.7",
+    "unplugin-element-plus": "0.4.0",
+    "unplugin-vue-components": "0.19.6",
+    "vite": "3.0.3",
+    "vite-plugin-importer": "0.2.5"
   }
 }

@@ -29,10 +29,7 @@
                 {{ end }}
                 <div class="judge-info-unit pdng-t-10px">
                     <div class="judge-info-unit-name txt-color-1">
-                        Суд:
-                    </div>
-                    <div class="judge-info-unit-desc">
-                        {{ .Param "court.name" }}
+                        <a href='/court/{{.Param "court.id"}}'>{{ .Param "court.name" }}</a>
                     </div>
                 </div>
                 <div class="judge-info-unit">
@@ -58,6 +55,7 @@
                     </div>
                     Выдано штрафов на <span id='stat_fines_rub'></span> руб.,
                     адм. ареста - <span id='stat_arrests'></span> суток
+                    <span id='stat_fines' style="display: none;"></span>
                 </div>
                 <div class="judge-info-unit">
                     <ul>
@@ -69,10 +67,10 @@
                             Назначен(а) с {{$element.timestamp}} {{if eq $element.termType "indefinitely"}},
                             бессрочно
                             {{else}}
-                            , на срок {{$element.term}} лет{{end}}, {{$element.court.name}}
+                            , на срок {{$element.term}} лет{{end}}, <a href="/court/{{$element.court.id}}">{{$element.court.name}}</a>
                         </li>
                         {{else if eq $element.type "released"}}
-                        <li>Освобожден(а) с {{$element.timestamp}}, {{$element.court.name}}</li>
+                        <li>Освобожден(а) с {{$element.timestamp}}, <a href="/court/{{$element.court.id}}">{{$element.court.name}}</a> </li>
                         {{end}}
                         {{end}}
                     </ul>

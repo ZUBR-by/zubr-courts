@@ -1,24 +1,28 @@
-import {defineConfig} from 'vite'
-import vue            from '@vitejs/plugin-vue'
-import usePluginImport from 'vite-plugin-importer'
+import {defineConfig}        from 'vite'
+import vue                   from '@vitejs/plugin-vue'
+import AutoImport            from 'unplugin-auto-import/vite'
+import Components            from 'unplugin-vue-components/vite'
+import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
+import ElementPlus           from 'unplugin-element-plus/vite'
+import path                  from 'path'
 
 export default defineConfig({
     plugins: [
         vue(),
-        usePluginImport({
-            libraryName: "element-plus",
-            libraryDirectory: "es",
-            customStyleName: (name) => {
-                if (name === 'locale') {
-                    return `element-plus/packages/theme-chalk/src/button.scss`
-                }
-                return `element-plus/packages/theme-chalk/src/${name.replace('el-','')}.scss`;
-            },
+        AutoImport({
+            resolvers: [ElementPlusResolver()],
+        }),
+        Components({
+            resolvers: [ElementPlusResolver()],
+        }),
+        ElementPlus({
+            useSource: true,
         }),
     ],
     resolve: {
         alias: {
-            'vue' : 'vue/dist/vue.esm-bundler.js'
+            '~/' : `${path.resolve(__dirname, 'src')}/`,
+            'vue': 'vue/dist/vue.esm-bundler.js'
         }
     },
     build  : {
@@ -32,21 +36,12 @@ export default defineConfig({
                 'src/court_list.js'
             ]
         },
-        outDir : './../assets/generated'
+        outDir       : './../assets/generated'
     },
-    css: {
-        preprocessorOptions : {
+    css    : {
+        preprocessorOptions: {
             scss: {
-                additionalData: `
-$--color-primary: #ff5c01;
-$--color-success: #ff5c01;
-$--input-placeholder-color: rgba(255,92,1,0.3);
-
-$--select-border-color-hover: #FF5C01;
-
-$--border-color-base: #FF5C01;
-$--select-input-focus-border-color: #FF5C01;   
-`
+                additionalData: `@use "~/styles/element.scss" as *;`
             }
         }
     }

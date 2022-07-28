@@ -1,7 +1,7 @@
 {{ $entry := print "src/" (.Scratch.Get "entry") ".js" }}
 {{- if not hugo.IsProduction -}}
-<script type="module" src="http://localhost:3000/@vite/client"></script>
-<script type="module" src="http://localhost:3000/{{$entry}}"></script>
+<script type="module" src="http://localhost:5173/@vite/client"></script>
+<script type="module" src="http://localhost:5173/{{$entry}}"></script>
 {{ else }}
 {{ $manifest := getJSON "assets/generated/manifest.json" }}
 {{ $entry := index $manifest $entry}}
