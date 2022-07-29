@@ -196,9 +196,12 @@ export default defineComponent({
 })
 </script>
 <style>
+/** TODO это не фикс **/
 .zbr-table {
     --el-color-primary: #ff5c01;
-    --el-button-hover-bg-color: rgba(255,92,1,0.3);
+    --el-button-hover-bg-color: rgba(255, 92, 1, 0.3);
+    --el-color-primary-light-3: rgba(255, 92, 1, 0.3);
+    --el-color-primary-dark-2: rgba(255, 92, 1, 0.5);
 }
 </style>
 
