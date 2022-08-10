@@ -43,25 +43,25 @@
                      class="section size-25">
                     ФИО судьи
                     <div
-                        :class="{'filter-t-s-arrow' : this.sort === 'full_name', 'down' : this.order === 'desc', 'up': this.order === 'asc'}"></div>
+                        :class="{'filter-t-s-arrow' : sort === 'full_name', 'down' : order === 'desc', 'up': order === 'asc'}"></div>
 
                 </div>
                 <div class="section size-25" @click="setSort('tags')">
                     Метки
                     <div
-                        :class="{'filter-t-s-arrow' : this.sort === 'tags', 'down' : this.order === 'desc', 'up': this.order === 'asc'}"></div>
+                        :class="{'filter-t-s-arrow' : sort === 'tags', 'down' : order === 'desc', 'up': order === 'asc'}"></div>
                 </div>
                 <div class="section size-20" @click="setSort('administrative_decisions_count')">
                     Адм. Решения
                     <div
-                        :class="{'filter-t-s-arrow' : this.sort === 'administrative_decisions_count', 'down' : this.order === 'desc', 'up': this.order === 'asc'}"></div>
+                        :class="{'filter-t-s-arrow' : sort === 'administrative_decisions_count', 'down' : order === 'desc', 'up': order === 'asc'}"></div>
                 </div>
                 <div class="section size-30">
                     Текущее/прошлое место работы
                 </div>
             </div>
         </div>
-        <div class="table-wrapper pdng-t-20px pdng-20px" v-loading="this.loading">
+        <div class="table-wrapper pdng-t-20px pdng-20px" v-loading="loading">
             <table class="zbr-table">
                 <tbody>
                 <tr v-for="judge of judges" :key="judge.id">
@@ -121,170 +121,153 @@
     </div>
 </template>
 
-<script>
+<script setup>
 
-import {ElOption, ElSelect, ElLoading, ElInput} from 'element-plus'
-import translations                             from './../../data/translations.json'
-import {defineComponent}                        from 'vue'
+import translations                from './../../data/translations.json'
+import {ref, watch, onBeforeMount} from 'vue'
 
-export default defineComponent({
-    name      : 'judges',
-    components: {
-        ElSelect,
-        ElOption,
-        ElInput
-    },
-    data() {
-        return {
-            translations,
-            judges : [],
-            page   : 1,
-            count  : 0,
-            order  : 'desc',
-            sort   : 'administrative_decisions_count',
-            filter : {
-                tags  : [],
-                search: '',
-            },
-            loading: false
-        }
-    },
-    directives: {
-        loading: ElLoading.directive
-    },
-    methods   : {
-        loadMore() {
-            this.page++;
-            this.loadData()
-        },
-        setSort(column) {
-            if (this.sort === column) {
-                if (this.order === 'desc') {
-                    this.order = 'asc';
-                } else {
-                    this.order = '';
-                    this.sort  = '';
-                }
-            } else {
-                this.sort  = column;
-                this.order = 'desc'
-            }
-            this.page = 1;
-            this.loadData();
-        },
-        translate(value) {
-            return this.translations[value];
-        },
-        loadData() {
-            let host   = import.meta.env.VITE_BACKEND_URL;
-            let url    = new URL(
-                host + 'courts/judges'
-            );
-            let params = {
-                filter: {_and: []}
-            }
-            if (this.sort) {
-                params['sort'] = {[this.sort]: this.order};
-            }
-            for (let tag of this.filter.tags) {
-                params.filter._and.push({tags: {_contains: tag}});
-            }
-            if (this.filter.search) {
-                params.filter._and.push({full_name: {_ilike: '%' + this.filter.search + '%'}});
-            }
-            if (this.page > 1) {
-                params['offset'] = this.page * 30;
-            }
-
-            this.loading = true;
-            fetch(
-                url,
-                {
-                    method : 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body   : JSON.stringify(params)
-                }
-            ).then(r => {
-                    if (!r.ok) {
-                        this.loading = false;
-                        return null;
-                    }
-                    return r.json()
-                }
-            ).then(r => {
-                if (r === null || !r.judges) {
-                    return;
-                }
-                const addYear = (d, a) => {
-                    d.setFullYear(d.getFullYear() + a)
-                    return d
-                }
-                r['judges'].map(elem => {
-                    elem.currentCourt = ((history) => {
-                        if (history.length === 0) {
-                            return null;
-                        }
-                        const [item] = history;
-
-                        return item.type !== 'released'
-                        && (
-                            item.term_type === 'indefinitely'
-                            || (
-                                item.term_type === 'years'
-                                && (new Date()) < addYear(new Date(item.timestamp), item.term)
-                            )
-                            || item.term_type === 'period'
-                        )
-                            ? item.house : null
-                    })(elem.career)
-
-                    elem.previousCourt = ((history) => {
-                        if (history.length === 0) {
-                            return null;
-                        }
-                        const [first, second] = history
-                        if (!second && first.type !== 'released') {
-                            return null
-                        }
-                        if (!second && first.type === 'released') {
-                            return first.house
-                        }
-                        if (second) {
-                            return second.house
-                        }
-                        return null
-                    })(elem.career)
-
-                    return {
-                        ...elem
-                    }
-                })
-                if (this.page > 1) {
-                    this.judges = this.judges.concat(r['judges']);
-                } else {
-                    this.count  = r['aggregate']['fn']['count'];
-                    this.judges = r['judges'];
-                }
-
-                this.loading = false;
-            })
-        }
-    },
-    watch     : {
-        filter: {
-            deep: true,
-            handler() {
-                this.page = 1;
-                this.loadData()
-            }
-        }
-    },
-    created() {
-        this.loadData()
-    }
+const judges  = ref([]);
+const page    = ref(1);
+const count   = ref(0);
+const order   = ref('desc');
+const sort    = ref('administrative_decisions_count')
+const filter  = ref({
+    tags  : [],
+    search: '',
 })
+const loading = ref(false)
+
+
+const loadData  = () => {
+    let host   = import.meta.env.VITE_BACKEND_URL;
+    let url    = new URL(
+        host + 'courts/judges'
+    );
+    let params = {
+        filter: {_and: []}
+    }
+    if (sort.value) {
+        params['sort'] = {[sort.value]: order.value};
+    }
+    for (let tag of filter.value.tags) {
+        params.filter._and.push({tags: {_contains: tag}});
+    }
+    if (filter.value.search) {
+        params.filter._and.push({full_name: {_ilike: '%' + filter.value.search + '%'}});
+    }
+    if (page.value > 1) {
+        params['offset'] = page.value * 30;
+    }
+
+    loading.value = true;
+    fetch(
+        url,
+        {
+            method : 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body   : JSON.stringify(params)
+        }
+    ).then(r => {
+            if (!r.ok) {
+                loading.value = false;
+                return null;
+            }
+            return r.json()
+        }
+    ).then(r => {
+        if (r === null || !r.judges) {
+            return;
+        }
+        const addYear = (d, a) => {
+            d.setFullYear(d.getFullYear() + a)
+            return d
+        }
+        r['judges'].map(elem => {
+            elem.currentCourt = ((history) => {
+                if (history.length === 0) {
+                    return null;
+                }
+                const [item] = history;
+
+                return item.type !== 'released'
+                && (
+                    item.term_type === 'indefinitely'
+                    || (
+                        item.term_type === 'years'
+                        && (new Date()) < addYear(new Date(item.timestamp), item.term)
+                    )
+                    || item.term_type === 'period'
+                )
+                    ? item.house : null
+            })(elem.career)
+
+            elem.previousCourt = ((history) => {
+                if (history.length === 0) {
+                    return null;
+                }
+                const [first, second] = history
+                if (!second && first.type !== 'released') {
+                    return null
+                }
+                if (!second && first.type === 'released') {
+                    return first.house
+                }
+                if (second) {
+                    return second.house
+                }
+                return null
+            })(elem.career)
+
+            return {
+                ...elem
+            }
+        })
+        if (page.value > 1) {
+            judges.value = judges.value.concat(r['judges']);
+        } else {
+            count.value  = r['aggregate']['fn']['count'];
+            judges.value = r['judges'];
+        }
+
+        loading.value = false;
+    })
+}
+const loadMore  = () => {
+    page.value++;
+    loadData()
+}
+const setSort   = (column) => {
+    if (sort.value === column) {
+        if (order.value === 'desc') {
+            order.value = 'asc';
+        } else {
+            order.value = '';
+            sort.value  = '';
+        }
+    } else {
+        sort.value  = column;
+        order.value = 'desc'
+    }
+    page.value = 1;
+    loadData();
+}
+const translate = (value) => {
+    return translations[value];
+}
+
+watch(filter, () => {
+    page.value = 1;
+    loadData()
+}, {
+    deep: true
+})
+
+onBeforeMount(() => {
+    loadData()
+})
+
 </script>
 <style>
 :root {
