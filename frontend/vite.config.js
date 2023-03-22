@@ -33,7 +33,8 @@ export default defineConfig({
                 'src/judge_list.js',
                 'src/judge.js',
                 'src/court.js',
-                'src/court_list.js'
+                'src/court_list.js',
+                'src/prosecutor_list.js'
             ]
         },
         outDir       : './../assets/generated'

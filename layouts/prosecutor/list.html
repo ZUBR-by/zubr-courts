@@ -1,0 +1,11 @@
+{{ define "main" }}
+{{partial "header" . }}
+<div id="app">
+    <prosecutors></prosecutors>
+</div>
+{{partial "footer"}}
+{{ end }}
+{{ define "assets"}}
+{{ .Scratch.Set "entry" "prosecutor_list" }}
+{{ partial "assets" . }}
+{{end}}
