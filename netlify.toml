@@ -12,4 +12,4 @@
 # located at the absolute path "root/project/build-output"
 publish = "public"
 # Default build command.
-command = "yarn run build && hugo"
+command = "yarn run build && hugo -b master--zubr-cc.netlify.app"
