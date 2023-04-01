@@ -7,3 +7,4 @@ content.zip
 
 frontend/node_modules
 node_modules
+.hugo_build.lock
