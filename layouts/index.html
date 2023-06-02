@@ -368,7 +368,7 @@
             <div class="stats-promo">
                 <div class="stats-promo-header txt-bold">
                     <a class="txt-underline" :class="{active: y == year}"
-                       v-for="y of [2019,2020,2021,2022]"
+                       v-for="y of yearsOverall"
                        @click="year = y"
                        :key="y"
                        v-text="y"></a>
