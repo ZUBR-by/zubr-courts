@@ -8,19 +8,22 @@ function pad(number) {
     }
     return number;
 }
+let currentYear = (new Date()).getFullYear();
+let yearsOverall = Array.from({length: (currentYear - 2019) + 1}, (_, i) => currentYear - i).reverse()
 
 createApp({
     components: {
         ElCard
     },
     data() {
+
         return {
             regions,
             total       : null,
             maxYear     : 2020,
             maxRegion   : '07',
-            year        : 2022,
-            yearsOverall: [2020, 2021, 2022],
+            year        : currentYear,
+            yearsOverall,
             trials      : [],
         }
     },
@@ -98,12 +101,12 @@ createApp({
                 if (!r) {
                     return;
                 }
-                const result   = {
-                    2019: {},
-                    2020: {},
-                    2021: {},
-                    2022: {},
+                const result   = {}
+
+                for (let i of yearsOverall) {
+                    result[i] = {}
                 }
+
                 this.maxYear   = 2019
                 this.maxRegion = '07'
                 let maxValue   = 0;
