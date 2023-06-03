@@ -19,8 +19,8 @@ createApp({
             total       : null,
             maxYear     : 2020,
             maxRegion   : '07',
-            year        : 2022,
-            yearsOverall: [2020, 2021, 2022],
+            year        : 2023,
+            yearsOverall: [2020, 2021, 2022, 2023],
             trials      : [],
         }
     },
@@ -103,6 +103,7 @@ createApp({
                     2020: {},
                     2021: {},
                     2022: {},
+                    2023: {},
                 }
                 this.maxYear   = 2019
                 this.maxRegion = '07'
