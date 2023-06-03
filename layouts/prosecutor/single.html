@@ -1,0 +1,58 @@
+{{ define "main" }}
+<div class="flex-row mil-flex-column">
+    <div class="section size-100 mil-size-100">
+        {{ partial "header" . }}
+        <div class="scene flex-row mil-flex-column" style="padding-bottom: 0">
+            <div class="section size-15 pdng-r-50px mil-size-100 mil-pdng-20px">
+                <div class="judge-unit-photo">
+                    {{if $.Param "photo_url"}}
+                    <img alt="photo" src='{{$.Param "photo_url"}}'>
+                    {{else}}
+                    <img alt="photo" src='/imgs/icons/svg/user.svg'>
+                    {{end}}
+                </div>
+            </div>
+            <div class="section size-70 mil-size-100">
+                <h1 class="txt-size-34px txt-nottransform">
+                    {{ $.Param "full_name"}}
+                </h1>
+                {{ if $.Param "court"}}
+                <div class="judge-info-unit pdng-t-10px">
+                    <div class="judge-info-unit-name txt-color-1">
+                        <a href='/court/{{.Param "court.id"}}'>{{ .Param "court.name" }}</a>
+                    </div>
+                </div>
+                <div class="judge-info-unit">
+                    <div class="judge-info-unit-name txt-color-1">
+                        Должность:
+                    </div>
+                    <div class="judge-info-unit-desc">
+                        {{ .Param "court.position" }}
+                    </div>
+                </div>
+                <div class="judge-info-unit">
+                    <div class="judge-info-unit-name txt-color-1">
+                        Назначение:
+                    </div>
+                    <div class="judge-info-unit-desc">
+                        {{ .Param "court.description" }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+        {{ $id := .Param "id"}}
+        <div class="scene" id="app">
+            <decisions :judge="'{{$id}}'"></decisions>
+        </div>
+        {{ partial "footer"}}
+    </div>
+</div>
+{{ end }}
+{{ define "assets"}}
+<script>
+    var id = '{{.Param "id"}}';
+</script>
+
+{{end}}
+
