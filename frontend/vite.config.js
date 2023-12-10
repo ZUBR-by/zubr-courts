@@ -34,6 +34,7 @@ export default defineConfig({
                 'src/judge.js',
                 'src/court.js',
                 'src/court_list.js',
+                'src/prosecutor.js',
                 'src/prosecutor_list.js'
             ]
         },

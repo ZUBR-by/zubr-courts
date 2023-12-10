@@ -9,7 +9,7 @@
             <div class="flex-row mil-flex-column">
                 <div class="section size-25 mil-size-100 pdng-r-10px mil-pdng-0 mil-pdng-t-10px">
                     <div class="txt-algn-l">
-                        ФИО прокуроа
+                        Имя
                     </div>
                     <input class="input" style="padding:8px 15px;" v-model.lazy="filter.search" autofocus :placeholder="''">
                 </div>
@@ -32,7 +32,7 @@
 
                 </div>
                 <div class="section size-20" @click="setSort('decisions_count')">
-                    Кол-во. Решений
+                    Количество дел
                     <div
                         :class="{'filter-t-s-arrow' : sort === 'decisions_count', 'down' : order === 'desc', 'up': order === 'asc'}"></div>
                 </div>
@@ -62,20 +62,22 @@
                     </td>
                     <td class="txt-nowrap size-20 valgn-c txt-algn-c">
                         <div>
-                            {{ prosecutor.decisions_count === 0 ? 'Не найдено решений' : prosecutor.decisions_count }}
+                            {{ prosecutor.decisions_count === 0 ? 'Нет данных' : prosecutor.decisions_count }}
                         </div>
                     </td>
                     <td class="txt-nowrap size-30 pdng-r-10px valgn-c">
-                        <div v-if="prosecutor.currentCourt">
-                            <a class="txt-color-2" :href="'/poffice/' + prosecutor.currentCourt.id">
-                                {{ prosecutor.currentCourt.name }}
-                            </a>
-                        </div>
-                        <div v-if="prosecutor.previousCourt">
-                            <a class="txt-color-3" :href="'/poffice/' + prosecutor.previousCourt.id">
-                                {{ prosecutor.previousCourt.name }}
-                            </a>
-                        </div>
+                        <template v-if="prosecutor.career.length > 0">
+                            <div>
+                              <a class="txt-color-2">
+                                {{ prosecutor.career[0].office.name }}
+                              </a>
+                            </div>
+                            <div v-if="prosecutor.career[1]">
+                              <a class="txt-color-3">
+                                {{ prosecutor.career[1].office.name}}
+                              </a>
+                            </div>
+                        </template>
                     </td>
                 </tr>
                 <tr v-if="prosecutors.length === 0 && loading === false">

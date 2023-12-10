@@ -130,6 +130,7 @@ export default defineComponent({
     props: {
         court: String,
         judge: String,
+        prosecutor: String,
     },
     watch: {
         filter() {
@@ -153,10 +154,33 @@ export default defineComponent({
         },
         fetchData() {
             this.loading = true;
+
+            let entityType = null;
+            let entityValue = null;
+
+            if (this.court) {
+              entityType = 'house/'
+              entityValue = this.court
+            }
+
+            if (this.judge) {
+              entityType = 'judge/'
+              entityValue = this.judge
+            }
+
+            if (this.prosecutor) {
+              entityType = 'prosecutor/'
+              entityValue = this.prosecutor
+            }
+
+            if (entityType === null) {
+              this.error = 'Произошла ошибка, не передан тип'
+              return;
+            }
+
+
             let url      = new URL(
-                import.meta.env.VITE_BACKEND_URL
-                + (this.court ? 'house/' + this.court : 'judge/' + this.judge)
-                + '/decisions'
+                import.meta.env.VITE_BACKEND_URL + entityType + entityValue + '/decisions'
             );
             let params   = {};
             if (this.page > 1) {
@@ -174,19 +198,28 @@ export default defineComponent({
                     this.error = 'Произошла ошибка'
                     return;
                 }
-                let prop = this.court ? 'house' : 'judge';
+
+
+                let prop;
+                if (this.court) {
+                  prop = 'house';
+                } else if (this.prosecutor) {
+                  prop = 'prosecutor';
+                } else {
+                  prop = 'judge';
+                }
                 if (this.page > 1) {
                     this.decisions = this.decisions.concat(r[prop]['decisions']);
                 } else {
                     this.total     = r[prop]['aggregate']['data']['count'];
                     this.decisions = r[prop]['decisions'];
-                    if (r[prop]['fines']['aggregate']['sum']['amount']) {
+                    if (r[prop]['fines'] && r[prop]['fines']['aggregate']['sum']['amount']) {
                         this.fines = r[prop]['fines']['aggregate']['sum']['amount'];
                     }
-                    if (r[prop]['fines']['aggregate']['sum']['amount_rub']) {
+                    if (r[prop]['fines'] && r[prop]['fines']['aggregate']['sum']['amount_rub']) {
                         this.fines_rub = r[prop]['fines']['aggregate']['sum']['amount_rub'];
                     }
-                    if (r[prop]['arrests']['aggregate']['sum']['amount']) {
+                    if (r[prop]['arrests'] && r[prop]['arrests']['aggregate']['sum']['amount']) {
                         this.arrests = r[prop]['arrests']['aggregate']['sum']['amount'];
                     }
                 }

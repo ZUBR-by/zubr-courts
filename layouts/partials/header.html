@@ -9,30 +9,39 @@
     </div>
     <div class="hdr-nav-links">
         <a href="/">Главная</a>
+        {{ if eq .Type "prosecutor" }}
+            <span class="hdr-nav-l-spr">/</span>
+            <a href="/prosecutor/">Прокуроры</a>
+            {{if (.Param "full_name")}}
+            <span class="hdr-nav-l-spr">/</span>
+            <span>{{ .Param "full_name"}}</span>
+            {{end}}
+        {{end}}
+
         {{ if eq .Type "court" }}
-        <span class="hdr-nav-l-spr">/</span>
-        <a href="/court">Суды</a>
-        {{if (.Param "name")}}
-        <span class="hdr-nav-l-spr">/</span>
-        <span>{{ .Param "region"}}</span>
-        <span class="hdr-nav-l-spr">/</span>
-        <span>{{ .Param "name"}}</span>
-        {{end}}
+            <span class="hdr-nav-l-spr">/</span>
+            <a href="/court">Суды</a>
+            {{if (.Param "name")}}
+            <span class="hdr-nav-l-spr">/</span>
+            <span>{{ .Param "region"}}</span>
+            <span class="hdr-nav-l-spr">/</span>
+            <span>{{ .Param "name"}}</span>
+            {{end}}
         {{ else if eq .Type "judge" }}
-        <span class="hdr-nav-l-spr">/</span>
-        {{if and (.Param "court") (.Param "fullName")}}
-        <a href="/court">Суды</a>
+            <span class="hdr-nav-l-spr">/</span>
+            {{if and (.Param "court") (.Param "fullName")}}
+            <a href="/court">Суды</a>
         {{else}}
-        <a href="/judge">Судьи</a>
-        {{end}}
-        {{if (.Param "court")}}
-        <span class="hdr-nav-l-spr">/</span>
-        <a href='/court/{{.Param "court.id"}}'>{{ .Param "court.name"}}</a>
-        {{end}}
-        {{if (.Param "fullName")}}
-        <span class="hdr-nav-l-spr">/</span>
-        <span>{{ .Param "fullName"}}</span>
-        {{end}}
+            <a href="/judge">Судьи</a>
+            {{end}}
+            {{if (.Param "court")}}
+            <span class="hdr-nav-l-spr">/</span>
+            <a href='/court/{{.Param "court.id"}}'>{{ .Param "court.name"}}</a>
+            {{end}}
+            {{if (.Param "fullName")}}
+            <span class="hdr-nav-l-spr">/</span>
+            <span>{{ .Param "fullName"}}</span>
+            {{end}}
         {{ end }}
     </div>
 </div>

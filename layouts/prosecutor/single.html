@@ -16,10 +16,10 @@
                 <h1 class="txt-size-34px txt-nottransform">
                     {{ $.Param "full_name"}}
                 </h1>
-                {{ if $.Param "court"}}
+                {{ if $.Param "offices"}}
                 <div class="judge-info-unit pdng-t-10px">
                     <div class="judge-info-unit-name txt-color-1">
-                        <a href='/court/{{.Param "court.id"}}'>{{ .Param "court.name" }}</a>
+                        <a>{{ index ($.Param "offices") 0 "name" }}</a>
                     </div>
                 </div>
                 <div class="judge-info-unit">
@@ -27,15 +27,7 @@
                         Должность:
                     </div>
                     <div class="judge-info-unit-desc">
-                        {{ .Param "court.position" }}
-                    </div>
-                </div>
-                <div class="judge-info-unit">
-                    <div class="judge-info-unit-name txt-color-1">
-                        Назначение:
-                    </div>
-                    <div class="judge-info-unit-desc">
-                        {{ .Param "court.description" }}
+                        {{ index ($.Param "offices") 0 "position" }}
                     </div>
                 </div>
                 {{ end }}
@@ -43,7 +35,7 @@
         </div>
         {{ $id := .Param "id"}}
         <div class="scene" id="app">
-            <decisions :judge="'{{$id}}'"></decisions>
+            <decisions :prosecutor="'{{$id}}'"></decisions>
         </div>
         {{ partial "footer"}}
     </div>
@@ -53,6 +45,8 @@
 <script>
     var id = '{{.Param "id"}}';
 </script>
+{{ .Scratch.Set "entry" "prosecutor" }}
+{{ partial "assets" . }}
 
 {{end}}
 
