@@ -1,0 +1,467 @@
+{{ define "main" }}
+<div id="app">
+    <div class="scene zbr-home-promo mil-pdng-b-60px">
+        <!--    <div class="lang-swicher mil-notdisplay" style="top:-30px;">-->
+        <!--        <div class="lang-swicher-button">-->
+        <!--            <img src="imgs/icons/svg/flag-belarus.svg">-->
+        <!--        </div>-->
+        <!--        <div class="lang-swicher-button"><img src="imgs/icons/svg/flag-ukraine.svg">-->
+        <!--        </div>-->
+        <!--        <div class="lang-swicher-button active"><img src="imgs/icons/svg/flag-russia.svg">-->
+        <!--        </div>-->
+        <!--    </div>-->
+        <div>
+            {{ partial "mobile_nav"}}
+            <div class="pdng-t-30px">
+                <a class="button large" href="/judge">Судьи</a>
+                <a class="button large" href="/court">Суды</a>
+
+                <a class="button large" href="/prosecutor">Прокуроры</a>
+                <a class="button large active" href="https://t.me/zubr_watch_bot">Отправить данные</a>
+            </div>
+        </div>
+        <div class="flex-row">
+            <div class="inline-notice mrgn-t-20px min-size-300px">
+                <div class="section">
+                    <p>
+                        Если вас задержали в связи с протестами, заполните форму проекта
+                        <a href="https://www.23-34.net/" class="txt-underline"><b>23.34</b></a>
+                        и мы получим данные по судьям, автоматически.
+                    </p>
+                    <br>
+                    <span>
+                        Информацию о политзаключенных можно получить на
+                        <a class="txt-underline" href="https://dissidentby.com/">
+                            <b>dissidentby.com</b>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="flex-row scroll-x-auto" v-if="trials && trials.length > 0" v-cloak>
+            <div class="section size-75 pdng-t-20px">
+                <div style="font-size: 20px">
+                    <strong>Ближайшие слушания</strong> (<a href="/court">Расписание</a>):
+                </div>
+                <div class="pdng-t-15px" style="font-size: 19px">
+                    <div v-for="trial of trials" :key="trial.id" v-cloak>
+                        {{ safeHTML `
+                        <a :href="trial.court ? '/court/' + trial.house.id : '#'">
+                            <el-card class="trial-card mrgn-l-5px" shadow="always"
+                                     style="min-width:550px;min-height: 120px">
+                                <h4>{{trial.timestamp}}
+                                    <template v-if="trial.house">
+                                        - <a :href="'/court/' + trial.house.id"> {{trial.house.name}}</a>
+                                    </template>
+                                </h4>
+                                <p>{{trial.person}}</p>
+                                <template v-if="trial.comment">{{trial.comment}}</template>
+                                <template v-else>&nbsp;</template>
+                            </el-card>
+                        </a>
+                        `}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="pdng-t-50px">
+            <h2 class="txt-medium">
+                Проект &laquo;Гражданский контроль судебной системы&raquo; создан командой <a
+                    class="txt-underline txt-bolder" href="https://zubr.in/elections/about">ZUBR</a>
+                , при экспертной поддержке правозащитной организации <a class="txt-underline txt-bolder"
+                                                                        href="https://humanconstanta.by/">Human
+                Constanta</a>.
+                Наша цель - показать работу судебной системы Республики Беларусь и сделать ее максимально прозрачной.
+            </h2>
+        </div>
+        <div class="flex-row pdng-t-50px mil-flex-column ">
+            <div class="section size-50 pdng-r-2_5prc mil-size-100 mil-pdng-0">
+                <h3>
+                <span class="txt-medium txt-color-1">
+                    Вся информация, используемая в проекте, получена из открытых источников
+                </span> либо от потерпевших в результате произвола работников репрессивного аппарата.
+                    В связи с тем, что информация по судьям является практически закрытой,
+                    мы будем благодарны любым дополнительным данным как о судах, так и о судьях.
+                </h3>
+            </div>
+            <div class="section size-50 pdng-l-2_5prc mil-size-100 mil-pdng-0 mil-pdng-t-30px ">
+                <h3>
+                <span class="txt-medium txt-color-1">
+                    Своими историями и опытом взаимодействия с ними вы можете поделиться</span> как через нашего бота в
+                    <a class="txt-underline" href="https://t.me/zubr_watch_bot">Телеграме</a>,
+                    так и через систему комментирования на
+                    <a class="txt-underline" href="/court">странице суда</a> или конкретного
+                    <a class="txt-underline" href="/judge">судьи</a>.
+                    С развитием проекта можно будет видеть статистику как по каждому суду, так и судье в отдельности.
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="scene pdng-t-15px">
+        <div class="zbr-home-promoguide mil-pdng-t-60px">
+            <div class="zbr-home-promoguide-row flex-row mil-flex-column">
+                <div class="section size-40 mil-size-100">
+                    <div class="zbr-home-promoguide-unit flex-row flex-algn-itms-s">
+                        <div class="zbr-home-pg-unit-number">
+                            1
+                        </div>
+                        <div class="section pdng-l-20px">
+                            <div class="zbr-home-pg-unit-img disabled">
+                                <img src="imgs/icons/steps/1.svg" alt="1">
+                            </div>
+                            <div class="pdng-t-10px">
+                                <p>
+                                    Почти все судебные процессы открытые
+                                    и вы имеете право присутствовать на них
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section size-20 mil-notdisplay"></div>
+                <div class="section size-40 mil-size-100 mil-mrgn-t-80px">
+                    <div class="zbr-home-promoguide-unit flex-row flex-algn-itms-s">
+                        <div class="zbr-home-pg-unit-number">
+                            2
+                        </div>
+                        <div class="section pdng-l-20px">
+                            <div class="zbr-home-pg-unit-img">
+                                <div class="zbr-h-pg-u--txt txt-color-1 txt-bolder txt-size-64px">
+                                    9&mdash;18
+                                </div>
+                            </div>
+                            <div class="pdng-t-15px">
+                                <p>
+                                    Суд работает по будням с 9:00 до 18:00.
+                                    <br>
+                                    Обед с 13:00 до 14:00.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="zbr-home-promoguide-row flex-row mil-flex-column">
+                <div class="section size-40 mil-size-100">
+                    <div class="zbr-home-promoguide-unit flex-row flex-algn-itms-s">
+                        <div class="zbr-home-pg-unit-number">
+                            3
+                        </div>
+                        <div class="section pdng-l-20px">
+                            <div class="zbr-home-pg-unit-img">
+                                <img src="imgs/icons/steps/3.svg">
+                            </div>
+                            <div class="pdng-t-15px">
+                                <p>
+                                    Для входа в суд нужен паспорт
+                                    и могут досматривать вещи,
+                                    поэтому не берите колющие
+                                    и режущие предметы
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section size-20 mil-notdisplay"></div>
+                <div class="section size-40 mil-size-100 mil-mrgn-t-80px">
+                    <div class="zbr-home-promoguide-unit flex-row flex-algn-itms-s">
+                        <div class="zbr-home-pg-unit-number">
+                            4
+                        </div>
+                        <div class="section pdng-l-20px">
+                            <div class="zbr-home-pg-unit-img">
+                                <div class="zbr-h-pg-u--txt txt-color-1 txt-bolder txt-size-34px">
+                                    Иду смотреть, а
+                                    не участвовать
+                                </div>
+                            </div>
+                            <div class="pdng-t-15px">
+                                <p>
+                                    На входе можно сказать, что идете
+                                    смотреть на судебный процесс,
+                                    а не участвовать
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="zbr-home-promoguide-row flex-row mil-flex-column">
+                <div class="section size-40 mil-size-100">
+                    <div class="zbr-home-promoguide-unit flex-row flex-algn-itms-s">
+                        <div class="zbr-home-pg-unit-number">
+                            5
+                        </div>
+                        <div class="section pdng-l-20px">
+                            <div class="zbr-home-pg-unit-img">
+                                <img src="imgs/icons/steps/5.svg" alt="5">
+                            </div>
+                            <div class="pdng-t-15px">
+                                <p>
+                                    Информацию про процессы можно посмотреть на стендах.
+                                    Обычно они находятся на первом этаже возле входа,
+                                    но иногда на втором (суд Московского района Минска)
+                                    или в коридорах (Дом правосудия в Минске).
+                                    Рекомендуем сделать фото стенда с интересующим делом
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section size-20 mil-notdisplay"></div>
+                <div class="section size-40 mil-size-100 mil-mrgn-t-80px">
+                    <div class="zbr-home-promoguide-unit flex-row flex-algn-itms-s">
+                        <div class="zbr-home-pg-unit-number">
+                            6
+                        </div>
+                        <div class="section pdng-l-20px">
+                            <div class="zbr-home-pg-unit-img">
+                                <img src="imgs/icons/steps/6.svg" alt="6">
+                            </div>
+                            <div class="pdng-t-15px">
+                                <p>
+                                    На стенде посмотрите номер зала заседания/кабинет
+                                    и не опаздывайте
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="zbr-home-promoguide-row flex-row mil-flex-column">
+                <div class="section size-40 mil-size-100">
+                    <div class="zbr-home-promoguide-unit flex-row flex-algn-itms-s">
+                        <div class="zbr-home-pg-unit-number">
+                            7
+                        </div>
+                        <div class="section pdng-l-20px">
+                            <div class="zbr-home-pg-unit-img">
+                                <div class="zbr-h-pg-u--txt txt-color-1 txt-bolder txt-size-48px">
+                                    &laquo;Кто Вы?&raquo;
+                                </div>
+                            </div>
+                            <div class="pdng-t-15px">
+                                <p>
+                                    На вопрос &laquo;кто вы?&raquo; отвечайте
+                                    &laquo;слушатель&raquo;, &laquo;публика&raquo;, или &laquo;просто посмотреть&raquo;
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section size-20 mil-notdisplay"></div>
+                <div class="section size-40 mil-size-100 mil-mrgn-t-80px">
+                    <div class="zbr-home-promoguide-unit flex-row flex-algn-itms-s">
+                        <div class="zbr-home-pg-unit-number">
+                            8
+                        </div>
+                        <div class="section pdng-l-20px">
+                            <div class="zbr-home-pg-unit-img">
+                                <img src="imgs/icons/steps/8.svg" alt="8">
+                            </div>
+                            <div class="pdng-t-15px">
+                                <p>
+                                    Обязательно запишите процесс
+                                    на диктофон!
+                                    Предупреждать про запись
+                                    суд не надо — это ваше право
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="zbr-home-promoguide-row flex-row mil-flex-column">
+                <div class="section size-40 mil-size-100">
+                    <div class="zbr-home-promoguide-unit flex-row flex-algn-itms-s">
+                        <div class="zbr-home-pg-unit-number">
+                            9
+                        </div>
+                        <div class="section pdng-l-20px">
+                            <div class="zbr-home-pg-unit-img disabled">
+                                <img src="imgs/icons/steps/9.svg" alt="9">
+                            </div>
+                            <div class="pdng-t-10px">
+                                <p>
+                                    Вставайте, когда судья входит и зачитывает решение
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section size-20 mil-notdisplay"></div>
+                <div class="section size-40 mil-size-100 mil-mrgn-t-80px">
+                    <div class="zbr-home-promoguide-unit flex-row flex-algn-itms-s">
+                        <div class="zbr-home-pg-unit-number">
+                            10
+                        </div>
+                        <div class="section pdng-l-50px">
+                            <div class="zbr-home-pg-unit-img pdng-l-50px">
+                                <img src="imgs/icons/steps/10.svg" alt="10">
+                            </div>
+                            <div class="pdng-t-15px">
+                                <p>
+                                    После суда расскажите о результатах в социальных сетях, правозащитным организациям
+                                    или нам в телеграм-бот
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scene pdng-t-30px pdng-b-10px">
+        <div>
+            <h2 class="txt-algn-c txt-uppercase txt-color-1">
+                Наиболее отличившиеся судьи
+            </h2>
+        </div>
+        <div class="flex-row pdng-t-20px mil-flex-column">
+            {{ range $index, $element := $.Site.Data.judges }}
+            {{if in (slice "1293" "1218" "1253" "1166" "36") $index}}
+            <div class="section flex-row size-20 mil-size-100 mil-pdng-b-50px">
+                <div class="judge-unit flex-column pdng-5prc txt-algn-c">
+                    <div class="judge-unit-photo">
+                        <img alt="photo" src='{{$element.photoURL}}'>
+                    </div>
+                    <h3 class="judge-unit-name txt-color-1">
+                        {{$element.fullName}}
+                    </h3>
+                    <div class="judge-unit-court">
+                        {{if $element.court}}
+                        {{$element.court.name}}
+                        {{end}}
+                    </div>
+                    <div class="judge-unit-position">
+                        {{if $element.court}}
+                        {{$element.court.position}}
+                        {{end}}
+                    </div>
+                    <p class="judge-unit-description pdng-t-20px">
+                        Выдано штрафов на <span id="{{$element.id}}_fines_rub"></span> руб.,
+                        суток адм. ареста - <span id="{{$element.id}}_arrests"></span>
+                    </p>
+                    <div class="tags-wrp txt-algn-l pdng-t-10px">
+                        {{ range $index, $element := $element.tags}}
+                        <a class="tag-unit">{{index $.Site.Data.translations $element}}</a>
+                        {{end}}
+                    </div>
+                    <div class="flex-grow-all"></div>
+                    <div class="pdng-t-30px">
+                        <a class="button size-100" href='/judge/{{$element.id}}'>Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            {{end}}
+            {{end}}
+        </div>
+    </div>
+    <div class="scene pdng-t-30px">
+        <div>
+            <div>
+                <h2 class="txt-algn-c pdng-b-30px txt-uppercase txt-color-1">
+                    Статистика
+                </h2>
+            </div>
+            <div class="stats-promo">
+                <div class="stats-promo-header txt-bold">
+                    <a class="txt-underline" :class="{active: y == year}"
+                       v-for="y of yearsOverall"
+                       @click="year = y"
+                       :key="y"
+                       v-text="y"></a>
+                </div>
+                <div class="stats-promo-data flex-row flex-algn-itms-c mil-flex-column">
+                    <div class="section size-50 txt-algn-c mil-size-100">
+                        <h1 id="total_fines_rub">
+                            1 234 872 р.
+                        </h1>
+                        <h3 id="total_fines">
+                            45 736 базовых величин
+                        </h3>
+                    </div>
+                    <div class="section size-50 txt-algn-c mil-size-100">
+                        <h1 id="total_arrest">
+                            28 527
+                        </h1>
+                        <h3>
+                            суток административного ареста
+                        </h3>
+                    </div>
+                </div>
+                <div class="stats-promo-diagrams-wrp">
+                    <div class="stats-promo-diagrams" v-if="total">
+                        <div class="stats-promo-dgrms-unit" v-for="(label, key) in regions" :key="key">
+                            <div class="stats-promo-dgrms-u-data">
+                                <div v-for="y of yearsOverall"
+                                     :style="{ height : calculateHeight(y, key)}"
+                                     class="stats-promo-dgrms-u-value">
+                                    <div class="stats-promo-dgrms-u-v-count">
+                                        <div v-text="total[y][key]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stats-promo-dgrms-u-name" v-text="label.replace(/обл./g, '')"></div>
+                        </div>
+                    </div>
+                    <div class="flex-row stats-promo-info txt-bold" v-if="total">
+                        <div class="section">
+                            <div class="stats-promo-i-mark gray"></div>
+                            2020
+                        </div>
+                        <div class="section">
+                            <div class="stats-promo-i-mark orange"></div>
+                            2021
+                        </div>
+                        <div class="section">
+                            <div class="stats-promo-i-mark red"></div>
+                            2022
+                        </div>
+                        <div class="section">
+                            <div class="stats-promo-i-mark red"></div>
+                            2023
+                        </div>
+                        <div class="section">
+                            <div class="stats-promo-i-mark red"></div>
+                            2024
+                        </div>
+                        <div class="section">
+                            <div class="stats-promo-i-mark red"></div>
+                            2025
+                        </div>
+                        <div class="section" style="padding-top: 2px">
+                            <span>Количество решений</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{{partial "footer"}}
+{{ end }}
+
+{{ define "assets"}}
+<style>
+    .trial-card {
+        float: left;
+        min-width: 200px
+    }
+
+    .el-card {
+        background-color: #f7f7f7 !important;
+    }
+</style>
+{{ .Scratch.Set "entry" "index" }}
+{{ partial "assets" . }}
+{{ end }}
+
+{{ define "class_body"}}
+class="homepage"
+{{end}}
