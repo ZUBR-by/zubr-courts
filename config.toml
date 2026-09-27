@@ -1,4 +1,4 @@
-baseURL = "https://zubr.cc/"
+baseURL = "https://courts.zubr.in/"
 languageCode = "ru-RU"
 title = "Гражданский контроль судебной системы"
 [taxonomies]

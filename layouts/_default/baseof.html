@@ -14,8 +14,7 @@
 
         gtag('config', 'G-D6WW4ZCJG9');
     </script>
-    {{$title := cond (gt (.Title | len) 0) .Title .Site.Title}}
-    {{$fullTitle := printf "%s - %s" "ZUBR.cc" $title}}
+    {{$title := cond (gt (.Title | len) 0) .Title .Site.Title}}    {{$fullTitle := printf "%s - %s" "ZUBR Суды" $title}}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1">
