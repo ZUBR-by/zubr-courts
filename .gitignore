@@ -2,6 +2,7 @@ public/
 !frontend/public/
 resources/
 content.zip
+.hugo_build.lock
 
 /assets/generated/*
 
