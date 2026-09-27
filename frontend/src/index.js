@@ -27,21 +27,21 @@ createApp({
         }
     },
     mounted() {
-        this.fetchStatistic()
+        // this.fetchStatistic()
         this.fetchTrials()
-        fetch(import.meta.env.VITE_BACKEND_URL + 'courts/judges/top').then(
-            r => r.json()
-        ).then(
-            r => {
-                if (!r.judges || !Array.isArray(r.judges)) {
-                    return
-                }
-                r.judges.forEach((elem) => {
-                    document.getElementById(elem.id + '_fines_rub').innerText = elem.fines.aggregate.sum.amount_rub;
-                    document.getElementById(elem.id + '_arrests').innerText   = elem.arrests.aggregate.sum.amount;
-                })
-            }
-        )
+        // fetch(import.meta.env.VITE_BACKEND_URL + 'courts/judges/top').then(
+        //     r => r.json()
+        // ).then(
+        //     r => {
+        //         if (!r.judges || !Array.isArray(r.judges)) {
+        //             return
+        //         }
+        //         r.judges.forEach((elem) => {
+        //             document.getElementById(elem.id + '_fines_rub').innerText = elem.fines.aggregate.sum.amount_rub;
+        //             document.getElementById(elem.id + '_arrests').innerText   = elem.arrests.aggregate.sum.amount;
+        //         })
+        //     }
+        // )
     },
     watch  : {
         year() {
